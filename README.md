@@ -13,3 +13,17 @@ Welcome to Movix, your all-in-one destination for everything related to movies! 
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB
 - **Additional Tools:** React Router, Redux, Axios
+
+## Contributing
+I welcome contributions and feedback from the community. If you'd like to contribute to this repository.
+
+## Contact
+Connect with me on social media:
+- Twitter: [@devhimanshuu](https://twitter.com/devhimanshuu)
+- LinkedIn: [Himanshu Gupta](https://www.linkedin.com/in/himanshu-guptaa/)
+- Email: devhimanshuu@gmail.com
+- Hashnode: [TechSphere](https://techsphere.hashnode.dev/)
+
+Feel free to reach out if you have questions, suggestions, or just want to chat about Movix
+
+Happy coding! 🚀
