@@ -1,8 +1,15 @@
-# React + Vite
+# Movix: Your Ultimate Movie Companion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to Movix, your all-in-one destination for everything related to movies! Movix is a web application inspired by popular platforms like IMDb, designed to provide users with a seamless and immersive movie experience.
 
-Currently, two official plugins are available:
+## Key Features:
+- **Comprehensive Database:** Explore an extensive collection of movies, TV shows, and documentaries. From the latest releases to timeless classics, Movix has it all.
+- **User-Friendly Interface:** Our intuitive interface makes it easy to search for titles, read reviews, and discover new favorites.
+- **Personalized Recommendations:** Receive personalized movie recommendations based on your viewing history and preferences.
+- **Responsive Design:** Enjoy a seamless experience across devices, from desktops to smartphones.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used:
+- **Frontend:** React.js, SASS
+- **Backend:** Node.js, Express.js
+- **Database:** MongoDB
+- **Additional Tools:** React Router, Redux, Axios
