@@ -11,7 +11,7 @@ Welcome to Movix, your all-in-one destination for everything related to movies! 
 ## Technologies Used:
 - **Frontend:** React.js, SASS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB
+- **APIs:** [TMDB](https://developer.themoviedb.org/docs/getting-started)
 - **Additional Tools:** React Router, Redux, Axios
 
 ## Contributing
