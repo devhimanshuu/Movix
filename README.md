@@ -2,6 +2,10 @@
 
 Welcome to Movix, your all-in-one destination for everything related to movies! Movix is a web application inspired by popular platforms like IMDb, designed to provide users with a seamless and immersive movie experience.
 
+## Demo:
+![Home-page](public/Movix-home.png)
+![Detais-page](public/Movix-detail.png)
+
 ## Key Features:
 - **Comprehensive Database:** Explore an extensive collection of movies, TV shows, and documentaries. From the latest releases to timeless classics, Movix has it all.
 - **User-Friendly Interface:** Our intuitive interface makes it easy to search for titles, read reviews, and discover new favorites.
