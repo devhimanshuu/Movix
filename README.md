@@ -1,8 +1,10 @@
 # Movix: Your Ultimate Movie Companion
 
 Welcome to Movix, your all-in-one destination for everything related to movies! Movix is a web application inspired by popular platforms like IMDb, designed to provide users with a seamless and immersive movie experience.
-
+ 
 ## Demo:
+<p style="color: red;">Note - Detail page is not available for Upcoming section as Database is not updated as Movie released. User can check detail page of movies</p>
+
 ![Home-page](public/Movix-home.png)
 ![Detais-page](public/Movix-detail.png)
 
