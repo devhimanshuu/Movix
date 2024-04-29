@@ -47,7 +47,7 @@ const Footer = () => {
           </span>
         </div>
         <div className="endName">
-          <p>Made By Himanshu Gupta</p>
+          <p>Created By Himanshu Gupta</p>
         </div>
       </ContentWrapper>
     </footer>
