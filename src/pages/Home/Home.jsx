@@ -3,7 +3,7 @@ import "./style.scss";
 import Popular from "./Popular/Popular";
 import HeroBanner from "./heroBanner/HeroBanner";
 import TopRated from "./TopRated/TopRated";
-import Upcoming from "./Upcoming/Upcoming";
+import Upcoming from "./Trending/Trending";
 const Home = () => {
   return (
     <div className="homePage">

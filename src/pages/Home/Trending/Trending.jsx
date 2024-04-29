@@ -6,10 +6,10 @@ import { fetchDataFromApi } from "../../../utils/api";
 import SwitchTab from "../../../components/SwichTab/SwitchTab";
 import useFetch from "../../../hooks/useFetch";
 
-const Upcoming = () => {
+const Trending = () => {
   const [endPoint, setEndPoint] = useState("day");
 
-  const { data, loading } = useFetch(`/movie/upcoming`);
+  const { data, loading } = useFetch(`/trending/all/${endPoint}`);
 
   const onTabChange = (Tab) => {
     setEndPoint(tab === "Day" ? "day" : "week");
@@ -18,7 +18,7 @@ const Upcoming = () => {
   return (
     <div className="carouselSection">
       <ContentWrapper>
-        <span className="carouselTitle">Upcoming</span>
+        <span className="carouselTitle">Trending</span>
         <SwitchTab data={["Day", "Week"]} onTabChange={onTabChange} />
       </ContentWrapper>
       <Carousel data={data?.results} loading={loading} />
@@ -26,4 +26,4 @@ const Upcoming = () => {
   );
 };
 
-export default Upcoming;
+export default Trending;
