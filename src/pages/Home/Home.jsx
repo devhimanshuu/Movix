@@ -3,12 +3,14 @@ import "./style.scss";
 import Popular from "./Popular/Popular";
 import HeroBanner from "./heroBanner/HeroBanner";
 import TopRated from "./TopRated/TopRated";
-import Upcoming from "./Trending/Trending";
+import Trending from "./Trending/Trending";
+import InTheatre from "./InTheatre/InTheatre";
 const Home = () => {
   return (
     <div className="homePage">
       <HeroBanner />
-      <Upcoming />
+      <InTheatre />
+      <Trending />
       <Popular />
       <TopRated />
     </div>
