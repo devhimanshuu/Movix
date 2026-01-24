@@ -19,6 +19,7 @@ import Watchlist from "./pages/Watchlist/Watchlist";
 import WatchHistory from "./pages/WatchHistory/WatchHistory";
 import Comparison from "./pages/Comparison/Comparison";
 import PersonDetails from "./pages/PersonDetails/PersonDetails";
+import Moodify from "./pages/Moodify/Moodify";
 import { all } from "axios";
 
 function App() {
@@ -123,6 +124,7 @@ function App() {
         <Route path="/history" element={<WatchHistory />} />
         <Route path="/comparison" element={<Comparison />} />
         <Route path="/person/:id" element={<PersonDetails />} />
+        <Route path="/moodify" element={<Moodify />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

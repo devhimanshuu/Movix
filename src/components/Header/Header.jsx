@@ -92,6 +92,9 @@ const Header = () => {
           <li className="menuItem" onClick={() => navigate("/comparison")}>
             Comparison
           </li>
+          <li className="menuItem" onClick={() => navigate("/moodify")}>
+            Moods
+          </li>
           <li className="menuItem">
             <HiOutlineSearch onClick={openSearch} />
           </li>
