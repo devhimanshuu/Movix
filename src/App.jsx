@@ -4,6 +4,7 @@ import { fetchDataFromApi } from "./utils/api";
 import { useSelector, useDispatch } from "react-redux";
 import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { loadWatchlist } from "./store/watchlistSlice";
+import { loadHistory } from "./store/historySlice";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -13,12 +14,14 @@ import PageNotFound from "./pages/404/PageNotFound";
 import Details from "./pages/Details/Details";
 import Home from "./pages/Home/Home";
 import Watchlist from "./pages/Watchlist/Watchlist";
+import WatchHistory from "./pages/WatchHistory/WatchHistory";
 import { all } from "axios";
 
 function App() {
   const dispatch = useDispatch();
   const { url } = useSelector((state) => state.home);
   const watchlist = useSelector((state) => state.watchlist.items);
+  const history = useSelector((state) => state.history.items);
   console.log(url);
 
   useEffect(() => {
@@ -29,6 +32,11 @@ function App() {
     if (savedWatchlist) {
       dispatch(loadWatchlist(JSON.parse(savedWatchlist)));
     }
+    // Load history from localStorage
+    const savedHistory = localStorage.getItem("movix_history");
+    if (savedHistory) {
+      dispatch(loadHistory(JSON.parse(savedHistory)));
+    }
   }, []);
 
   // Save watchlist to localStorage whenever it changes
@@ -37,6 +45,13 @@ function App() {
       localStorage.setItem("movix_watchlist", JSON.stringify(watchlist));
     }
   }, [watchlist]);
+
+  // Save history to localStorage whenever it changes
+  useEffect(() => {
+    if (history.length > 0) {
+      localStorage.setItem("movix_history", JSON.stringify(history));
+    }
+  }, [history]);
   const fetchApiConfig = () => {
     fetchDataFromApi("/configuration").then((res) => {
       console.log(res);
@@ -77,6 +92,7 @@ function App() {
         <Route path="/search/:query" element={<SearchResult />} />
         <Route path="/explore/:mediaType" element={<Explore />} />
         <Route path="/watchlist" element={<Watchlist />} />
+        <Route path="/history" element={<WatchHistory />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

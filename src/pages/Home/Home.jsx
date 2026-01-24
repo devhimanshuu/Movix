@@ -5,10 +5,12 @@ import HeroBanner from "./heroBanner/HeroBanner";
 import TopRated from "./TopRated/TopRated";
 import Trending from "./Trending/Trending";
 import InTheatre from "./InTheatre/InTheatre";
+import ContinueWatching from "./ContinueWatching/ContinueWatching";
 const Home = () => {
   return (
     <div className="homePage">
       <HeroBanner />
+      <ContinueWatching />
       <InTheatre />
       <Trending />
       <Popular />

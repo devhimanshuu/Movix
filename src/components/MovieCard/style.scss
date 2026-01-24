@@ -22,6 +22,20 @@
     justify-content: space-between;
     padding: 10px;
     transition: all ease 0.5s;
+    overflow: hidden;
+    border-radius: 12px;
+
+    .posterImg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 12px;
+    }
+
     .lazy-load-image-background {
       position: absolute;
       top: 0;
@@ -44,6 +58,7 @@
       top: 30px;
       background-color: white;
       flex-shrink: 0;
+      z-index: 2;
       @include md {
         width: 50px;
         height: 50px;
@@ -52,6 +67,7 @@
     .genres {
       display: none;
       position: relative;
+      z-index: 2;
       @include md {
         display: flex;
         flex-flow: wrap;

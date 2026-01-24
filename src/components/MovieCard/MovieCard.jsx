@@ -16,26 +16,53 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
   const dispatch = useDispatch();
   const watchlist = useSelector((state) => state.watchlist.items);
   
-  const isInWatchlist = watchlist.some((item) => item.id === data.id);
+  // Safety check - return null if no data
+  if (!data?.id) {
+    return null;
+  }
+
+  // Ensure data has required fields with defaults
+  const safeData = {
+    id: data?.id,
+    title: data?.title || data?.name || "Unknown",
+    name: data?.name || data?.title || "Unknown",
+    poster_path: data?.poster_path,
+    media_type: data?.media_type || mediaType,
+    vote_average: data?.vote_average ?? 0,
+    release_date: data?.release_date || data?.first_air_date,
+    genre_ids: data?.genre_ids || data?.genres?.map((g) => g.id) || [],
+    ...data,
+  };
+
+  const isInWatchlist = watchlist.some((item) => item.id === safeData.id);
   
-  const posterUrl = data.poster_path
-    ? url.poster + data.poster_path
-    : PosterFallback;
+  // Use stored full posterUrl if available (from history), otherwise construct from base URL
+  let posterUrl;
+  if (safeData.posterUrl) {
+    // History items have full URL stored
+    posterUrl = safeData.posterUrl;
+  } else if (url?.poster && safeData.poster_path) {
+    // Regular items - construct URL from base
+    posterUrl = url.poster + safeData.poster_path;
+  } else {
+    // Fallback to placeholder
+    posterUrl = PosterFallback;
+  }
 
   // Handle both genre_ids (from list endpoints) and genres (from details endpoint)
-  const genreIds = data.genre_ids 
-    ? data.genre_ids.slice(0, 2)
-    : data.genres?.map((g) => g.id).slice(0, 2) || [];
+  const genreIds = safeData.genre_ids 
+    ? safeData.genre_ids.slice(0, 2)
+    : safeData.genres?.map((g) => g.id).slice(0, 2) || [];
 
   const handleWatchlistClick = (e) => {
     e.stopPropagation();
     if (isInWatchlist) {
-      dispatch(removeFromWatchlist(data.id));
+      dispatch(removeFromWatchlist(safeData.id));
     } else {
       dispatch(
         addToWatchlist({
-          ...data,
-          media_type: mediaType || data.media_type,
+          ...safeData,
+          media_type: safeData.media_type || mediaType,
         })
       );
     }
@@ -44,13 +71,13 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
   return (
     <div
       className="movieCard"
-      onClick={() => navigate(`/${data.media_type || mediaType}/${data.id}`)}
+      onClick={() => navigate(`/${safeData.media_type || mediaType}/${safeData.id}`)}
     >
       <div className="posterBlock">
         <Img className="posterImg" src={posterUrl} />
         {!fromSearch && (
           <React.Fragment>
-            <CircleRating rating={data.vote_average?.toFixed(1) || "0"} />
+            <CircleRating rating={safeData.vote_average?.toFixed(1) || "0"} />
             <Genres data={genreIds} />
           </React.Fragment>
         )}
@@ -63,9 +90,9 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
         </button>
       </div>
       <div className="textBlock">
-        <span className="title">{data.title || data.name}</span>
+        <span className="title">{safeData.title}</span>
         <span className="date">
-          {data.release_date ? dayjs(data.release_date).format("MMM D, YYYY") : "N/A"}
+          {safeData.release_date ? dayjs(safeData.release_date).format("MMM D, YYYY") : "N/A"}
         </span>
       </div>
     </div>
