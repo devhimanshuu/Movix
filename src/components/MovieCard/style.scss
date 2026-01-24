@@ -56,9 +56,13 @@
       height: 40px;
       position: relative;
       top: 30px;
-      background-color: white;
+      background-color: var(--black);
       flex-shrink: 0;
       z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
       @include md {
         width: 50px;
         height: 50px;

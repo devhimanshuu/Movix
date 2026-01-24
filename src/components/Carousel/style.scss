@@ -6,13 +6,13 @@
   }
   .carouselTitle {
     font-size: 24px;
-    color: white;
+    color: var(--text-primary);
     margin-bottom: 20px;
     font-weight: normal;
   }
   .arrow {
     font-size: 30px;
-    color: black;
+    color: var(--text-primary);
     position: absolute;
     top: 44%;
     transform: translateY(-50%);
@@ -130,7 +130,11 @@
           height: 40px;
           position: relative;
           top: 30px;
-          background-color: white;
+          background-color: var(--black);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border-radius: 50%;
           flex-shrink: 0;
           @include md {
             width: 50px;

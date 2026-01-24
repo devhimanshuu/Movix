@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { loadWatchlist } from "./store/watchlistSlice";
 import { loadHistory } from "./store/historySlice";
-import { setTheme } from "./store/themeSlice";
 import { loadFilters } from "./store/searchFiltersSlice";
 
 import Header from "./components/Header/Header";
@@ -24,7 +23,6 @@ function App() {
   const { url } = useSelector((state) => state.home);
   const watchlist = useSelector((state) => state.watchlist.items);
   const history = useSelector((state) => state.history.items);
-  const isDark = useSelector((state) => state.theme.isDark);
   const filters = useSelector((state) => state.searchFilters);
   console.log(url);
 
@@ -40,11 +38,6 @@ function App() {
     const savedHistory = localStorage.getItem("movix_history");
     if (savedHistory) {
       dispatch(loadHistory(JSON.parse(savedHistory)));
-    }
-    // Load theme preference from localStorage
-    const savedTheme = localStorage.getItem("movix_theme");
-    if (savedTheme !== null) {
-      dispatch(setTheme(JSON.parse(savedTheme)));
     }
     // Load search filters from localStorage
     const savedFilters = localStorage.getItem("movix_searchFilters");
@@ -66,19 +59,6 @@ function App() {
       localStorage.setItem("movix_history", JSON.stringify(history));
     }
   }, [history]);
-
-  // Apply theme class to document
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.remove("light-mode");
-      document.documentElement.classList.add("dark-mode");
-    } else {
-      document.documentElement.classList.remove("dark-mode");
-      document.documentElement.classList.add("light-mode");
-    }
-    // Save theme preference
-    localStorage.setItem("movix_theme", JSON.stringify(isDark));
-  }, [isDark]);
 
   // Save search filters to localStorage whenever they change
   useEffect(() => {

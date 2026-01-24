@@ -5,14 +5,27 @@ import "react-circular-progressbar/dist/styles.css";
 import "./style.scss";
 
 const CircleRating = ({ rating }) => {
+  const getPathColor = () => {
+    if (rating < 5) return "red";
+    if (rating < 7) return "orange";
+    return "green";
+  };
+
   return (
     <div className="circleRating">
       <CircularProgressbar
         value={rating}
         maxValue={10}
-        text={rating}
+        text={`${rating}`}
+        strokeWidth={4}
         styles={buildStyles({
-          pathColor: rating < 5 ? "red" : rating < 7 ? "orange" : "green",
+          rotation: 0.25,
+          strokeLinecap: "round",
+          pathColor: getPathColor(),
+          textColor: "#ffffff",
+          textSize: "38px",
+          fontWeight: "bold",
+          trailColor: "rgba(255, 255, 255, 0.15)",
         })}
       />
     </div>

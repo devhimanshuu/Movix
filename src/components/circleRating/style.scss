@@ -2,12 +2,29 @@
   background-color: var(--black);
   border-radius: 50%;
   padding: 2px;
-  .CircularProgressbar-text {
-    font-size: 34px;
-    font-weight: 700;
-    fill: var(--black);
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .CircularProgressbar {
+    width: 100%;
+    max-width: 50px;
+    height: auto;
   }
+
+  .CircularProgressbar-text {
+    font-size: 38px !important;
+    font-weight: 700 !important;
+    fill: white !important;
+    dominant-baseline: central;
+  }
+
+  .CircularProgressbar-path {
+    stroke-linecap: round;
+  }
+
   .CircularProgressbar-trail {
-    stroke: transparent;
+    stroke: rgba(255, 255, 255, 0.15);
   }
 }
