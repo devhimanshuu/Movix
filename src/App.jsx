@@ -6,6 +6,7 @@ import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { loadWatchlist } from "./store/watchlistSlice";
 import { loadHistory } from "./store/historySlice";
 import { setTheme } from "./store/themeSlice";
+import { loadFilters } from "./store/searchFiltersSlice";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -24,6 +25,7 @@ function App() {
   const watchlist = useSelector((state) => state.watchlist.items);
   const history = useSelector((state) => state.history.items);
   const isDark = useSelector((state) => state.theme.isDark);
+  const filters = useSelector((state) => state.searchFilters);
   console.log(url);
 
   useEffect(() => {
@@ -43,6 +45,11 @@ function App() {
     const savedTheme = localStorage.getItem("movix_theme");
     if (savedTheme !== null) {
       dispatch(setTheme(JSON.parse(savedTheme)));
+    }
+    // Load search filters from localStorage
+    const savedFilters = localStorage.getItem("movix_searchFilters");
+    if (savedFilters) {
+      dispatch(loadFilters(JSON.parse(savedFilters)));
     }
   }, []);
 
@@ -72,6 +79,11 @@ function App() {
     // Save theme preference
     localStorage.setItem("movix_theme", JSON.stringify(isDark));
   }, [isDark]);
+
+  // Save search filters to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem("movix_searchFilters", JSON.stringify(filters));
+  }, [filters]);
   const fetchApiConfig = () => {
     fetchDataFromApi("/configuration").then((res) => {
       console.log(res);
