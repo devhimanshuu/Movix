@@ -22,6 +22,7 @@ import PersonDetails from "./pages/PersonDetails/PersonDetails";
 import Moodify from "./pages/Moodify/Moodify";
 import CineStream from "./pages/CineStream/CineStream";
 import CineMatch from "./pages/CineMatch/CineMatch";
+import Trivia from "./pages/Trivia/Trivia";
 import { all } from "axios";
 
 function App() {
@@ -128,6 +129,7 @@ function App() {
         <Route path="/moodify" element={<Moodify />} />
         <Route path="/cinestream" element={<CineStream />} />
         <Route path="/cinematch" element={<CineMatch />} />
+        <Route path="/trivia" element={<Trivia />} />
         <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
