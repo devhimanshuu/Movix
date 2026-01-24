@@ -9,12 +9,14 @@ import CircleRating from "../circleRating/CircleRating";
 import Genres from "../genres/Genres";
 import PosterFallback from "../../assets/no-poster.png";
 import { addToWatchlist, removeFromWatchlist } from "../../store/watchlistSlice";
+import { addToComparison, removeFromComparison } from "../../store/comparisonSlice";
 
 const MovieCard = ({ data, fromSearch, mediaType }) => {
   const { url } = useSelector((state) => state.home);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const watchlist = useSelector((state) => state.watchlist.items);
+  const comparison = useSelector((state) => state.comparison.items);
   
   // Safety check - return null if no data
   if (!data?.id) {
@@ -68,6 +70,22 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
     }
   };
 
+  const isInComparison = comparison.some((item) => item.id === safeData.id);
+
+  const handleCompareClick = (e) => {
+    e.stopPropagation();
+    if (isInComparison) {
+      dispatch(removeFromComparison(safeData.id));
+    } else {
+      dispatch(
+        addToComparison({
+          ...safeData,
+          media_type: safeData.media_type || mediaType,
+        })
+      );
+    }
+  };
+
   return (
     <div
       className="movieCard"
@@ -87,6 +105,13 @@ const MovieCard = ({ data, fromSearch, mediaType }) => {
           title={isInWatchlist ? "Remove from watchlist" : "Add to watchlist"}
         >
           {isInWatchlist ? "♥" : "♡"}
+        </button>
+        <button
+          className={`compareIcon ${isInComparison ? "active" : ""}`}
+          onClick={handleCompareClick}
+          title={isInComparison ? "Remove from comparison" : "Add to comparison"}
+        >
+          ⚖
         </button>
       </div>
       <div className="textBlock">

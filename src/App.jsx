@@ -6,6 +6,7 @@ import { getApiConfiguration, getGenres } from "./store/homeSlice";
 import { loadWatchlist } from "./store/watchlistSlice";
 import { loadHistory } from "./store/historySlice";
 import { loadFilters } from "./store/searchFiltersSlice";
+import { loadComparison } from "./store/comparisonSlice";
 
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -16,6 +17,8 @@ import Details from "./pages/Details/Details";
 import Home from "./pages/Home/Home";
 import Watchlist from "./pages/Watchlist/Watchlist";
 import WatchHistory from "./pages/WatchHistory/WatchHistory";
+import Comparison from "./pages/Comparison/Comparison";
+import PersonDetails from "./pages/PersonDetails/PersonDetails";
 import { all } from "axios";
 
 function App() {
@@ -24,6 +27,7 @@ function App() {
   const watchlist = useSelector((state) => state.watchlist.items);
   const history = useSelector((state) => state.history.items);
   const filters = useSelector((state) => state.searchFilters);
+  const comparison = useSelector((state) => state.comparison.items);
   console.log(url);
 
   useEffect(() => {
@@ -43,6 +47,11 @@ function App() {
     const savedFilters = localStorage.getItem("movix_searchFilters");
     if (savedFilters) {
       dispatch(loadFilters(JSON.parse(savedFilters)));
+    }
+    // Load comparison from localStorage
+    const savedComparison = localStorage.getItem("movix_comparison");
+    if (savedComparison) {
+      dispatch(loadComparison(JSON.parse(savedComparison)));
     }
   }, []);
 
@@ -64,6 +73,13 @@ function App() {
   useEffect(() => {
     localStorage.setItem("movix_searchFilters", JSON.stringify(filters));
   }, [filters]);
+
+  // Save comparison to localStorage whenever it changes
+  useEffect(() => {
+    if (comparison.length > 0) {
+      localStorage.setItem("movix_comparison", JSON.stringify(comparison));
+    }
+  }, [comparison]);
   const fetchApiConfig = () => {
     fetchDataFromApi("/configuration").then((res) => {
       console.log(res);
@@ -105,6 +121,8 @@ function App() {
         <Route path="/explore/:mediaType" element={<Explore />} />
         <Route path="/watchlist" element={<Watchlist />} />
         <Route path="/history" element={<WatchHistory />} />
+        <Route path="/comparison" element={<Comparison />} />
+        <Route path="/person/:id" element={<PersonDetails />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

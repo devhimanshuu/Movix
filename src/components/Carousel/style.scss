@@ -144,10 +144,82 @@
         .genres {
           display: none;
           position: relative;
+          z-index: 2;
           @include md {
             display: flex;
             flex-flow: wrap;
             justify-content: flex-end;
+          }
+        }
+        .watchlistIcon {
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          width: 30px;
+          height: 30px;
+          background: rgba(0, 0, 0, 0.7);
+          border: none;
+          border-radius: 50%;
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all 0.3s ease;
+          z-index: 10;
+          @include md {
+             width: 40px;
+             height: 40px;
+             font-size: 20px;
+          }
+
+          &:hover {
+            background: rgba(229, 9, 20, 0.9);
+            transform: scale(1.1);
+          }
+
+          &.active {
+            background: var(--pink);
+            opacity: 1;
+            color: white;
+          }
+        }
+        .compareIcon {
+          position: absolute;
+          top: 45px;
+          right: 10px;
+          width: 30px;
+          height: 30px;
+          background: rgba(0, 0, 0, 0.7);
+          border: none;
+          border-radius: 50%;
+          color: white;
+          font-size: 14px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          opacity: 0;
+          transition: all 0.3s ease;
+          z-index: 9;
+           @include md {
+             width: 40px;
+             height: 40px;
+             font-size: 18px;
+             top: 55px;
+          }
+
+          &:hover {
+            background: rgba(248, 158, 0, 0.9);
+            transform: scale(1.1);
+          }
+
+          &.active {
+            background: var(--orange);
+            opacity: 1;
+            color: white;
           }
         }
       }
@@ -167,6 +239,14 @@
         .date {
           font-size: 14px;
           opacity: 0.5;
+        }
+      }
+      &:hover {
+        .posterBlock {
+          .watchlistIcon,
+          .compareIcon {
+            opacity: 1;
+          }
         }
       }
     }

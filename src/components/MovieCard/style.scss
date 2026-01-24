@@ -22,7 +22,7 @@
     justify-content: space-between;
     padding: 10px;
     transition: all ease 0.5s;
-    overflow: hidden;
+    overflow: visible;
     border-radius: 12px;
 
     .posterImg {
@@ -108,6 +108,36 @@
         color: white;
       }
     }
+    .compareIcon {
+      position: absolute;
+      top: 55px;
+      right: 10px;
+      width: 40px;
+      height: 40px;
+      background: rgba(0, 0, 0, 0.7);
+      border: none;
+      border-radius: 50%;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: all 0.3s ease;
+      z-index: 9;
+
+      &:hover {
+        background: rgba(248, 158, 0, 0.9);
+        transform: scale(1.1);
+      }
+
+      &.active {
+        background: var(--orange);
+        opacity: 1;
+        color: white;
+      }
+    }
   }
   .textBlock {
     color: white;
@@ -131,6 +161,9 @@
     .posterBlock {
       opacity: 0.5;
       .watchlistIcon {
+        opacity: 1;
+      }
+      .compareIcon {
         opacity: 1;
       }
     }
