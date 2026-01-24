@@ -8,6 +8,7 @@ import Cast from "./Cast/Cast";
 import VideosSection from "./VideoSection/VideoSection";
 import Similar from "./carousels/Similar";
 import Recommendation from "./carousels/Recommendations";
+import Reviews from "./Reviews/Reviews";
 import { addToHistory } from "../../store/historySlice";
 
 const Details = () => {
@@ -16,9 +17,12 @@ const Details = () => {
   const { url } = useSelector((state) => state.home);
   const { data, loading } = useFetch(`/${mediaType}/${id}/videos`);
   const { data: credits, loading: creditsLoading } = useFetch(
-    `/${mediaType}/${id}/credits`
+    `/${mediaType}/${id}/credits`,
   );
   const detailsData = useFetch(`/${mediaType}/${id}`).data;
+  const { data: reviews, loading: reviewsLoading } = useFetch(
+    `/${mediaType}/${id}/reviews`,
+  );
 
   // Track view in history when details page loads
   useEffect(() => {
@@ -42,7 +46,7 @@ const Details = () => {
           genre_ids: detailsData.genres?.map((g) => g.id) || [],
           genres: detailsData.genres || [],
           backdrop_path: detailsData.backdrop_path,
-        })
+        }),
       );
     }
   }, [detailsData?.id, mediaType, dispatch, url]);
@@ -52,6 +56,7 @@ const Details = () => {
       <DetailsBanner video={data?.results[0]} crew={credits?.crew} />
       <Cast data={credits?.cast} loading={creditsLoading} />
       <VideosSection data={data} loading={loading} />
+      <Reviews data={reviews} loading={reviewsLoading} />
       <Similar mediaType={mediaType} id={id} />
       <Recommendation mediaType={mediaType} id={id} />
     </div>
