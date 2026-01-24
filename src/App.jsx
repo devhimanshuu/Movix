@@ -20,6 +20,7 @@ import WatchHistory from "./pages/WatchHistory/WatchHistory";
 import Comparison from "./pages/Comparison/Comparison";
 import PersonDetails from "./pages/PersonDetails/PersonDetails";
 import Moodify from "./pages/Moodify/Moodify";
+import CineStream from "./pages/CineStream/CineStream";
 import { all } from "axios";
 
 function App() {
@@ -117,7 +118,6 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="/search/:query" element={<SearchResult />} />
         <Route path="/explore/:mediaType" element={<Explore />} />
         <Route path="/watchlist" element={<Watchlist />} />
@@ -125,6 +125,8 @@ function App() {
         <Route path="/comparison" element={<Comparison />} />
         <Route path="/person/:id" element={<PersonDetails />} />
         <Route path="/moodify" element={<Moodify />} />
+        <Route path="/cinestream" element={<CineStream />} />
+        <Route path="/:mediaType/:id" element={<Details />} />
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />

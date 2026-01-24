@@ -92,6 +92,9 @@ const Header = () => {
           <li className="menuItem" onClick={() => navigate("/comparison")}>
             Comparison
           </li>
+          <li className="menuItem" onClick={() => navigate("/cinestream")}>
+            Feed
+          </li>
           <li className="menuItem" onClick={() => navigate("/moodify")}>
             Moods
           </li>
