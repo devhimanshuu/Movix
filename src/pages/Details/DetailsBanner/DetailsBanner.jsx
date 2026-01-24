@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import dayjs from "dayjs";
 import "./style.scss";
 import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
@@ -11,8 +11,10 @@ import Img from "../../../components/lazyLoadImage/img.jsx";
 import PosterFallback from "../../../assets/no-poster.png";
 import PlayIcon from "../Playbtn.jsx";
 import VideoPopup from "../../../components/videoPopUp/VideoPopUp.jsx";
+import { addToWatchlist, removeFromWatchlist } from "../../../store/watchlistSlice";
 
 const DetailsBanner = ({ video, crew }) => {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const [videoId, setVideoId] = useState(null);
 
@@ -20,6 +22,9 @@ const DetailsBanner = ({ video, crew }) => {
   const { data, loading } = useFetch(`/${mediaType}/${id}`);
 
   const { url } = useSelector((state) => state.home);
+  const watchlist = useSelector((state) => state.watchlist.items);
+  
+  const isInWatchlist = watchlist.some((item) => item.id === data?.id);
 
   const _genres = data?.genres?.map((g) => g.id);
 
@@ -32,6 +37,19 @@ const DetailsBanner = ({ video, crew }) => {
     const hours = Math.floor(totalMinutes / 60);
     const minutes = totalMinutes % 60;
     return `${hours}h${minutes > 0 ? ` ${minutes}m` : ""}`;
+  };
+
+  const handleWatchlistToggle = () => {
+    if (isInWatchlist) {
+      dispatch(removeFromWatchlist(data.id));
+    } else {
+      dispatch(
+        addToWatchlist({
+          ...data,
+          media_type: mediaType,
+        })
+      );
+    }
   };
 
   return (
@@ -78,6 +96,24 @@ const DetailsBanner = ({ video, crew }) => {
                         <PlayIcon />
                         <span className="text">Watch Trailer</span>
                       </div>
+                      <button
+                        className={`watchlistBtn ${
+                          isInWatchlist ? "active" : ""
+                        }`}
+                        onClick={handleWatchlistToggle}
+                        title={
+                          isInWatchlist
+                            ? "Remove from watchlist"
+                            : "Add to watchlist"
+                        }
+                      >
+                        <span className="icon">
+                          {isInWatchlist ? "♥" : "♡"}
+                        </span>
+                        <span className="text">
+                          {isInWatchlist ? "Watchlist" : "Add to List"}
+                        </span>
+                      </button>
                     </div>
 
                     <div className="overview">

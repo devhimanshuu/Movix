@@ -149,6 +149,47 @@
           }
         }
       }
+      .watchlistBtn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        cursor: pointer;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        background: transparent;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 50px;
+        font-size: 18px;
+        transition: all 0.3s ease;
+
+        .icon {
+          font-size: 24px;
+          transition: all 0.3s ease;
+        }
+
+        .text {
+          font-size: 18px;
+          @include md {
+            font-size: 20px;
+          }
+        }
+
+        &:hover {
+          background: rgba(229, 9, 20, 0.1);
+          border-color: var(--pink);
+          color: var(--pink);
+
+          .icon {
+            transform: scale(1.2);
+          }
+        }
+
+        &.active {
+          background: var(--pink);
+          border-color: var(--pink);
+          color: white;
+        }
+      }
       .row {
         display: flex;
         align-items: center;
