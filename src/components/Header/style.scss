@@ -51,6 +51,14 @@
       &.searchIcon {
         margin-right: 0;
       }
+      &.themeToggle {
+        font-size: 20px;
+        transition: transform 0.3s ease;
+        &:hover {
+          transform: scale(1.2) rotate(20deg);
+          color: white;
+        }
+      }
       svg {
         font-size: 18px;
       }

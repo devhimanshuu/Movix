@@ -3,6 +3,8 @@ import { HiOutlineSearch } from "react-icons/hi";
 import { SlMenu } from "react-icons/sl";
 import { VscChromeClose } from "react-icons/vsc";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../../store/themeSlice";
 
 import "./style.scss";
 
@@ -10,6 +12,8 @@ import ContentWrapper from "../contentWrapper/ContentWrapper";
 import logo from "../../assets/movix-logo.svg";
 
 const Header = () => {
+  const dispatch = useDispatch();
+  const isDark = useSelector((state) => state.theme.isDark);
   const [show, setShow] = useState("top");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [mobileMenu, setMobileMenu] = useState(false);
@@ -88,6 +92,9 @@ const Header = () => {
           </li>
           <li className="menuItem" onClick={() => navigate("/history")}>
             History
+          </li>
+          <li className="menuItem themeToggle" onClick={() => dispatch(toggleTheme())} title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+            {isDark ? "☀️" : "🌙"}
           </li>
           <li className="menuItem">
             <HiOutlineSearch onClick={openSearch} />

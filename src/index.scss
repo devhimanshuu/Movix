@@ -10,11 +10,32 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  /* Dark mode (default) */
   --black: #04152d;
   --black2: #041226;
   --black3: #020c1b;
   --black-lighter: #1c4b91;
   --black-light: #173d77;
+  --text-primary: #ffffff;
+  --text-secondary: #b0b0b0;
+  --bg-primary: #04152d;
+  --bg-secondary: #041226;
+  --pink: #da2f68;
+  --orange: #f89e00;
+  --gradient: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
+}
+
+/* Light mode */
+:root.light-mode {
+  --black: #ffffff;
+  --black2: #f5f5f5;
+  --black3: #eeeeee;
+  --black-lighter: #e0e0e0;
+  --black-light: #d0d0d0;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f5f5;
   --pink: #da2f68;
   --orange: #f89e00;
   --gradient: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
@@ -28,6 +49,8 @@
 
 body {
   background-color: var(--black);
+  color: var(--text-primary);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::-webkit-scrollbar {
