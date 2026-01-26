@@ -21,29 +21,34 @@ const CineMatch = () => {
   // State
   const [movies, setMovies] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [pageNum, setPageNum] = useState(1);
+  const [pageNum, setPageNum] = useState(Math.floor(Math.random() * 100) + 1);
   const [direction, setDirection] = useState(null); // 'left' or 'right'
+  const [isSwiping, setIsSwiping] = useState(false);
 
-  // Fetch popular movies for discovery
+  // Fetch movies for discovery
   useEffect(() => {
     fetchDataFromApi(
       `/discover/movie?sort_by=popularity.desc&page=${pageNum}`,
     ).then((res) => {
       if (res?.results) {
         // Filter out movies already in watchlist
-        const newMovies = res.results.filter(
+        let newMovies = res.results.filter(
           (movie) => !watchlist.some((item) => item.id === movie.id),
         );
+
+        // Shuffle the results for randomness
+        newMovies = [...newMovies].sort(() => Math.random() - 0.5);
 
         setMovies((prev) => [...prev, ...newMovies]);
       }
     });
-  }, [pageNum, watchlist]);
+  }, [pageNum]); // Removed watchlist from dependency to prevent infinite loops, only fetch more when page changes
 
   const handleSwipe = (dir) => {
-    if (currentIndex >= movies.length) return;
+    if (currentIndex >= movies.length || isSwiping) return;
 
     const currentMovie = movies[currentIndex];
+    setIsSwiping(true);
     setDirection(dir);
 
     // Visual delay for animation
@@ -55,12 +60,13 @@ const CineMatch = () => {
       // Move to next card
       setCurrentIndex((prev) => prev + 1);
       setDirection(null);
+      setIsSwiping(false);
 
       // Fetch more if running low
       if (movies.length - currentIndex < 5) {
         setPageNum((prev) => prev + 1);
       }
-    }, 300);
+    }, 400); // Slightly longer for better visual feedback
   };
 
   const currentMovie = movies[currentIndex];
