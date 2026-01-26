@@ -6,10 +6,12 @@ import TopRated from "./TopRated/TopRated";
 import Trending from "./Trending/Trending";
 import InTheatre from "./InTheatre/InTheatre";
 import ContinueWatching from "./ContinueWatching/ContinueWatching";
+import ContinueWatchingReminder from "../../components/ContinueWatchingReminder/ContinueWatchingReminder";
 const Home = () => {
   return (
     <div className="homePage">
       <HeroBanner />
+      <ContinueWatchingReminder />
       <ContinueWatching />
       <InTheatre />
       <Trending />

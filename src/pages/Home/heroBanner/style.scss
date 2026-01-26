@@ -8,6 +8,9 @@
   align-items: center;
   justify-content: center;
   position: relative;
+  &.clickable {
+    cursor: pointer;
+  }
   @include md {
     height: 700px;
   }
@@ -121,23 +124,50 @@
         }
       }
 
-      .watchBtn {
-        padding: 12px 30px;
-        background: var(--gradient);
-        color: white;
-        border: none;
-        border-radius: 30px;
-        font-size: 18px;
-        font-weight: 700;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(218, 47, 104, 0.4);
-
-        &:hover {
-          transform: scale(1.05);
-          box-shadow: 0 6px 20px rgba(218, 47, 104, 0.6);
+        .bannerButtons {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
         }
-      }
+
+        .watchBtn {
+            padding: 12px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(218, 47, 104, 0.4);
+
+            &:hover {
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(218, 47, 104, 0.6);
+            }
+        }
+
+        .surpriseBtn {
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 2px solid white;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            animation: pulse-glow 2s infinite;
+
+            &:hover {
+                background: white;
+                color: black;
+                transform: scale(1.05);
+                box-shadow: 0 0 20px white;
+            }
+        }
     }
 
     .searchInput {
@@ -230,4 +260,10 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+@keyframes pulse-glow {
+    0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
+    50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.7); }
+    100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.4); }
 }

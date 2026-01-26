@@ -31,7 +31,10 @@ const HeroBanner = () => {
   };
 
   return (
-    <div className="heroBanner">
+    <div
+      className="heroBanner clickable"
+      onClick={() => featured && navigate(`/movie/${featured.id}`)}
+    >
       {!loading && (
         <div className="backdrop-img">
           <Img src={background} />
@@ -40,7 +43,7 @@ const HeroBanner = () => {
 
       <div className="opacity-layer"></div>
       <ContentWrapper>
-        <div className="heroBannerContent">
+        <div className="heroBannerContent" onClick={(e) => e.stopPropagation()}>
           {featured && (
             <div className="featuredContent">
               <span className="featuredLabel">Featured Today</span>
@@ -61,6 +64,12 @@ const HeroBanner = () => {
                   onClick={() => navigate(`/movie/${featured.id}`)}
                 >
                   Watch Now
+                </button>
+                <button
+                  className="surpriseBtn"
+                  onClick={() => navigate("/mystery-box")}
+                >
+                  ✨ Surprise Me
                 </button>
               </div>
             </div>
