@@ -8,18 +8,21 @@ import ContentWrapper from "../../../components/contentWrapper/ContentWrapper";
 
 const HeroBanner = () => {
   const [background, setBackground] = useState("");
+  const [featured, setFeatured] = useState(null);
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
   const { url } = useSelector((state) => state.home);
 
-  const { data, loading } = useFetch("/movie/upcoming");
+  const { data, loading } = useFetch("/trending/movie/day");
 
   useEffect(() => {
-    const bg =
-      url.backdrop +
-      data?.results?.[Math.floor(Math.random() * 20)]?.backdrop_path;
-    setBackground(bg);
-  }, [data]);
+    if (data?.results?.length > 0) {
+      const featuredMovie = data.results[0];
+      setFeatured(featuredMovie);
+      const bg = url.backdrop + featuredMovie.backdrop_path;
+      setBackground(bg);
+    }
+  }, [data, url.backdrop]);
 
   const searchQueryHandler = (event) => {
     if (event.key === "Enter" && query.length > 0) {
@@ -38,18 +41,43 @@ const HeroBanner = () => {
       <div className="opacity-layer"></div>
       <ContentWrapper>
         <div className="heroBannerContent">
-          <span className="title">Welcome.</span>
-          <span className="subTitle">
-            Millions of Movies ,TV shows and people to discover. Explore now.
-          </span>
+          {featured && (
+            <div className="featuredContent">
+              <span className="featuredLabel">Featured Today</span>
+              <h1 className="title">{featured.title}</h1>
+              <div className="rating">
+                <span className="score">
+                  ⭐ {featured.vote_average.toFixed(1)}
+                </span>
+                <span className="dot">•</span>
+                <span className="date">
+                  {featured.release_date?.split("-")[0]}
+                </span>
+              </div>
+              <p className="description">{featured.overview}</p>
+              <div className="bannerButtons">
+                <button
+                  className="watchBtn"
+                  onClick={() => navigate(`/movie/${featured.id}`)}
+                >
+                  Watch Now
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="searchInput ">
             <input
               type="text"
               placeholder="Search for Movies or Tv shows..."
               onKeyUp={searchQueryHandler}
-              onChange={(e) => setQuery(e.target.value)} // use to save  state in query
+              onChange={(e) => setQuery(e.target.value)}
             />
-            <button> Search</button>
+            <button
+              onClick={() => query.length > 0 && navigate(`/search/${query}`)}
+            >
+              Search
+            </button>
           </div>
         </div>
       </ContentWrapper>
