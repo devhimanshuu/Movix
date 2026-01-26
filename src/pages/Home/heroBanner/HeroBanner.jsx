@@ -79,6 +79,28 @@ const HeroBanner = () => {
               Search
             </button>
           </div>
+
+          <div className="genrePills">
+            {[
+              { id: 28, name: "Action" },
+              { id: 35, name: "Comedy" },
+              { id: 27, name: "Horror" },
+              { id: 878, name: "Sci-Fi" },
+              { id: 16, name: "Animation" },
+              { id: 18, name: "Drama" },
+              { id: 9648, name: "Mystery" },
+            ].map((g) => (
+              <span
+                key={g.id}
+                className="pill"
+                onClick={() =>
+                  navigate("/explore/movie", { state: { genreId: g.id } })
+                }
+              >
+                {g.name}
+              </span>
+            ))}
+          </div>
         </div>
       </ContentWrapper>
     </div>

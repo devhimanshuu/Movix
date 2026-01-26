@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Select from "react-select";
 
@@ -33,6 +33,7 @@ const Explore = () => {
   const [genre, setGenre] = useState(null);
   const [sortby, setSortby] = useState(null);
   const { mediaType } = useParams();
+  const location = useLocation();
 
   const { data: genresData } = useFetch(`/genre/${mediaType}/list`);
 
@@ -57,7 +58,7 @@ const Explore = () => {
           setData(res);
         }
         setPageNum((prev) => prev + 1);
-      }
+      },
     );
   };
 
@@ -66,9 +67,24 @@ const Explore = () => {
     setData(null);
     setPageNum(1);
     setSortby(null);
-    setGenre(null);
+
+    // Check if genre was passed through navigation state
+    if (location.state?.genreId && genresData?.genres) {
+      const initialGenre = genresData.genres.find(
+        (g) => g.id === location.state.genreId,
+      );
+      if (initialGenre) {
+        setGenre([initialGenre]);
+        filters.with_genres = initialGenre.id.toString();
+      } else {
+        setGenre(null); // If genreId is present but not found in genresData
+      }
+    } else {
+      setGenre(null);
+    }
+
     fetchInitialData();
-  }, [mediaType]);
+  }, [mediaType, location.state, genresData]);
 
   const onChange = (selectedItems, action) => {
     if (action.name === "sortby") {
