@@ -98,6 +98,9 @@ const Header = () => {
           <li className="menuItem" onClick={() => navigate("/trivia")}>
             Trivia
           </li>
+          <li className="menuItem" onClick={() => navigate("/mystery-box")}>
+            Surprise
+          </li>
           <li className="menuItem" onClick={() => navigate("/cinestream")}>
             Feed
           </li>
