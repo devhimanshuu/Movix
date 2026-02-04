@@ -1,0 +1,285 @@
+@import "../../mixins.scss";
+
+.sixDegreesPage {
+	min-height: 100vh;
+	padding: 100px 0 50px;
+	background: linear-gradient(180deg, #04152d 0%, #0a1929 50%, #04152d 100%);
+
+	.pageHeader {
+		text-align: center;
+		margin-bottom: 40px;
+
+		h1 {
+			font-size: 48px;
+			font-weight: 700;
+			margin-bottom: 10px;
+			background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+
+			@include md {
+				font-size: 36px;
+			}
+		}
+
+		p {
+			font-size: 18px;
+			color: rgba(255, 255, 255, 0.7);
+
+			@include md {
+				font-size: 16px;
+			}
+		}
+	}
+
+	.searchSection {
+		background: rgba(255, 255, 255, 0.05);
+		border-radius: 20px;
+		padding: 40px;
+		margin-bottom: 40px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+
+		@include md {
+			padding: 20px;
+		}
+
+		.searchRow {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 30px;
+			margin-bottom: 30px;
+
+			@include md {
+				grid-template-columns: 1fr;
+				gap: 20px;
+			}
+
+			.searchBox {
+				position: relative;
+
+				label {
+					display: block;
+					color: white;
+					font-size: 16px;
+					font-weight: 600;
+					margin-bottom: 10px;
+				}
+
+				input {
+					width: 100%;
+					padding: 14px 18px;
+					background: rgba(255, 255, 255, 0.1);
+					border: 2px solid rgba(255, 255, 255, 0.2);
+					border-radius: 12px;
+					color: white;
+					font-size: 16px;
+					transition: all 0.3s ease;
+
+					&:focus {
+						outline: none;
+						border-color: #f093fb;
+						background: rgba(255, 255, 255, 0.15);
+					}
+
+					&::placeholder {
+						color: rgba(255, 255, 255, 0.4);
+					}
+				}
+
+				.searchResults {
+					position: absolute;
+					top: 100%;
+					left: 0;
+					right: 0;
+					margin-top: 8px;
+					background: rgba(20, 30, 50, 0.98);
+					border-radius: 12px;
+					overflow: hidden;
+					z-index: 100;
+					box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+					border: 1px solid rgba(255, 255, 255, 0.1);
+
+					.resultItem {
+						padding: 12px 16px;
+						cursor: pointer;
+						transition: all 0.2s ease;
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+
+						&:hover {
+							background: rgba(255, 255, 255, 0.1);
+						}
+
+						&:not(:last-child) {
+							border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+						}
+
+						span {
+							color: white;
+							font-size: 14px;
+						}
+
+						.dept {
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 12px;
+						}
+					}
+				}
+			}
+		}
+
+		.actionButtons {
+			display: flex;
+			gap: 15px;
+			justify-content: center;
+			flex-wrap: wrap;
+
+			.btn {
+				padding: 14px 28px;
+				border-radius: 25px;
+				font-size: 16px;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				border: none;
+
+				&.primary {
+					background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+					color: white;
+
+					&:hover:not(:disabled) {
+						transform: translateY(-2px);
+						box-shadow: 0 10px 25px rgba(245, 87, 108, 0.4);
+					}
+
+					&:disabled {
+						opacity: 0.5;
+						cursor: not-allowed;
+					}
+				}
+
+				&.secondary {
+					background: rgba(255, 255, 255, 0.1);
+					color: white;
+					border: 1px solid rgba(255, 255, 255, 0.2);
+
+					&:hover {
+						background: rgba(255, 255, 255, 0.2);
+						transform: translateY(-2px);
+					}
+				}
+
+				@include md {
+					padding: 12px 20px;
+					font-size: 14px;
+				}
+			}
+		}
+
+		.errorMessage {
+			margin-top: 20px;
+			padding: 16px;
+			background: rgba(255, 59, 48, 0.2);
+			border: 1px solid rgba(255, 59, 48, 0.5);
+			border-radius: 12px;
+			color: #ff6b6b;
+			text-align: center;
+			font-weight: 500;
+		}
+	}
+
+	.loadingSection {
+		text-align: center;
+		padding: 60px 20px;
+
+		p {
+			margin-top: 20px;
+			color: rgba(255, 255, 255, 0.7);
+			font-size: 18px;
+			animation: pulse 2s ease-in-out infinite;
+		}
+	}
+
+	.resultSection {
+		.resultHeader {
+			text-align: center;
+			margin-bottom: 30px;
+
+			h2 {
+				font-size: 32px;
+				color: white;
+				margin-bottom: 15px;
+
+				@include md {
+					font-size: 24px;
+				}
+			}
+
+			.legend {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				gap: 20px;
+				flex-wrap: wrap;
+				color: rgba(255, 255, 255, 0.7);
+				font-size: 14px;
+
+				.actorDot,
+				.movieDot {
+					display: inline-block;
+					width: 12px;
+					height: 12px;
+					border-radius: 50%;
+					margin-right: 5px;
+				}
+
+				.actorDot {
+					background: #ff6b6b;
+				}
+
+				.movieDot {
+					background: #4ecdc4;
+				}
+
+				.hint {
+					color: rgba(255, 255, 255, 0.5);
+					font-style: italic;
+					margin-left: 10px;
+				}
+			}
+		}
+
+		.graphContainer {
+			background: rgba(0, 0, 0, 0.3);
+			border-radius: 20px;
+			overflow: hidden;
+			box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			display: flex;
+			justify-content: center;
+
+			canvas {
+				cursor: grab;
+
+				&:active {
+					cursor: grabbing;
+				}
+			}
+		}
+	}
+}
+
+@keyframes pulse {
+	0%,
+	100% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0.5;
+	}
+}

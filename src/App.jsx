@@ -25,6 +25,7 @@ import CineMatch from "./pages/CineMatch/CineMatch";
 import Trivia from "./pages/Trivia/Trivia";
 import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
+import SixDegrees from "./pages/SixDegrees/SixDegrees";
 import { all } from "axios";
 
 function App() {
@@ -134,6 +135,7 @@ function App() {
 				<Route path="/trivia" element={<Trivia />} />
 				<Route path="/mystery-box" element={<MysteryBox />} />
 				<Route path="/globetrotter" element={<GlobeTrotter />} />
+				<Route path="/six-degrees" element={<SixDegrees />} />
 				<Route path="/:mediaType/:id" element={<Details />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>

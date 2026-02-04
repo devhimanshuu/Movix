@@ -110,6 +110,9 @@ const Header = () => {
 					<li className="menuItem" onClick={() => navigate("/globetrotter")}>
 						Globe
 					</li>
+					<li className="menuItem" onClick={() => navigate("/six-degrees")}>
+						6°
+					</li>
 					<li className="menuItem">
 						<HiOutlineSearch onClick={openSearch} />
 					</li>
