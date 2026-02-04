@@ -10,6 +10,12 @@
   @include lg {
     width: calc(20% - 16px);
   }
+  @include xl {
+    width: calc(16.66% - 17px);
+  }
+  @include xxl {
+    width: calc(14.28% - 17px);
+  }
   .posterBlock {
     position: relative;
     width: 100%;

@@ -1,6 +1,16 @@
+@import "../../mixins.scss";
+
 .contentWrapper {
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
+
+  @include xl {
+    max-width: 1360px;
+  }
+
+  @include xxl {
+    max-width: 1600px;
+  }
 }
