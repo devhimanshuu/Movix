@@ -1,0 +1,319 @@
+@import "../../mixins.scss";
+
+.globeTrotterPage {
+	min-height: 100vh;
+	padding: 100px 0 50px;
+	background: linear-gradient(180deg, #04152d 0%, #0a1929 50%, #04152d 100%);
+	position: relative;
+	overflow: hidden;
+
+	&::before {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(74, 144, 226, 0.1) 0%,
+			transparent 70%
+		);
+		pointer-events: none;
+	}
+
+	.pageHeader {
+		text-align: center;
+		margin-bottom: 40px;
+		position: relative;
+		z-index: 1;
+
+		h1 {
+			font-size: 48px;
+			font-weight: 700;
+			margin-bottom: 10px;
+			background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			background-clip: text;
+			animation: glow 2s ease-in-out infinite alternate;
+
+			@include md {
+				font-size: 36px;
+			}
+		}
+
+		p {
+			font-size: 18px;
+			color: rgba(255, 255, 255, 0.7);
+			margin-bottom: 20px;
+
+			@include md {
+				font-size: 16px;
+			}
+		}
+
+		.instructions {
+			display: flex;
+			gap: 20px;
+			justify-content: center;
+			flex-wrap: wrap;
+
+			span {
+				background: rgba(255, 255, 255, 0.05);
+				padding: 8px 16px;
+				border-radius: 20px;
+				font-size: 14px;
+				color: rgba(255, 255, 255, 0.8);
+				border: 1px solid rgba(255, 255, 255, 0.1);
+				transition: all 0.3s ease;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.1);
+					border-color: rgba(255, 255, 255, 0.3);
+					transform: translateY(-2px);
+				}
+			}
+		}
+	}
+
+	.globeContainer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 40px 0;
+		position: relative;
+		z-index: 1;
+		border-radius: 20px;
+		overflow: hidden;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+
+		canvas {
+			border-radius: 20px;
+			cursor: grab;
+
+			&:active {
+				cursor: grabbing;
+			}
+		}
+	}
+
+	.locationModal {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.85);
+		backdrop-filter: blur(10px);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		z-index: 1000;
+		animation: fadeIn 0.3s ease;
+
+		.modalContent {
+			background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+			padding: 40px;
+			border-radius: 20px;
+			max-width: 600px;
+			width: 90%;
+			max-height: 80vh;
+			overflow-y: auto;
+			position: relative;
+			box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+			border: 2px solid rgba(255, 255, 255, 0.1);
+			animation: slideUp 0.4s ease;
+
+			@include md {
+				padding: 30px 20px;
+			}
+
+			.closeBtn {
+				position: absolute;
+				top: 15px;
+				right: 15px;
+				background: rgba(255, 255, 255, 0.1);
+				border: none;
+				color: white;
+				font-size: 24px;
+				width: 40px;
+				height: 40px;
+				border-radius: 50%;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				&:hover {
+					background: rgba(255, 59, 48, 0.8);
+					transform: rotate(90deg);
+				}
+			}
+
+			h2 {
+				font-size: 32px;
+				margin-bottom: 10px;
+				color: white;
+
+				@include md {
+					font-size: 24px;
+				}
+			}
+
+			.subtitle {
+				color: rgba(255, 255, 255, 0.7);
+				margin-bottom: 30px;
+				font-size: 16px;
+			}
+
+			.moviesList {
+				display: flex;
+				flex-direction: column;
+				gap: 12px;
+
+				.movieItem {
+					background: rgba(255, 255, 255, 0.05);
+					padding: 16px 20px;
+					border-radius: 12px;
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					cursor: pointer;
+					transition: all 0.3s ease;
+					border: 1px solid rgba(255, 255, 255, 0.1);
+
+					&:hover {
+						background: rgba(255, 255, 255, 0.15);
+						transform: translateX(10px);
+						border-color: rgba(255, 255, 255, 0.3);
+
+						.arrow {
+							transform: translateX(5px);
+						}
+					}
+
+					.movieInfo {
+						display: flex;
+						flex-direction: column;
+						gap: 4px;
+						flex: 1;
+
+						.movieTitle {
+							color: white;
+							font-size: 16px;
+							font-weight: 500;
+
+							@include md {
+								font-size: 14px;
+							}
+						}
+
+						.movieYear {
+							color: rgba(255, 255, 255, 0.5);
+							font-size: 13px;
+						}
+					}
+
+					.arrow {
+						color: rgba(255, 255, 255, 0.6);
+						font-size: 20px;
+						transition: transform 0.3s ease;
+					}
+				}
+			}
+		}
+	}
+
+	.legend {
+		margin-top: 50px;
+		text-align: center;
+
+		h3 {
+			font-size: 24px;
+			margin-bottom: 20px;
+			color: white;
+
+			@include md {
+				font-size: 20px;
+			}
+		}
+
+		.legendItems {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 15px;
+			justify-content: center;
+
+			.legendItem {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				background: rgba(255, 255, 255, 0.05);
+				padding: 10px 16px;
+				border-radius: 20px;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				border: 1px solid rgba(255, 255, 255, 0.1);
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.1);
+					transform: translateY(-3px);
+					box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+					.dot {
+						transform: scale(1.3);
+						box-shadow: 0 0 20px currentColor;
+					}
+				}
+
+				.dot {
+					width: 12px;
+					height: 12px;
+					border-radius: 50%;
+					transition: all 0.3s ease;
+				}
+
+				.name {
+					color: rgba(255, 255, 255, 0.9);
+					font-size: 14px;
+					font-weight: 500;
+				}
+			}
+		}
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideUp {
+	from {
+		transform: translateY(50px);
+		opacity: 0;
+	}
+	to {
+		transform: translateY(0);
+		opacity: 1;
+	}
+}
+
+@keyframes glow {
+	from {
+		text-shadow:
+			0 0 10px rgba(102, 126, 234, 0.5),
+			0 0 20px rgba(102, 126, 234, 0.3);
+	}
+	to {
+		text-shadow:
+			0 0 20px rgba(118, 75, 162, 0.8),
+			0 0 30px rgba(118, 75, 162, 0.5);
+	}
+}
