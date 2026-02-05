@@ -16,17 +16,27 @@ const BoxOfficeBattle = ({ items }) => {
 			setLoading(true);
 			try {
 				const data = await Promise.all(
-					items.map((item) =>
-						fetchDataFromApi(`/${item.media_type || "movie"}/${item.id}`),
-					),
+					items.map(async (item) => {
+						const res = await fetchDataFromApi(
+							`/${item.media_type || "movie"}/${item.id}`,
+						);
+						return res
+							? { ...res, media_type: item.media_type || "movie" }
+							: null;
+					}),
 				);
-				setDetails(data);
+
+				const validData = data.filter((d) => d !== null);
+				if (validData.length < 2)
+					throw new Error("Could not fetch battle data");
+
+				setDetails(validData);
 
 				// Determine winner
 				setTimeout(() => {
 					setAnimate(true);
-					const score1 = calculateScore(data[0]);
-					const score2 = calculateScore(data[1]);
+					const score1 = calculateScore(validData[0]);
+					const score2 = calculateScore(validData[1]);
 					if (score1 > score2) setWinner(0);
 					else if (score2 > score1) setWinner(1);
 					else setWinner("draw");
@@ -43,11 +53,15 @@ const BoxOfficeBattle = ({ items }) => {
 	}, [items]);
 
 	const calculateScore = (item) => {
-		const revenue = item.revenue || 0;
 		const rating = item.vote_average || 0;
 		const popularity = item.popularity || 0;
-		// Weighted score logic
-		return (revenue / 1000000) * 0.5 + rating * 2 + (popularity / 100) * 0.3;
+		if (item.media_type === "tv") {
+			const episodes = item.number_of_episodes || 0;
+			return episodes * 0.5 + rating * 2 + popularity / 100;
+		} else {
+			const revenue = item.revenue || 0;
+			return (revenue / 1000000) * 0.5 + rating * 2 + (popularity / 100) * 0.3;
+		}
 	};
 
 	if (loading || details.length < 2) {
@@ -68,12 +82,66 @@ const BoxOfficeBattle = ({ items }) => {
 
 	// Max values for normalization
 	const maxRevenue = Math.max(movie1.revenue || 0, movie2.revenue || 0, 1);
+	const maxEpisodes = Math.max(
+		movie1.number_of_episodes || 0,
+		movie2.number_of_episodes || 0,
+		1,
+	);
 	const maxRating = 10;
 	const maxPopularity = Math.max(
 		movie1.popularity || 0,
 		movie2.popularity || 0,
 		1,
 	);
+
+	const renderStatBar = (movie, type) => {
+		let label = "";
+		let value = "";
+		let percent = 0;
+		let colorClass = "";
+
+		switch (type) {
+			case "primary":
+				if (movie.media_type === "tv") {
+					label = "Episodes";
+					value = movie.number_of_episodes;
+					percent = getStatPercent(movie.number_of_episodes, maxEpisodes);
+				} else {
+					label = "Revenue";
+					value = `$${(movie.revenue / 1000000).toFixed(1)}M`;
+					percent = getStatPercent(movie.revenue, maxRevenue);
+				}
+				break;
+			case "rating":
+				label = "Rating";
+				value = `${movie.vote_average?.toFixed(1)}/10`;
+				percent = getStatPercent(movie.vote_average, maxRating);
+				colorClass = "green";
+				break;
+			case "pop":
+				label = "Popularity";
+				value = movie.popularity?.toFixed(0);
+				percent = getStatPercent(movie.popularity, maxPopularity);
+				colorClass = "orange";
+				break;
+			default:
+				break;
+		}
+
+		return (
+			<div className="statBar">
+				<div className="label">
+					<span>{label}</span>
+					<span>{value}</span>
+				</div>
+				<div className="barContainer">
+					<div
+						className={`bar fill ${colorClass}`}
+						style={{ width: animate ? `${percent}%` : "0%" }}></div>
+				</div>
+			</div>
+		);
+	};
 
 	return (
 		<div className="boxOfficeBattle">
@@ -92,48 +160,9 @@ const BoxOfficeBattle = ({ items }) => {
 					</div>
 					<div className="stats">
 						<h2>{movie1.title || movie1.name}</h2>
-						<div className="statBar">
-							<div className="label">
-								Revenue: ${(movie1.revenue / 1000000).toFixed(1)}M
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill"
-									style={{
-										width: animate
-											? `${getStatPercent(movie1.revenue, maxRevenue)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
-						<div className="statBar">
-							<div className="label">
-								Rating: {movie1.vote_average?.toFixed(1)}
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill green"
-									style={{
-										width: animate
-											? `${getStatPercent(movie1.vote_average, maxRating)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
-						<div className="statBar">
-							<div className="label">
-								Popularity: {movie1.popularity?.toFixed(0)}
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill orange"
-									style={{
-										width: animate
-											? `${getStatPercent(movie1.popularity, maxPopularity)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
+						{renderStatBar(movie1, "primary")}
+						{renderStatBar(movie1, "rating")}
+						{renderStatBar(movie1, "pop")}
 					</div>
 				</div>
 
@@ -155,48 +184,9 @@ const BoxOfficeBattle = ({ items }) => {
 					</div>
 					<div className="stats">
 						<h2>{movie2.title || movie2.name}</h2>
-						<div className="statBar">
-							<div className="label">
-								Revenue: ${(movie2.revenue / 1000000).toFixed(1)}M
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill"
-									style={{
-										width: animate
-											? `${getStatPercent(movie2.revenue, maxRevenue)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
-						<div className="statBar">
-							<div className="label">
-								Rating: {movie2.vote_average?.toFixed(1)}
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill green"
-									style={{
-										width: animate
-											? `${getStatPercent(movie2.vote_average, maxRating)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
-						<div className="statBar">
-							<div className="label">
-								Popularity: {movie2.popularity?.toFixed(0)}
-							</div>
-							<div className="barContainer">
-								<div
-									className="bar fill orange"
-									style={{
-										width: animate
-											? `${getStatPercent(movie2.popularity, maxPopularity)}%`
-											: "0%",
-									}}></div>
-							</div>
-						</div>
+						{renderStatBar(movie2, "primary")}
+						{renderStatBar(movie2, "rating")}
+						{renderStatBar(movie2, "pop")}
 					</div>
 				</div>
 			</div>
