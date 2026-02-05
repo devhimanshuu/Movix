@@ -1,77 +1,134 @@
 @import "../../mixins.scss";
 .footer {
-  background-color: var(--black3);
-  padding: 50px 0;
-  color: white;
-  position: relative;
-  .contentWrapper {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-  }
-  .menuItems {
-    list-style-type: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    @include md {
-      margin-bottom: 30px;
-      gap: 30px;
-    }
-    .menuItem {
-      transition: all ease 0.3s;
-      cursor: pointer;
-      font-size: 12px;
-      @include md {
-        font-size: 16px;
-      }
-      &:hover {
-        color: var(--pink);
-      }
-    }
-  }
-  .infoText {
-    font-size: 12px;
-    line-height: 20px;
-    opacity: 0.5;
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 20px;
-    @include md {
-      font-size: 14px;
-      margin-bottom: 30px;
-    }
-  }
-  .socialIcons {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    .icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background-color: var(--black);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all ease 0.3s;
-      &:hover {
-        box-shadow: 0 0 0.625em var(--pink);
-        color: var(--pink);
-      }
-    }
-  }
-  .endName {
-    font-size: 15px;
-    line-height: 20px;
-    opacity: 0.5;
-    margin-top: 25px;
-    text-align: center;
-    max-width: 800px;
-    margin-bottom: 20px;
-  }
+	background-color: var(--black3);
+	padding: 50px 0;
+	color: white;
+	position: relative;
+	.contentWrapper {
+		display: flex;
+		align-items: center;
+		flex-direction: column;
+	}
+	.menuItems {
+		list-style-type: none;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 15px;
+		margin-bottom: 20px;
+		@include md {
+			margin-bottom: 30px;
+			gap: 30px;
+		}
+		.menuItem {
+			transition: all ease 0.3s;
+			cursor: pointer;
+			font-size: 12px;
+			@include md {
+				font-size: 16px;
+			}
+			&:hover {
+				color: var(--pink);
+			}
+		}
+	}
+	.infoText {
+		font-size: 12px;
+		line-height: 20px;
+		opacity: 0.5;
+		text-align: center;
+		max-width: 800px;
+		margin-bottom: 20px;
+		@include md {
+			font-size: 14px;
+			margin-bottom: 30px;
+		}
+	}
+	.socialIcons {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		.icon {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background-color: var(--black);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			transition: all ease 0.3s;
+			&:hover {
+				box-shadow: 0 0 0.625em var(--pink);
+				color: var(--pink);
+			}
+		}
+	}
+	.endName {
+		margin-top: 40px;
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin-bottom: 20px;
+
+		.signature-wrapper {
+			position: relative;
+			padding: 10px 30px;
+			color: white;
+			font-weight: 600;
+			font-size: 16px;
+			border-radius: 50px;
+			background: var(--black3);
+			z-index: 1;
+			overflow: hidden;
+			cursor: pointer;
+			display: inline-block;
+			box-shadow: 0 0 15px rgba(255, 0, 0, 0.2);
+			transition: all 0.3s ease;
+
+			&::before {
+				content: "";
+				position: absolute;
+				top: -50%;
+				left: -50%;
+				width: 200%;
+				height: 200%;
+				background: conic-gradient(
+					transparent,
+					transparent,
+					transparent,
+					#ff0000
+				);
+				animation: rotateSignature 3s linear infinite;
+				z-index: -2;
+			}
+
+			&::after {
+				content: "";
+				position: absolute;
+				inset: 2px;
+				background: var(--black3);
+				border-radius: 50px;
+				z-index: -1;
+			}
+
+			&:hover {
+				transform: scale(1.05);
+				box-shadow: 0 0 25px rgba(255, 0, 0, 0.8);
+				&::before {
+					animation-duration: 1.5s;
+				}
+			}
+		}
+	}
+}
+
+@keyframes rotateSignature {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
 }
