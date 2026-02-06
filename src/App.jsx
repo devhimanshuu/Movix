@@ -25,6 +25,7 @@ import CineMatch from "./pages/CineMatch/CineMatch";
 import Trivia from "./pages/Trivia/Trivia";
 import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
+import CineBot from "./components/CineBot/CineBot";
 import { all } from "axios";
 
 function App() {
@@ -138,6 +139,7 @@ function App() {
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 			<Footer />
+			<CineBot />
 		</BrowserRouter>
 	);
 }
