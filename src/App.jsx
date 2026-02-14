@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { fetchDataFromApi } from "./utils/api";
 import { useSelector, useDispatch } from "react-redux";
 import { getApiConfiguration, getGenres } from "./store/homeSlice";
@@ -26,6 +26,7 @@ import Trivia from "./pages/Trivia/Trivia";
 import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
 import CineBot from "./components/CineBot/CineBot";
+import Landing from "./pages/Landing/Landing";
 import { all } from "axios";
 
 function App() {
@@ -120,9 +121,21 @@ function App() {
 
 	return (
 		<BrowserRouter>
-			<Header />
+			<AppLayout />
+		</BrowserRouter>
+	);
+}
+
+function AppLayout() {
+	const { pathname } = useLocation();
+	const isLanding = pathname === "/";
+
+	return (
+		<>
+			{!isLanding && <Header />}
 			<Routes>
-				<Route path="/" element={<Home />} />
+				<Route path="/" element={<Landing />} />
+				<Route path="/home" element={<Home />} />
 				<Route path="/search/:query" element={<SearchResult />} />
 				<Route path="/explore/:mediaType" element={<Explore />} />
 				<Route path="/watchlist" element={<Watchlist />} />
@@ -138,9 +151,9 @@ function App() {
 				<Route path="/:mediaType/:id" element={<Details />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
-			<Footer />
+			{!isLanding && <Footer />}
 			<CineBot />
-		</BrowserRouter>
+		</>
 	);
 }
 
