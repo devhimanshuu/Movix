@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { fetchDataFromApi } from "./utils/api";
 import { useSelector, useDispatch } from "react-redux";
@@ -27,6 +27,7 @@ import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
 import CineBot from "./components/CineBot/CineBot";
 import Landing from "./pages/Landing/Landing";
+import CustomCursor from "./components/CustomCursor/CustomCursor";
 import { all } from "axios";
 
 function App() {
@@ -153,6 +154,7 @@ function AppLayout() {
 			</Routes>
 			{!isLanding && <Footer />}
 			<CineBot />
+			<CustomCursor />
 		</>
 	);
 }

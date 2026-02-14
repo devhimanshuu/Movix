@@ -14,6 +14,24 @@
 	background: var(--black);
 	color: var(--text-primary);
 	overflow-x: hidden;
+	position: relative;
+
+	&::after {
+		content: "";
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: radial-gradient(
+			circle at 50% 50%,
+			rgba(218, 47, 104, 0.03) 0%,
+			transparent 70%
+		);
+		pointer-events: none;
+		z-index: 0;
+		animation: bgFloat 20s infinite alternate ease-in-out;
+	}
 }
 
 /* ── Reusable ────────────────────────────── */
@@ -62,10 +80,32 @@
 		background: var(--gradient);
 		color: #fff;
 		box-shadow: 0 8px 32px rgba(218, 47, 104, 0.35);
+		position: relative;
+		overflow: hidden;
+
+		&::after {
+			content: "";
+			position: absolute;
+			top: -50%;
+			left: -50%;
+			width: 200%;
+			height: 200%;
+			background: radial-gradient(
+				circle,
+				rgba(255, 255, 255, 0.2) 0%,
+				transparent 50%
+			);
+			opacity: 0;
+			transition: opacity 0.3s ease;
+		}
 
 		&:hover {
 			transform: translateY(-2px);
 			box-shadow: 0 14px 44px rgba(218, 47, 104, 0.5);
+			animation: pulseGlow 1.5s infinite;
+			&::after {
+				opacity: 1;
+			}
 		}
 	}
 
@@ -599,6 +639,29 @@
 		opacity: 0;
 		transition: opacity 0.5s ease;
 		pointer-events: none;
+	}
+
+	/* Shine Sweep Effect */
+	&::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: -150%;
+		width: 100%;
+		height: 100%;
+		background: linear-gradient(
+			90deg,
+			transparent,
+			rgba(255, 255, 255, 0.1),
+			transparent
+		);
+		transform: skewX(-20deg);
+		transition: left 0.7s ease;
+		pointer-events: none;
+	}
+
+	&:hover::after {
+		left: 150%;
 	}
 
 	.reveal & {
@@ -1407,5 +1470,29 @@
 	}
 	to {
 		transform: rotate(360deg);
+	}
+}
+
+@keyframes bgFloat {
+	0% {
+		transform: translate(0, 0) scale(1);
+	}
+	50% {
+		transform: translate(-2%, 2%) scale(1.1);
+	}
+	100% {
+		transform: translate(2%, -2%) scale(1);
+	}
+}
+
+@keyframes pulseGlow {
+	0% {
+		box-shadow: 0 8px 32px rgba(218, 47, 104, 0.35);
+	}
+	50% {
+		box-shadow: 0 8px 48px rgba(218, 47, 104, 0.6);
+	}
+	100% {
+		box-shadow: 0 8px 32px rgba(218, 47, 104, 0.35);
 	}
 }

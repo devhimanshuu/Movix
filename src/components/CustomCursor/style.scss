@@ -1,0 +1,47 @@
+.custom-cursor {
+	width: 10px;
+	height: 10px;
+	background-color: var(--pink);
+	border-radius: 50%;
+	position: fixed;
+	pointer-events: none;
+	z-index: 9999;
+	transform: translate(-50%, -50%);
+	transition:
+		width 0.3s ease,
+		height 0.3s ease,
+		background-color 0.3s ease;
+	mix-blend-mode: difference;
+
+	&.cursor-hover {
+		width: 60px;
+		height: 60px;
+		background-color: rgba(255, 255, 255, 0.1);
+		border: 1px solid var(--pink);
+		backdrop-filter: blur(4px);
+		mix-blend-mode: normal;
+	}
+
+	&.cursor-hidden {
+		opacity: 0;
+	}
+}
+
+.cursor-dot {
+	width: 6px;
+	height: 6px;
+	background: var(--gradient);
+	border-radius: 50%;
+	position: fixed;
+	pointer-events: none;
+	z-index: 10000;
+	transform: translate(-50%, -50%);
+	transition: transform 0.1s ease-out;
+}
+
+@media (hover: none) and (pointer: coarse) {
+	.custom-cursor,
+	.cursor-dot {
+		display: none;
+	}
+}
