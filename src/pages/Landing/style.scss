@@ -292,13 +292,18 @@
 
 	&__now {
 		position: absolute;
-		bottom: 80px;
-		right: 24px;
+		bottom: 100px;
+		right: 16px;
 		z-index: 3;
 		text-align: right;
 		opacity: 0;
 		animation: fadeUp 0.7s 1.4s ease forwards;
+		pointer-events: none;
 
+		@include sm {
+			bottom: 80px;
+			right: 24px;
+		}
 		@include md {
 			bottom: 56px;
 			right: 48px;
@@ -306,20 +311,31 @@
 
 		&-tag {
 			display: block;
-			font-size: 10px;
+			font-size: 9px;
 			font-weight: 700;
-			letter-spacing: 3px;
+			letter-spacing: 2px;
 			text-transform: uppercase;
 			color: var(--pink);
-			margin-bottom: 4px;
+			margin-bottom: 3px;
+
+			@include sm {
+				font-size: 10px;
+				letter-spacing: 3px;
+				margin-bottom: 4px;
+			}
 		}
 		&-name {
 			display: block;
-			font-size: 14px;
+			font-size: 12px;
 			font-weight: 500;
 			color: rgba(255, 255, 255, 0.35);
-			max-width: 220px;
+			max-width: 180px;
 			margin-left: auto;
+
+			@include sm {
+				font-size: 14px;
+				max-width: 220px;
+			}
 			@include md {
 				font-size: 16px;
 				max-width: 280px;
@@ -331,25 +347,33 @@
 		position: relative;
 		z-index: 2;
 		text-align: center;
-		padding: 80px 16px 50px;
+		padding: 60px 16px 40px;
 		max-width: 900px;
 		margin: 0 auto;
 
 		@include sm {
+			padding: 80px 20px 50px;
+		}
+		@include md {
 			padding: 100px 24px 60px;
 		}
 	}
 
 	&__eyebrow {
-		font-size: 12px;
+		font-size: 10px;
 		font-weight: 700;
-		letter-spacing: 5px;
+		letter-spacing: 3px;
 		text-transform: uppercase;
 		color: var(--pink);
-		margin-bottom: 24px;
+		margin-bottom: 20px;
 		opacity: 0;
 		animation: fadeUp 0.7s 0.2s ease forwards;
 
+		@include sm {
+			font-size: 12px;
+			letter-spacing: 5px;
+			margin-bottom: 24px;
+		}
 		@include md {
 			font-size: 14px;
 			letter-spacing: 6px;
@@ -357,46 +381,61 @@
 	}
 
 	&__title {
-		font-size: clamp(68px, 17vw, 170px);
+		font-size: clamp(52px, 15vw, 170px);
 		font-weight: 900;
 		line-height: 0.88;
-		letter-spacing: -4px;
-		margin-bottom: 28px;
+		letter-spacing: -2px;
+		margin-bottom: 20px;
 		opacity: 0;
 		animation: fadeUp 0.7s 0.35s ease forwards;
 
+		@include sm {
+			letter-spacing: -3px;
+			margin-bottom: 24px;
+		}
 		@include md {
 			letter-spacing: -8px;
+			margin-bottom: 28px;
 		}
 	}
 
 	&__sub {
-		font-size: 15px;
+		font-size: 14px;
 		font-weight: 400;
-		line-height: 1.7;
+		line-height: 1.6;
 		color: rgba(255, 255, 255, 0.55);
 		max-width: 520px;
-		margin: 0 auto 32px;
+		margin: 0 auto 28px;
 		opacity: 0;
 		animation: fadeUp 0.7s 0.5s ease forwards;
 
 		@include sm {
+			font-size: 15px;
+			line-height: 1.7;
+			margin: 0 auto 32px;
+		}
+		@include md {
 			font-size: 16px;
 			margin: 0 auto 40px;
 		}
-		@include md {
+		@include lg {
 			font-size: 19px;
 		}
 	}
 
 	&__btns {
 		display: flex;
-		gap: 14px;
+		gap: 10px;
 		justify-content: center;
 		flex-wrap: wrap;
-		margin-bottom: 28px;
+		margin-bottom: 24px;
 		opacity: 0;
 		animation: fadeUp 0.7s 0.65s ease forwards;
+
+		@include sm {
+			gap: 14px;
+			margin-bottom: 28px;
+		}
 	}
 
 	&__dots {
@@ -416,6 +455,7 @@
 		cursor: pointer;
 		padding: 0;
 		transition: all 0.3s ease;
+		-webkit-tap-highlight-color: transparent;
 
 		&.on {
 			background: var(--pink);
@@ -427,7 +467,7 @@
 
 	&__scroll {
 		position: absolute;
-		bottom: 36px;
+		bottom: 24px;
 		left: 50%;
 		transform: translateX(-50%);
 		z-index: 2;
@@ -437,11 +477,17 @@
 		border-radius: 11px;
 		background: none;
 		cursor: pointer;
-		display: flex;
+		display: none;
 		justify-content: center;
 		padding-top: 8px;
 		opacity: 0;
 		animation: fadeUp 0.7s 1.1s ease forwards;
+		-webkit-tap-highlight-color: transparent;
+
+		@include sm {
+			display: flex;
+			bottom: 36px;
+		}
 
 		&-bar {
 			display: block;
