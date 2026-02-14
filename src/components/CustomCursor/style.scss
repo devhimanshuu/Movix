@@ -4,22 +4,31 @@
 	background-color: var(--pink);
 	border-radius: 50%;
 	position: fixed;
+	top: 0;
+	left: 0;
 	pointer-events: none;
 	z-index: 9999;
-	transform: translate(-50%, -50%);
+	// Use transform from JS for high performance
 	transition:
-		width 0.3s ease,
-		height 0.3s ease,
-		background-color 0.3s ease;
+		width 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+		height 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+		background-color 0.35s ease,
+		opacity 0.35s ease;
 	mix-blend-mode: difference;
+	will-change: transform;
 
 	&.cursor-hover {
-		width: 60px;
-		height: 60px;
-		background-color: rgba(255, 255, 255, 0.1);
-		border: 1px solid var(--pink);
+		width: 50px;
+		height: 50px;
+		background-color: rgba(255, 255, 255, 0.08);
+		border: 1.2px solid var(--pink);
 		backdrop-filter: blur(4px);
 		mix-blend-mode: normal;
+	}
+
+	&.cursor-clicked {
+		transform: scale(0.8) !important;
+		background-color: var(--pink);
 	}
 
 	&.cursor-hidden {
@@ -36,7 +45,16 @@
 	pointer-events: none;
 	z-index: 10000;
 	transform: translate(-50%, -50%);
-	transition: transform 0.1s ease-out;
+	will-change: transform;
+	transition: opacity 0.3s ease;
+
+	&.cursor-clicked {
+		transform: translate(-50%, -50%) scale(1.5);
+	}
+
+	&.cursor-hidden {
+		opacity: 0;
+	}
 }
 
 @media (hover: none) and (pointer: coarse) {
