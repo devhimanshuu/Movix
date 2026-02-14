@@ -205,11 +205,12 @@ const Landing = () => {
 							<div
 								className="glass-card"
 								key={i}
-								style={{ transitionDelay: `${i * 0.1}s` }}>
+								style={{ transitionDelay: `${i * 0.1}s`, cursor: "pointer" }}
+								onClick={go(c.l)}>
 								<span className="glass-card__num">{c.n}</span>
 								<h3 className="glass-card__title">{c.t}</h3>
 								<p className="glass-card__text">{c.d}</p>
-								<span className="glass-card__link" onClick={go(c.l)}>
+								<span className="glass-card__link">
 									Try it →
 								</span>
 							</div>
@@ -257,11 +258,12 @@ const Landing = () => {
 							<div
 								className="glass-card glass-card--tall"
 								key={i}
-								style={{ transitionDelay: `${i * 0.12}s` }}>
+								style={{ transitionDelay: `${i * 0.12}s`, cursor: "pointer" }}
+								onClick={go(c.l)}>
 								<span className="glass-card__badge">{c.sub}</span>
 								<h3 className="glass-card__title">{c.t}</h3>
 								<p className="glass-card__text">{c.d}</p>
-								<span className="glass-card__link" onClick={go(c.l)}>
+								<span className="glass-card__link">
 									Explore →
 								</span>
 							</div>

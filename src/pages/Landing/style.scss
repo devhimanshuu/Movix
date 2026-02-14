@@ -47,6 +47,8 @@
 	border-radius: 100px;
 	cursor: pointer;
 	transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;
 
 	@include sm {
 		padding: 16px 40px;
@@ -268,6 +270,7 @@
 		position: absolute;
 		inset: 0;
 		z-index: 1;
+		pointer-events: none;
 		background:
 			linear-gradient(
 				180deg,
@@ -576,6 +579,14 @@
 		}
 	}
 
+	/* Touch devices: always show links since there's no hover */
+	@media (hover: none) {
+		.glass-card__link {
+			opacity: 1 !important;
+			transform: translateX(0) !important;
+		}
+	}
+
 	@include sm {
 		padding: 40px 32px;
 	}
@@ -647,6 +658,8 @@
 		transform: translateX(-8px);
 		transition: all 0.35s ease;
 		letter-spacing: 0.5px;
+		padding: 4px 0;
+		-webkit-tap-highlight-color: transparent;
 
 		&:hover {
 			letter-spacing: 1.5px;
@@ -750,6 +763,8 @@
 	border-radius: 100px;
 	cursor: pointer;
 	transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	-webkit-tap-highlight-color: transparent;
+	touch-action: manipulation;
 	opacity: 0;
 	transform: translateY(14px);
 
@@ -853,6 +868,12 @@
 		padding: 16px;
 		opacity: 0;
 		transition: opacity 0.35s ease;
+		pointer-events: none;
+
+		/* Always show on touch devices */
+		@media (hover: none) {
+			opacity: 1;
+		}
 	}
 
 	&__rating {
