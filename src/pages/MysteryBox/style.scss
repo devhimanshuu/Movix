@@ -23,6 +23,7 @@
       font-size: 3rem;
       background: var(--gradient);
       -webkit-background-clip: text;
+      background-clip: text;
       -webkit-text-fill-color: transparent;
       margin-bottom: 15px;
       font-weight: 800;
@@ -188,6 +189,7 @@
           color: rgba(255, 255, 255, 0.8);
           display: -webkit-box;
           -webkit-line-clamp: 3;
+          line-clamp: 3;
           -webkit-box-orient: vertical;
           overflow: hidden;
           margin-bottom: 20px;
@@ -258,5 +260,152 @@
   }
   100% {
     box-shadow: 0 0 10px rgba(218, 47, 104, 0.5);
+  }
+}
+
+// Responsive - Tablet
+@media screen and (max-width: 768px) {
+  .mysteryBoxPage {
+    padding: 90px 0 40px;
+
+    .titleSection {
+      margin-bottom: 36px;
+      h1 { font-size: 2.2rem; }
+      p { font-size: 1rem; }
+    }
+
+    .boxContainer {
+      width: 160px;
+      height: 160px;
+      margin-bottom: 60px;
+
+      .box {
+        .face {
+          font-size: 3.5rem;
+          &.front  { transform: rotateY(0deg) translateZ(80px); }
+          &.back   { transform: rotateY(180deg) translateZ(80px); }
+          &.right  { transform: rotateY(90deg) translateZ(80px); }
+          &.left   { transform: rotateY(-90deg) translateZ(80px); }
+          &.bottom { transform: rotateX(-90deg) translateZ(80px); }
+        }
+        .lid {
+          font-size: 3.5rem;
+          transform: rotateX(90deg) translateY(-80px);
+          &.open { transform: rotateX(200deg) translateY(-80px); }
+        }
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotateX(-25deg) rotateY(45deg) translateY(0); }
+      50% { transform: rotateX(-25deg) rotateY(45deg) translateY(-20px); }
+    }
+
+    .revealedContent {
+      margin-top: -300px;
+      max-width: 400px;
+
+      .movieCardRevealed {
+        border-radius: 16px;
+        .posterArea { aspect-ratio: 3/4; }
+        .infoArea {
+          padding: 20px;
+          h2 { font-size: 1.5rem; }
+          .overview { font-size: 0.9rem; }
+          .btnRow { gap: 10px; }
+        }
+      }
+
+      .resetBtn {
+        margin-top: 20px;
+        padding: 10px 24px;
+      }
+    }
+
+    .btn {
+      padding: 10px 24px;
+    }
+  }
+}
+
+// Responsive - Small Mobile
+@media screen and (max-width: 480px) {
+  .mysteryBoxPage {
+    padding: 80px 0 30px;
+
+    .titleSection {
+      margin-bottom: 28px;
+      h1 { font-size: 1.8rem; }
+      p { font-size: 0.9rem; }
+    }
+
+    .boxContainer {
+      width: 130px;
+      height: 130px;
+      margin-bottom: 50px;
+
+      .box {
+        .face {
+          font-size: 2.8rem;
+          border-width: 1px;
+          &.front  { transform: rotateY(0deg) translateZ(65px); }
+          &.back   { transform: rotateY(180deg) translateZ(65px); }
+          &.right  { transform: rotateY(90deg) translateZ(65px); }
+          &.left   { transform: rotateY(-90deg) translateZ(65px); }
+          &.bottom { transform: rotateX(-90deg) translateZ(65px); }
+        }
+        .lid {
+          font-size: 2.8rem;
+          border-width: 1px;
+          transform: rotateX(90deg) translateY(-65px);
+          &.open { transform: rotateX(200deg) translateY(-65px); }
+        }
+        &.opened {
+          transform: rotateX(-20deg) rotateY(405deg) translateY(40px);
+        }
+      }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: rotateX(-25deg) rotateY(45deg) translateY(0); }
+      50% { transform: rotateX(-25deg) rotateY(45deg) translateY(-15px); }
+    }
+
+    .revealedContent {
+      margin-top: -250px;
+      max-width: 320px;
+      padding: 0 10px;
+
+      .movieCardRevealed {
+        border-radius: 14px;
+        .posterArea { aspect-ratio: 3/4; }
+        .infoArea {
+          padding: 16px;
+          h2 { font-size: 1.3rem; margin-bottom: 8px; }
+          .meta {
+            gap: 10px;
+            margin-bottom: 10px;
+            .rating { font-size: 14px; }
+            .year { font-size: 13px; }
+          }
+          .overview { font-size: 0.85rem; margin-bottom: 14px; -webkit-line-clamp: 2; line-clamp: 2; }
+          .btnRow {
+            gap: 8px;
+            flex-wrap: wrap;
+          }
+        }
+      }
+
+      .resetBtn {
+        margin-top: 16px;
+        padding: 10px 20px;
+        font-size: 14px;
+      }
+    }
+
+    .btn {
+      padding: 10px 20px;
+      font-size: 14px;
+    }
   }
 }

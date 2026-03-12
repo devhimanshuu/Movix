@@ -215,6 +215,7 @@
 					color: rgba(255, 255, 255, 0.55);
 					display: -webkit-box;
 					-webkit-line-clamp: 3;
+					line-clamp: 3;
 					-webkit-box-orient: vertical;
 					overflow: hidden;
 					margin-bottom: 18px;
@@ -320,7 +321,7 @@
 	50% { opacity: 1; }
 }
 
-// Responsive
+// Responsive - Tablet
 @media screen and (max-width: 768px) {
 	.moodifyPage {
 		padding-top: 80px;
@@ -332,6 +333,18 @@
 
 		.moodPrompt {
 			font-size: 18px;
+			margin-bottom: 18px;
+		}
+
+		.moodGrid {
+			margin-bottom: 36px;
+			.moodCard {
+				min-height: 110px;
+				padding: 16px 10px;
+				.icon { font-size: 30px; }
+				.label { font-size: 13px; }
+				.desc { font-size: 10px; }
+			}
 		}
 
 		.resultsSection {
@@ -339,13 +352,20 @@
 				flex-direction: column-reverse;
 				padding: 24px;
 				gap: 20px;
+				align-items: flex-start;
 
 				.featuredPoster {
 					width: 120px;
+					align-self: center;
 				}
 
 				.featuredContent {
 					h2 { font-size: 22px; }
+					.featuredOverview {
+						-webkit-line-clamp: 2;
+						line-clamp: 2;
+						font-size: 13px;
+					}
 				}
 			}
 
@@ -359,3 +379,67 @@
 		}
 	}
 }
+
+// Responsive - Small Mobile
+@media screen and (max-width: 480px) {
+	.moodifyPage {
+		padding-top: 70px;
+
+		.pageHeader {
+			margin-bottom: 8px;
+			h1 { font-size: 26px; }
+			p { font-size: 13px; }
+		}
+
+		.moodPrompt {
+			font-size: 16px;
+			margin-bottom: 14px;
+		}
+
+		.moodGrid {
+			gap: 8px;
+			margin-bottom: 28px;
+
+			.moodCard {
+				min-height: 90px;
+				padding: 12px 8px;
+				border-radius: 12px;
+
+				.icon { font-size: 24px; margin-bottom: 4px; }
+				.label { font-size: 11px; margin-bottom: 2px; }
+				.desc { font-size: 9px; }
+				.moodGlow { width: 50px; height: 50px; }
+			}
+		}
+
+		.resultsSection {
+			.featuredMovie {
+				padding: 18px;
+				gap: 16px;
+				border-radius: 14px;
+
+				.featuredPoster {
+					width: 100px;
+					border-radius: 10px;
+				}
+
+				.featuredContent {
+					.featuredTag { font-size: 10px; padding: 4px 10px; margin-bottom: 10px; }
+					h2 { font-size: 18px; margin-bottom: 8px; }
+					.featuredMeta { font-size: 12px; gap: 10px; margin-bottom: 10px; }
+					.featuredOverview { font-size: 12px; margin-bottom: 14px; }
+					.featuredBtn { padding: 8px 18px; font-size: 12px; border-radius: 10px; }
+				}
+			}
+
+			.resultsTitleRow {
+				.resultsTitle { font-size: 16px; }
+				.resultsSubtitle { font-size: 11px; }
+				.shuffleBtn { padding: 8px 14px; font-size: 12px; }
+			}
+
+			.loadingState p { font-size: 13px; }
+		}
+	}
+}
+

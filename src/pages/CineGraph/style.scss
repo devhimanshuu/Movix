@@ -563,6 +563,7 @@
 			margin: 12px 0;
 			display: -webkit-box;
 			-webkit-line-clamp: 5;
+			line-clamp: 5;
 			-webkit-box-orient: vertical;
 			overflow: hidden;
 		}
@@ -753,22 +754,74 @@
 
 @media screen and (max-width: 480px) {
 	.cineGraphPage {
-		.graphContainer {
-			height: 380px;
+		padding-top: 70px;
+
+		.pageHeader {
+			margin-bottom: 18px;
+			h2 { font-size: 26px; }
+			p { font-size: 13px; }
 		}
 
 		.tabBar {
+			gap: 4px;
 			.tab {
-				padding: 7px 12px;
+				padding: 6px 10px;
 				font-size: 11px;
 			}
 		}
 
+		.searchSection {
+			padding: 0 10px;
+			.searchInput {
+				padding: 12px 40px 12px 40px;
+				font-size: 13px;
+			}
+			.searchIcon { left: 14px; font-size: 14px; }
+			.clearBtn { right: 12px; }
+		}
+
 		.statsBar {
+			margin-bottom: 16px;
 			.stat {
 				padding: 5px 10px;
 				gap: 5px;
+				.statIcon { font-size: 14px; }
+				.statValue { font-size: 13px; }
+				.statLabel { font-size: 9px; }
 			}
+		}
+
+		.graphContainer {
+			height: 380px;
+			border-radius: 12px;
+
+			.legend {
+				bottom: 10px;
+				left: 10px;
+				padding: 6px 12px;
+				gap: 10px;
+				.item { font-size: 10px; }
+			}
+
+			.graphControls {
+				top: 10px;
+				right: 10px;
+				gap: 4px;
+				button { width: 30px; height: 30px; font-size: 13px; }
+			}
+		}
+
+		.detailPanel {
+			padding: 16px;
+			.panelHeader h3 { font-size: 18px; }
+			.panelImage { max-height: 200px; }
+			.panelOverview {
+				-webkit-line-clamp: 4;
+				line-clamp: 4;
+				font-size: 12px;
+			}
+			.panelActions .actionBtn { padding: 10px; font-size: 13px; }
 		}
 	}
 }
+

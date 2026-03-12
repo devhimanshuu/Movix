@@ -432,6 +432,7 @@
 						margin-bottom: 2px;
 						display: -webkit-box;
 						-webkit-line-clamp: 1;
+						line-clamp: 1;
 						-webkit-box-orient: vertical;
 						overflow: hidden;
 					}
@@ -468,7 +469,7 @@
 	to { transform: rotate(360deg); }
 }
 
-// Responsive
+// Responsive - Tablet
 @media screen and (max-width: 768px) {
 	.middleGroundPage {
 		padding-top: 80px;
@@ -479,6 +480,7 @@
 		}
 
 		.namesRow {
+			gap: 14px;
 			.nameInput input {
 				width: 120px;
 				font-size: 14px;
@@ -493,21 +495,151 @@
 
 		.genreSelectionArea {
 			grid-template-columns: 1fr;
+			gap: 16px;
 
 			.dividerLine {
 				width: 100%;
 				height: 1px;
+			}
+
+			.personColumn {
+				.genreChips {
+					gap: 6px;
+					.genreChip {
+						padding: 6px 12px;
+						font-size: 11px;
+					}
+				}
 			}
 		}
 
 		.filtersRow {
 			flex-direction: column;
 			align-items: center;
+			gap: 14px;
+
+			.filterGroup .filterOptions button {
+				padding: 5px 10px;
+				font-size: 11px;
+			}
 		}
 
 		.findBtn {
 			padding: 14px 32px;
 			font-size: 15px;
 		}
+
+		.selectionSummary {
+			flex-direction: column;
+			align-items: center;
+			gap: 12px;
+		}
+
+		.resultsArea {
+			.resultsHeader h2 { font-size: 22px; }
+			.movieGrid { gap: 14px; }
+		}
 	}
 }
+
+// Responsive - Small Mobile
+@media screen and (max-width: 480px) {
+	.middleGroundPage {
+		padding-top: 70px;
+
+		.pageHeader {
+			margin-bottom: 20px;
+			h1 { font-size: 26px; }
+			p { font-size: 13px; }
+		}
+
+		.namesRow {
+			gap: 10px;
+			margin-bottom: 24px;
+			.nameInput input {
+				width: 100px;
+				font-size: 13px;
+				padding: 8px 12px;
+			}
+			.matchCircle {
+				width: 48px;
+				height: 48px;
+				.matchPercent { font-size: 14px; }
+				.matchLabel { font-size: 8px; }
+				.matchIcon { font-size: 20px; }
+			}
+		}
+
+		.genreSelectionArea {
+			gap: 12px;
+			margin-bottom: 20px;
+
+			.personColumn {
+				h3 {
+					font-size: 13px;
+					margin-bottom: 10px;
+				}
+				.genreChips {
+					gap: 5px;
+					.genreChip {
+						padding: 5px 10px;
+						font-size: 10px;
+						border-radius: 16px;
+						.chipEmoji { font-size: 12px; }
+					}
+				}
+			}
+		}
+
+		.filtersRow {
+			gap: 10px;
+			.filterGroup {
+				label { font-size: 10px; }
+				.filterOptions {
+					padding: 2px;
+					button {
+						padding: 4px 8px;
+						font-size: 10px;
+					}
+				}
+			}
+		}
+
+		.findBtn {
+			padding: 12px 28px;
+			font-size: 14px;
+		}
+
+		.selectionSummary {
+			margin-bottom: 24px;
+			.summaryGroup {
+				gap: 5px;
+				.summaryName { font-size: 12px; }
+				.summaryTag { font-size: 10px; padding: 3px 8px; }
+			}
+		}
+
+		.resultsArea {
+			.resultsHeader {
+				margin-bottom: 20px;
+				h2 { font-size: 18px; }
+				p { font-size: 12px; }
+			}
+			.movieGrid {
+				gap: 10px;
+				.movieCard .cardInfo {
+					padding: 8px 2px;
+					h4 { font-size: 12px; }
+					.cardYear { font-size: 11px; }
+				}
+			}
+
+			.noResults {
+				padding: 40px 16px;
+				.emptyIcon { font-size: 40px; }
+				p { font-size: 13px; }
+			}
+		}
+	}
+}
+

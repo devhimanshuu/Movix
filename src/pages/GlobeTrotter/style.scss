@@ -317,3 +317,126 @@
 			0 0 30px rgba(118, 75, 162, 0.5);
 	}
 }
+
+// Responsive - Tablet
+@media screen and (max-width: 768px) {
+	.globeTrotterPage {
+		padding: 80px 0 40px;
+
+		.pageHeader {
+			margin-bottom: 24px;
+
+			h1 { font-size: 32px; }
+			p { font-size: 14px; margin-bottom: 14px; }
+
+			.instructions {
+				gap: 10px;
+				span {
+					font-size: 12px;
+					padding: 6px 12px;
+				}
+			}
+		}
+
+		.globeContainer {
+			margin: 20px 0;
+			border-radius: 14px;
+			canvas { border-radius: 14px; }
+		}
+
+		.locationModal .modalContent {
+			padding: 28px 18px;
+			border-radius: 16px;
+
+			h2 { font-size: 22px; }
+			.subtitle { font-size: 14px; margin-bottom: 20px; }
+
+			.moviesList .movieItem {
+				padding: 12px 14px;
+				.movieInfo .movieTitle { font-size: 14px; }
+			}
+		}
+
+		.legend {
+			margin-top: 30px;
+			h3 { font-size: 18px; margin-bottom: 14px; }
+			.legendItems {
+				gap: 8px;
+				.legendItem {
+					padding: 8px 12px;
+					.name { font-size: 12px; }
+					.dot { width: 10px; height: 10px; }
+				}
+			}
+		}
+	}
+}
+
+// Responsive - Small Mobile
+@media screen and (max-width: 480px) {
+	.globeTrotterPage {
+		padding: 70px 0 30px;
+
+		.pageHeader {
+			margin-bottom: 16px;
+			h1 { font-size: 26px; }
+			p { font-size: 13px; margin-bottom: 10px; }
+
+			.instructions {
+				gap: 6px;
+				span {
+					font-size: 11px;
+					padding: 5px 10px;
+				}
+			}
+		}
+
+		.globeContainer {
+			margin: 10px 0;
+			border-radius: 10px;
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+			canvas { border-radius: 10px; }
+		}
+
+		.locationModal .modalContent {
+			padding: 24px 14px;
+			width: 95%;
+			max-height: 85vh;
+			border-radius: 14px;
+
+			.closeBtn {
+				top: 10px;
+				right: 10px;
+				width: 34px;
+				height: 34px;
+				font-size: 18px;
+			}
+
+			h2 { font-size: 18px; }
+			.subtitle { font-size: 13px; margin-bottom: 16px; }
+
+			.moviesList .movieItem {
+				padding: 10px 12px;
+				border-radius: 10px;
+				.movieInfo {
+					.movieTitle { font-size: 13px; }
+					.movieYear { font-size: 11px; }
+				}
+				.arrow { font-size: 16px; }
+			}
+		}
+
+		.legend {
+			margin-top: 20px;
+			h3 { font-size: 16px; margin-bottom: 12px; }
+			.legendItems {
+				gap: 6px;
+				.legendItem {
+					padding: 6px 10px;
+					.name { font-size: 11px; }
+					.dot { width: 8px; height: 8px; }
+				}
+			}
+		}
+	}
+}

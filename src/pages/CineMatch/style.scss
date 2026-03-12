@@ -479,28 +479,61 @@
   to { opacity: 1; }
 }
 
-// Responsive
+// Responsive - Tablet
 @media screen and (max-width: 768px) {
   .cineMatchPage {
     padding-top: 80px;
+    padding-bottom: 40px;
 
     .pageHeader {
       h1 { font-size: 32px; }
+      p { font-size: 14px; }
     }
 
     .genreFilter {
+      padding: 0 10px;
       .filterChip {
         padding: 5px 12px;
         font-size: 12px;
       }
     }
 
+    .sessionStats {
+      gap: 6px;
+      .statPill {
+        padding: 5px 10px;
+        font-size: 13px;
+      }
+    }
+
     .cardStack {
       width: 280px;
       height: 420px;
+
+      .cardContainer.currentCard {
+        .cardOverlay {
+          padding: 18px;
+          h2 { font-size: 22px; }
+          .cardMeta {
+            gap: 8px;
+            .genres { font-size: 12px; }
+          }
+        }
+
+        .swipeIndicator {
+          font-size: 16px;
+          padding: 8px 18px;
+        }
+
+        .detailsPanel {
+          padding: 50px 18px 18px;
+          .overview { font-size: 13px; }
+        }
+      }
     }
 
     .controls {
+      gap: 12px;
       .controlBtn {
         &.pass, &.like {
           width: 56px;
@@ -510,6 +543,7 @@
         &.undo, &.info {
           width: 42px;
           height: 42px;
+          font-size: 14px;
         }
       }
     }
@@ -519,3 +553,100 @@
     }
   }
 }
+
+// Responsive - Small Mobile
+@media screen and (max-width: 480px) {
+  .cineMatchPage {
+    padding-top: 70px;
+
+    .pageHeader {
+      margin-bottom: 14px;
+      h1 { font-size: 26px; }
+      p { font-size: 12px; }
+    }
+
+    .genreFilter {
+      gap: 6px;
+      margin-bottom: 12px;
+      .filterChip {
+        padding: 4px 10px;
+        font-size: 11px;
+      }
+    }
+
+    .sessionStats {
+      margin-bottom: 14px;
+      .statPill {
+        padding: 4px 8px;
+        font-size: 12px;
+        gap: 4px;
+      }
+    }
+
+    .cardStack {
+      width: 260px;
+      height: 390px;
+
+      .cardContainer.currentCard {
+        border-radius: 18px;
+
+        .cardOverlay {
+          padding: 14px;
+          height: 50%;
+          h2 { font-size: 18px; margin-bottom: 6px; }
+          .cardMeta {
+            gap: 6px;
+            .genres { font-size: 11px; }
+            .rating { font-size: 12px; }
+            .year { font-size: 11px; }
+          }
+        }
+
+        .swipeIndicator {
+          font-size: 14px;
+          padding: 6px 14px;
+          border-width: 2px;
+          gap: 6px;
+          &.like { top: 20px; left: 14px; }
+          &.nope { top: 20px; right: 14px; }
+        }
+
+        .infoBtn { width: 32px; height: 32px; font-size: 14px; }
+
+        .detailsPanel {
+          padding: 44px 14px 14px;
+          .overview { font-size: 12px; line-height: 1.6; }
+          .viewDetailsBtn { padding: 10px 18px; font-size: 13px; }
+        }
+      }
+
+      .cardContainer.emptyState {
+        border-radius: 18px;
+        .emptyContent {
+          padding: 20px;
+          .emptyIcon { font-size: 44px; }
+          h3 { font-size: 18px; }
+          p { font-size: 12px; }
+          .emptyActions button { padding: 10px 18px; font-size: 13px; }
+        }
+      }
+    }
+
+    .controls {
+      gap: 10px;
+      .controlBtn {
+        &.pass, &.like {
+          width: 50px;
+          height: 50px;
+          font-size: 18px;
+        }
+        &.undo, &.info {
+          width: 38px;
+          height: 38px;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+}
+

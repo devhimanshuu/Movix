@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import Globe from "react-globe.gl";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -145,6 +145,23 @@ const GlobeTrotter = () => {
 	const [selectedMovies, setSelectedMovies] = useState([]);
 	const [loadingMovies, setLoadingMovies] = useState(false);
 
+	// Responsive globe sizing
+	const getGlobeSize = useCallback(() => {
+		const w = window.innerWidth;
+		if (w > 1024) return { width: 900, height: 600 };
+		if (w > 768) return { width: Math.min(w - 80, 800), height: 500 };
+		if (w > 480) return { width: w - 40, height: 400 };
+		return { width: w - 20, height: 340 };
+	}, []);
+
+	const [globeSize, setGlobeSize] = useState(getGlobeSize);
+
+	useEffect(() => {
+		const handleResize = () => setGlobeSize(getGlobeSize());
+		window.addEventListener("resize", handleResize);
+		return () => window.removeEventListener("resize", handleResize);
+	}, [getGlobeSize]);
+
 	// Fetch movie details for all locations on mount
 	useEffect(() => {
 		const fetchAllLocations = async () => {
@@ -278,8 +295,8 @@ const GlobeTrotter = () => {
 						onPointHover={(point) => setHoveredLocation(point)}
 						atmosphereColor="#4a90e2"
 						atmosphereAltitude={0.25}
-						width={window.innerWidth > 768 ? 900 : window.innerWidth - 40}
-						height={window.innerWidth > 768 ? 600 : 400}
+						width={globeSize.width}
+						height={globeSize.height}
 					/>
 				</div>
 
