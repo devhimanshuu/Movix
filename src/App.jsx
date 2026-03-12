@@ -25,6 +25,8 @@ import CineMatch from "./pages/CineMatch/CineMatch";
 import Trivia from "./pages/Trivia/Trivia";
 import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
+import CineGraph from "./pages/CineGraph/CineGraph";
+import MiddleGround from "./pages/MiddleGround/MiddleGround";
 import CineBot from "./components/CineBot/CineBot";
 import Landing from "./pages/Landing/Landing";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
@@ -147,6 +149,8 @@ function AppLayout() {
 				<Route path="/cinestream" element={<CineStream />} />
 				<Route path="/cinematch" element={<CineMatch />} />
 				<Route path="/trivia" element={<Trivia />} />
+				<Route path="/cinegraph" element={<CineGraph />} />
+				<Route path="/middle-ground" element={<MiddleGround />} />
 				<Route path="/mystery-box" element={<MysteryBox />} />
 				<Route path="/globetrotter" element={<GlobeTrotter />} />
 				<Route path="/:mediaType/:id" element={<Details />} />

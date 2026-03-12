@@ -1,0 +1,137 @@
+@import "../../mixins.scss";
+
+.middleGroundPage {
+	min-height: 700px;
+	padding-top: 100px;
+	padding-bottom: 50px;
+
+	.pageHeader {
+		text-align: center;
+		margin-bottom: 40px;
+
+		h1 {
+			font-size: 42px;
+			margin-bottom: 10px;
+			background: var(--gradient);
+			-webkit-background-clip: text;
+			background-clip: text;
+			-webkit-text-fill-color: transparent;
+			font-weight: 700;
+		}
+
+		p {
+			font-size: 18px;
+			color: var(--text-secondary);
+		}
+	}
+
+	.plannerBox {
+		background: var(--black-light);
+		padding: 40px;
+		border-radius: 30px;
+		max-width: 800px;
+		margin: 0 auto 50px;
+		box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+		text-align: center;
+		border: 1px solid rgba(255, 255, 255, 0.05);
+
+		.selectionArea {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 30px;
+			gap: 20px;
+
+			.person {
+				flex: 1;
+
+				h3 {
+					font-size: 16px;
+					color: var(--text-secondary);
+					margin-bottom: 15px;
+					text-transform: uppercase;
+					letter-spacing: 1px;
+				}
+
+				select {
+					width: 100%;
+					padding: 15px;
+					border-radius: 12px;
+					background: rgba(0, 0, 0, 0.3);
+					color: white;
+					border: 2px solid rgba(255, 255, 255, 0.1);
+					font-size: 16px;
+					outline: none;
+					cursor: pointer;
+					appearance: none;
+					transition: border-color 0.2s;
+
+					&:focus {
+						border-color: var(--pink);
+					}
+
+					option {
+						background: var(--black-light);
+					}
+				}
+			}
+
+			.vs {
+				font-size: 32px;
+				color: var(--orange);
+			}
+		}
+
+		.findBtn {
+			padding: 15px 40px;
+			font-size: 18px;
+			background: var(--gradient);
+			border: none;
+			color: white;
+			border-radius: 40px;
+			font-weight: 700;
+			cursor: pointer;
+			transition: transform 0.2s;
+
+			&:hover:not(:disabled) {
+				transform: scale(1.05);
+			}
+
+			&:disabled {
+				opacity: 0.5;
+				cursor: default;
+			}
+		}
+	}
+
+	.resultsArea {
+		.sectionTitle {
+			font-size: 24px;
+			margin-bottom: 25px;
+			font-weight: 600;
+			text-align: center;
+		}
+
+		.noResults {
+			text-align: center;
+			color: var(--text-secondary);
+			font-size: 18px;
+			padding: 40px;
+		}
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.middleGroundPage {
+		.plannerBox {
+			padding: 20px;
+
+			.selectionArea {
+				flex-direction: column;
+				.vs {
+					transform: rotate(90deg);
+				}
+			}
+		}
+	}
+}

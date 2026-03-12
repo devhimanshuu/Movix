@@ -10,6 +10,7 @@ import Similar from "./carousels/Similar";
 import Recommendation from "./carousels/Recommendations";
 import Reviews from "./Reviews/Reviews";
 import { addToHistory } from "../../store/historySlice";
+import useThemeSync from "../../hooks/useThemeSync";
 
 const Details = () => {
 	const { mediaType, id } = useParams();
@@ -23,6 +24,12 @@ const Details = () => {
 	const { data: reviews, loading: reviewsLoading } = useFetch(
 		`/${mediaType}/${id}/reviews`,
 	);
+
+	const currentPosterUrl = detailsData?.poster_path
+		? url?.poster + detailsData?.poster_path
+		: null;
+
+	useThemeSync(currentPosterUrl);
 
 	// Track view in history when details page loads
 	useEffect(() => {

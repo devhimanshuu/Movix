@@ -113,6 +113,12 @@ const Header = () => {
 					<li className="menuItem" onClick={() => navigate("/globetrotter")}>
 						Globe
 					</li>
+					<li className="menuItem" onClick={() => navigate("/cinegraph")}>
+						Graph
+					</li>
+					<li className="menuItem" onClick={() => navigate("/middle-ground")}>
+						Planner
+					</li>
 					<li className="menuItem">
 						<HiOutlineSearch onClick={openSearch} />
 					</li>
