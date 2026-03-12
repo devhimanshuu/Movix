@@ -40,6 +40,7 @@ const Landing = () => {
 	const [r7, v7] = useReveal();
 	const [r8, v8] = useReveal();
 	const [r9, v9] = useReveal();
+	const [r10, v10] = useReveal();
 
 	useEffect(() => {
 		if (trendingData?.results?.length > 0) {
@@ -179,27 +180,27 @@ const Landing = () => {
 						{[
 							{
 								n: "01",
-								t: "Discover",
-								d: "Browse trending, top-rated, and upcoming titles across every genre — powered by live TMDB data with lightning-fast search.",
-								l: "/explore/movie",
+								t: "CineGraph",
+								d: "Visualize the cosmic web of cinema. Explore how actors, directors, and movies are connected in an interactive force-directed graph.",
+								l: "/cinegraph",
 							},
 							{
 								n: "02",
 								t: "Moodify",
-								d: "Tell us how you feel. Our mood-based engine analyzes tone and themes to serve you the perfect movie match for tonight.",
+								d: "Personalized discovery based on your vibe. Tell us how you feel today, and our engine will find movies that match your current mood.",
 								l: "/moodify",
 							},
 							{
 								n: "03",
 								t: "Compare",
-								d: "Put any two titles side by side. Ratings, cast, runtime, revenue, trivia — every detail at a glance in a beautiful visual diff.",
+								d: "Put any two titles side by side. Ratings, cast, runtime, and trivia — every detail at a glance in a beautiful visual comparison.",
 								l: "/comparison",
 							},
 							{
 								n: "04",
-								t: "Curate",
-								d: "Build your watchlist, track your watch history, and organize everything. Your data stays on your device — zero accounts needed.",
-								l: "/watchlist",
+								t: "CineMatch",
+								d: "Tinder for movies! Swipe through high-quality posters to build your perfect watchlist with fluid gesture controls.",
+								l: "/cinematch",
 							},
 						].map((c, i) => (
 							<div
@@ -239,19 +240,19 @@ const Landing = () => {
 							{
 								t: "CineBot",
 								sub: "AI Assistant",
-								d: "Ask anything about movies. Get instant recommendations, plot summaries, actor trivia, or just have a casual movie chat — powered by AI.",
+								d: "Your personal movie expert. Ask for plot summaries, hidden details, or actor bios. Get recommendations through natural conversation.",
 								l: "/home",
 							},
 							{
-								t: "CineMatch",
-								sub: "Similarity Engine",
-								d: "Find movies that feel the same. CineMatch analyzes themes, mood, visuals, and narrative style to surface titles you'd never find by genre alone.",
-								l: "/cinematch",
+								t: "Middle Ground",
+								sub: "Movie Planner",
+								d: "Solving the 'What should we watch?' dilemma. Find common movie interests between two sets of genre preferences instantly.",
+								l: "/middle-ground",
 							},
 							{
 								t: "CineStream",
-								sub: "Where to Watch",
-								d: "Stop switching between apps. CineStream shows you exactly where any title is streaming — Netflix, Prime, Hulu, Disney+ and 50+ more.",
+								sub: "Trailer Feed",
+								d: "Visual-first discovery. Swipe through an immersive, auto-playing feed of trailers to find your next obsession in seconds.",
 								l: "/cinestream",
 							},
 						].map((c, i) => (
@@ -268,6 +269,46 @@ const Landing = () => {
 								</span>
 							</div>
 						))}
+					</div>
+				</div>
+			</section>
+
+			{/* ═══════ CINEGRAPH FEATURE ═══════ */}
+			<section className={`sec sec--graph ${v10 ? "reveal" : ""}`} ref={r10}>
+				<div className="sec__inner">
+					<div className="showcase__grid showcase__grid--reverse">
+						<div className="showcase__visual">
+							<div className="graph-preview">
+								<div className="node node--movie" style={{ top: '20%', left: '30%' }}></div>
+								<div className="node node--actor" style={{ top: '50%', left: '20%' }}></div>
+								<div className="node node--actor" style={{ top: '15%', left: '70%' }}></div>
+								<div className="node node--movie" style={{ top: '60%', left: '60%' }}></div>
+								<div className="node node--director" style={{ top: '80%', left: '40%' }}></div>
+								<svg className="graph-lines" width="100%" height="100%">
+									<line x1="30%" y1="20%" x2="20%" y2="50%" stroke="rgba(255,255,255,0.2)" />
+									<line x1="30%" y1="20%" x2="70%" y2="15%" stroke="rgba(255,255,255,0.2)" />
+									<line x1="60%" y1="60%" x2="70%" y2="15%" stroke="rgba(255,255,255,0.2)" />
+									<line x1="60%" y1="60%" x2="40%" y2="80%" stroke="rgba(255,255,255,0.2)" />
+									<line x1="20%" y1="50%" x2="40%" y2="80%" stroke="rgba(255,255,255,0.2)" />
+								</svg>
+							</div>
+						</div>
+						<div className="showcase__text">
+							<span className="label label--blue">Data Visualization</span>
+							<h2 className="sec__title">
+								Discover the
+								<br />
+								Cosmic Web.
+							</h2>
+							<p className="sec__desc">
+								CineGraph uses interactive force-directed graph theory to map the 
+								entire cinematic universe. See how stars, directors, and movies 
+								cluster together in a beautiful, reactive data visualization.
+							</p>
+							<button className="btn btn--primary" onClick={go("/cinegraph")}>
+								Explore the Graph
+							</button>
+						</div>
 					</div>
 				</div>
 			</section>
@@ -292,18 +333,18 @@ const Landing = () => {
 						<div className="cards cards--col">
 							{[
 								{
-									t: "Trivia",
-									d: "Test your film knowledge with AI-generated questions across difficulty levels. Compete, learn, and discover new facts about your favorite movies.",
+									t: "Interactive Trivia",
+									d: "Challenge yourself with multiple game modes. Guess by year, tagline, or silhouette. Hit high streaks and test your cinema IQ.",
 									l: "/trivia",
 								},
 								{
-									t: "Mystery Box",
-									d: "Feeling adventurous? Click the box and get a completely random, hand-picked movie recommendation. No filters, pure surprise.",
+									t: "The Mystery Box",
+									d: "Feeling lucky? Our 3D mystery box unboxes a top-rated surprise recommendation. No thinking required, just pure luck.",
 									l: "/mystery-box",
 								},
 								{
 									t: "GlobeTrotter",
-									d: "Explore world cinema by clicking any country on an interactive map. Discover the best films from every corner of the globe.",
+									d: "Travel the cinematic world on an interactive 3D globe. Discover movies filmed in iconic locations across all continents.",
 									l: "/globetrotter",
 								},
 							].map((c, i) => (

@@ -207,6 +207,17 @@
 	&--smart {
 		background: #060d1d;
 	}
+	&--graph {
+		background: linear-gradient(180deg, #060d1d 0%, #0d122b 50%, #060d1d 100%);
+		position: relative;
+		&::before {
+			content: "";
+			position: absolute;
+			inset: 0;
+			background: radial-gradient(circle at 60% 50%, rgba(102, 126, 234, 0.05) 0%, transparent 60%);
+			pointer-events: none;
+		}
+	}
 	&--fun {
 		background: linear-gradient(180deg, #060d1d 0%, var(--black) 100%);
 	}
@@ -1495,4 +1506,111 @@
 	100% {
 		box-shadow: 0 8px 32px rgba(218, 47, 104, 0.35);
 	}
+}
+/* ── CINEGRAPH PREVIEW ───────────────────── */
+
+.showcase__visual {
+	position: relative;
+	width: 100%;
+	height: 340px;
+	margin-bottom: 40px;
+	
+	@include lg {
+		height: 480px;
+		margin-bottom: 0;
+	}
+
+	.graph-preview {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		background: rgba(255, 255, 255, 0.02);
+		border-radius: 24px;
+		border: 1px solid var(--glass-border);
+		overflow: hidden;
+		animation: graphFloat 8s infinite ease-in-out;
+
+		.node {
+			position: absolute;
+			border-radius: 50%;
+			z-index: 2;
+			box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+			transition: all 0.5s ease;
+
+			&--movie {
+				width: 34px;
+				height: 34px;
+				background: var(--pink);
+				box-shadow: 0 0 25px rgba(218, 47, 104, 0.4);
+				animation: nodePulse 3s infinite alternate;
+			}
+			&--actor {
+				width: 22px;
+				height: 22px;
+				background: var(--orange);
+				box-shadow: 0 0 15px rgba(248, 158, 0, 0.3);
+				animation: nodePulse 4s infinite alternate-reverse;
+			}
+			&--director {
+				width: 26px;
+				height: 26px;
+				background: #4ecdc4;
+				box-shadow: 0 0 20px rgba(78, 205, 196, 0.3);
+				animation: nodePulse 3.5s infinite alternate;
+			}
+		}
+
+		.graph-lines {
+			position: absolute;
+			inset: 0;
+			z-index: 1;
+			pointer-events: none;
+			line {
+				stroke-dasharray: 4;
+				animation: lineFlow 30s linear infinite;
+			}
+		}
+	}
+}
+
+.showcase__grid--reverse {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 48px;
+	align-items: center;
+
+	@include lg {
+		grid-template-columns: 1.2fr 1fr;
+		gap: 100px;
+	}
+
+	.showcase__text {
+		@include lg {
+			order: 1;
+		}
+	}
+	.showcase__visual {
+		@include lg {
+			order: 2;
+		}
+	}
+}
+
+.label--blue {
+	color: #667eea;
+}
+
+@keyframes graphFloat {
+	0%, 100% { transform: translateY(0) rotate(0deg); }
+	50% { transform: translateY(-10px) rotate(0.5deg); }
+}
+
+@keyframes nodePulse {
+	from { transform: scale(1); filter: brightness(1); }
+	to { transform: scale(1.1); filter: brightness(1.3); }
+}
+
+@keyframes lineFlow {
+	from { stroke-dashoffset: 1000; }
+	to { stroke-dashoffset: 0; }
 }
