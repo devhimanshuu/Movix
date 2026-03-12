@@ -1,60 +1,391 @@
 @import "../../mixins.scss";
 
 .cineGraphPage {
-	min-height: 700px;
+	min-height: 100vh;
 	padding-top: 100px;
-	padding-bottom: 50px;
+	padding-bottom: 60px;
 
 	.pageHeader {
 		text-align: center;
-		margin-bottom: 40px;
+		margin-bottom: 30px;
 
 		h1 {
-			font-size: 42px;
+			font-size: 46px;
 			margin-bottom: 10px;
 			background: var(--gradient);
 			-webkit-background-clip: text;
 			background-clip: text;
 			-webkit-text-fill-color: transparent;
 			font-weight: 700;
+			letter-spacing: -0.5px;
 		}
 
 		p {
-			font-size: 18px;
-			color: var(--text-secondary);
-			max-width: 600px;
+			font-size: 17px;
+			color: rgba(255, 255, 255, 0.5);
+			max-width: 550px;
 			margin: 0 auto;
+			line-height: 1.5;
 		}
 	}
 
+	// Tab Bar
+	.tabBar {
+		display: flex;
+		justify-content: center;
+		gap: 8px;
+		margin-bottom: 24px;
+		flex-wrap: wrap;
+
+		.tab {
+			padding: 10px 22px;
+			border-radius: 50px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			background: rgba(255, 255, 255, 0.04);
+			color: rgba(255, 255, 255, 0.6);
+			font-size: 14px;
+			font-family: "Outfit", sans-serif;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			backdrop-filter: blur(5px);
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.1);
+				color: white;
+				border-color: rgba(255, 255, 255, 0.2);
+			}
+
+			&.active {
+				background: var(--gradient);
+				color: white;
+				border-color: transparent;
+				font-weight: 600;
+				box-shadow: 0 4px 20px rgba(218, 47, 104, 0.3);
+			}
+		}
+	}
+
+	// Search Section
+	.searchSection {
+		max-width: 600px;
+		margin: 0 auto 24px;
+		position: relative;
+
+		.searchInputWrapper {
+			position: relative;
+			display: flex;
+			align-items: center;
+
+			.searchIcon {
+				position: absolute;
+				left: 18px;
+				font-size: 18px;
+				z-index: 1;
+			}
+
+			.searchInput {
+				width: 100%;
+				padding: 16px 50px 16px 50px;
+				border-radius: 50px;
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				background: rgba(255, 255, 255, 0.06);
+				backdrop-filter: blur(10px);
+				color: white;
+				font-size: 15px;
+				font-family: "Outfit", sans-serif;
+				outline: none;
+				transition: all 0.3s ease;
+
+				&::placeholder {
+					color: rgba(255, 255, 255, 0.35);
+				}
+
+				&:focus {
+					border-color: rgba(218, 47, 104, 0.5);
+					background: rgba(255, 255, 255, 0.08);
+					box-shadow: 0 0 30px rgba(218, 47, 104, 0.15);
+				}
+			}
+
+			.clearBtn {
+				position: absolute;
+				right: 16px;
+				background: rgba(255, 255, 255, 0.15);
+				border: none;
+				color: white;
+				width: 24px;
+				height: 24px;
+				border-radius: 50%;
+				cursor: pointer;
+				font-size: 12px;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: background 0.2s;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.3);
+				}
+			}
+		}
+
+		.searchStatus {
+			text-align: center;
+			padding: 12px;
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 14px;
+		}
+
+		.searchDropdown {
+			position: absolute;
+			top: calc(100% + 8px);
+			left: 0;
+			right: 0;
+			background: rgba(10, 20, 40, 0.95);
+			backdrop-filter: blur(20px);
+			border-radius: 16px;
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			overflow: hidden;
+			z-index: 100;
+			box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+
+			.searchResultItem {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				padding: 12px 18px;
+				width: 100%;
+				border: none;
+				background: transparent;
+				color: white;
+				cursor: pointer;
+				text-align: left;
+				font-family: "Outfit", sans-serif;
+				transition: background 0.2s;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.08);
+				}
+
+				&:not(:last-child) {
+					border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+				}
+
+				.resultType {
+					font-size: 22px;
+					flex-shrink: 0;
+				}
+
+				.resultInfo {
+					flex: 1;
+					min-width: 0;
+
+					.resultName {
+						display: block;
+						font-size: 14px;
+						font-weight: 500;
+						white-space: nowrap;
+						overflow: hidden;
+						text-overflow: ellipsis;
+					}
+
+					.resultMeta {
+						display: block;
+						font-size: 12px;
+						color: rgba(255, 255, 255, 0.4);
+						margin-top: 2px;
+					}
+				}
+
+				.addIcon {
+					font-size: 12px;
+					color: #da2f68;
+					font-weight: 600;
+					flex-shrink: 0;
+					padding: 4px 10px;
+					border-radius: 20px;
+					border: 1px solid rgba(218, 47, 104, 0.4);
+					transition: all 0.2s;
+				}
+
+				&:hover .addIcon {
+					background: rgba(218, 47, 104, 0.2);
+					border-color: #da2f68;
+				}
+			}
+		}
+	}
+
+	// Stats Bar
+	.statsBar {
+		display: flex;
+		justify-content: center;
+		gap: 16px;
+		margin-bottom: 20px;
+		flex-wrap: wrap;
+
+		.stat {
+			display: flex;
+			align-items: center;
+			gap: 8px;
+			padding: 8px 16px;
+			border-radius: 50px;
+			background: rgba(255, 255, 255, 0.04);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			backdrop-filter: blur(5px);
+
+			.statIcon {
+				font-size: 16px;
+			}
+
+			.statValue {
+				font-size: 16px;
+				font-weight: 700;
+				color: white;
+			}
+
+			.statLabel {
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.4);
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+
+			&.highlight {
+				border-color: rgba(248, 158, 0, 0.3);
+				background: rgba(248, 158, 0, 0.08);
+
+				.statValue {
+					color: #f89e00;
+					font-size: 14px;
+				}
+			}
+		}
+	}
+
+	// Loading Area
+	.loadingArea {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		min-height: 500px;
+		gap: 20px;
+
+		.loadingText {
+			color: rgba(255, 255, 255, 0.5);
+			font-size: 16px;
+			animation: fadeInOut 2s ease-in-out infinite;
+		}
+	}
+
+	// Graph Wrapper
+	.graphWrapper {
+		position: relative;
+
+		.loadMoreBtn {
+			display: block;
+			margin: 20px auto 0;
+			padding: 12px 30px;
+			border-radius: 50px;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(255, 255, 255, 0.06);
+			color: white;
+			font-size: 14px;
+			font-family: "Outfit", sans-serif;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			backdrop-filter: blur(5px);
+
+			&:hover:not(:disabled) {
+				background: rgba(255, 255, 255, 0.12);
+				border-color: rgba(255, 255, 255, 0.3);
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+			}
+
+			&:disabled {
+				opacity: 0.5;
+				cursor: not-allowed;
+			}
+		}
+	}
+
+	// Graph Container
 	.graphContainer {
 		background: rgba(4, 18, 38, 0.4);
 		border-radius: 24px;
-		border: 1px solid rgba(255, 255, 255, 0.1);
+		border: 1px solid rgba(255, 255, 255, 0.08);
 		overflow: hidden;
 		position: relative;
-		height: 600px;
+		height: 650px;
 		backdrop-filter: blur(10px);
-		box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4),
+			inset 0 1px 0 rgba(255, 255, 255, 0.06);
 
+		canvas {
+			border-radius: 24px;
+		}
+
+		// Graph Controls
+		.graphControls {
+			position: absolute;
+			top: 20px;
+			right: 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 6px;
+			z-index: 10;
+
+			button {
+				width: 36px;
+				height: 36px;
+				border-radius: 10px;
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				background: rgba(0, 0, 0, 0.5);
+				backdrop-filter: blur(10px);
+				color: white;
+				font-size: 16px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: all 0.2s ease;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.15);
+					border-color: rgba(255, 255, 255, 0.3);
+					transform: scale(1.05);
+				}
+
+				&.active {
+					background: rgba(218, 47, 104, 0.3);
+					border-color: rgba(218, 47, 104, 0.6);
+				}
+			}
+		}
+
+		// Legend
 		.legend {
 			position: absolute;
-			bottom: 30px;
-			left: 30px;
-			background: rgba(0, 0, 0, 0.6);
-			padding: 12px 20px;
+			bottom: 20px;
+			left: 20px;
+			background: rgba(0, 0, 0, 0.55);
+			padding: 10px 18px;
 			border-radius: 40px;
 			display: flex;
-			gap: 20px;
+			gap: 18px;
 			backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.1);
+			border: 1px solid rgba(255, 255, 255, 0.08);
+			z-index: 10;
 
 			.item {
 				display: flex;
 				align-items: center;
-				gap: 8px;
-				font-size: 14px;
-				color: white;
+				gap: 7px;
+				font-size: 12px;
+				color: rgba(255, 255, 255, 0.75);
+				font-weight: 500;
 
 				.dot {
 					width: 10px;
@@ -63,11 +394,226 @@
 
 					&.movie {
 						background: #da2f68;
-						box-shadow: 0 0 10px #da2f68;
+						box-shadow: 0 0 8px rgba(218, 47, 104, 0.6);
 					}
 					&.actor {
 						background: #f89e00;
-						box-shadow: 0 0 10px #f89e00;
+						box-shadow: 0 0 8px rgba(248, 158, 0, 0.6);
+					}
+					&.director {
+						background: #4ecdc4;
+						box-shadow: 0 0 8px rgba(78, 205, 196, 0.6);
+					}
+				}
+			}
+		}
+
+		// Hint
+		.hint {
+			position: absolute;
+			bottom: 20px;
+			right: 20px;
+			background: rgba(0, 0, 0, 0.5);
+			padding: 8px 16px;
+			border-radius: 30px;
+			font-size: 11px;
+			color: rgba(255, 255, 255, 0.4);
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.06);
+			z-index: 10;
+		}
+
+		// Loading Overlay
+		.loadingOverlay {
+			position: absolute;
+			top: 20px;
+			left: 50%;
+			transform: translateX(-50%);
+			background: rgba(0, 0, 0, 0.7);
+			padding: 10px 22px;
+			border-radius: 30px;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			backdrop-filter: blur(10px);
+			border: 1px solid rgba(255, 255, 255, 0.1);
+			z-index: 10;
+
+			span {
+				font-size: 13px;
+				color: rgba(255, 255, 255, 0.7);
+			}
+
+			.loadingPulse {
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: #da2f68;
+				animation: pulse 1s ease-in-out infinite;
+			}
+		}
+	}
+
+	// Detail Panel
+	.detailPanel {
+		position: fixed;
+		top: 100px;
+		right: 20px;
+		width: 320px;
+		max-height: calc(100vh - 140px);
+		overflow-y: auto;
+		background: rgba(8, 16, 32, 0.95);
+		backdrop-filter: blur(20px);
+		border-radius: 20px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+		padding: 24px;
+		z-index: 50;
+		box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+		animation: slideIn 0.3s ease-out;
+
+		/* Scrollbar styling */
+		&::-webkit-scrollbar {
+			width: 4px;
+		}
+		&::-webkit-scrollbar-track {
+			background: transparent;
+		}
+		&::-webkit-scrollbar-thumb {
+			background: rgba(255, 255, 255, 0.15);
+			border-radius: 4px;
+		}
+
+		.closePanel {
+			position: absolute;
+			top: 14px;
+			right: 14px;
+			width: 28px;
+			height: 28px;
+			border-radius: 50%;
+			border: 1px solid rgba(255, 255, 255, 0.15);
+			background: rgba(255, 255, 255, 0.06);
+			color: white;
+			cursor: pointer;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 12px;
+			transition: all 0.2s;
+
+			&:hover {
+				background: rgba(255, 255, 255, 0.15);
+			}
+		}
+
+		.panelHeader {
+			margin-bottom: 16px;
+
+			.nodeTypeTag {
+				display: inline-block;
+				padding: 4px 12px;
+				border-radius: 20px;
+				font-size: 11px;
+				font-weight: 600;
+				color: white;
+				margin-bottom: 10px;
+				text-transform: uppercase;
+				letter-spacing: 0.5px;
+			}
+
+			h3 {
+				font-size: 22px;
+				font-weight: 700;
+				color: white;
+				line-height: 1.3;
+			}
+		}
+
+		.panelImage {
+			border-radius: 14px;
+			overflow: hidden;
+			margin-bottom: 16px;
+			aspect-ratio: 2/3;
+			max-height: 250px;
+			background: rgba(255, 255, 255, 0.05);
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+			}
+		}
+
+		.panelRating {
+			font-size: 18px;
+			font-weight: 600;
+			color: #f89e00;
+			margin-bottom: 8px;
+		}
+
+		.panelMeta {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.5);
+			margin-bottom: 6px;
+		}
+
+		.panelOverview {
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.5);
+			line-height: 1.6;
+			margin: 12px 0;
+			display: -webkit-box;
+			-webkit-line-clamp: 5;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+		}
+
+		.panelConnections {
+			font-size: 14px;
+			color: rgba(255, 255, 255, 0.6);
+			padding: 10px 0;
+			border-top: 1px solid rgba(255, 255, 255, 0.08);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+			margin-bottom: 16px;
+		}
+
+		.panelActions {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+
+			.actionBtn {
+				width: 100%;
+				padding: 12px;
+				border-radius: 12px;
+				border: none;
+				font-size: 14px;
+				font-weight: 600;
+				cursor: pointer;
+				font-family: "Outfit", sans-serif;
+				transition: all 0.3s ease;
+
+				&.primary {
+					background: var(--gradient);
+					color: white;
+
+					&:hover {
+						transform: translateY(-2px);
+						box-shadow: 0 8px 25px rgba(218, 47, 104, 0.3);
+					}
+				}
+
+				&.secondary {
+					background: rgba(255, 255, 255, 0.06);
+					border: 1px solid rgba(255, 255, 255, 0.12);
+					color: white;
+
+					&:hover:not(:disabled) {
+						background: rgba(255, 255, 255, 0.12);
+					}
+
+					&:disabled {
+						opacity: 0.5;
+						cursor: not-allowed;
 					}
 				}
 			}
@@ -75,15 +621,154 @@
 	}
 }
 
+// Animations
+@keyframes pulse {
+	0%,
+	100% {
+		transform: scale(1);
+		opacity: 1;
+	}
+	50% {
+		transform: scale(1.4);
+		opacity: 0.5;
+	}
+}
+
+@keyframes fadeInOut {
+	0%,
+	100% {
+		opacity: 0.5;
+	}
+	50% {
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(30px);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+
+// Responsive
+@media screen and (max-width: 1024px) {
+	.cineGraphPage {
+		.detailPanel {
+			position: fixed;
+			top: auto;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			max-height: 50vh;
+			border-radius: 20px 20px 0 0;
+			animation: slideUp 0.3s ease-out;
+		}
+	}
+
+	@keyframes slideUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.cineGraphPage {
+		padding-top: 80px;
+
 		.pageHeader {
 			h1 {
 				font-size: 32px;
 			}
+			p {
+				font-size: 14px;
+			}
 		}
+
+		.tabBar {
+			gap: 6px;
+			.tab {
+				padding: 8px 14px;
+				font-size: 12px;
+			}
+		}
+
+		.statsBar {
+			gap: 8px;
+			.stat {
+				padding: 6px 12px;
+				.statValue {
+					font-size: 14px;
+				}
+				.statLabel {
+					font-size: 10px;
+				}
+				&.highlight {
+					display: none;
+				}
+			}
+		}
+
 		.graphContainer {
 			height: 450px;
+			border-radius: 16px;
+
+			.graphControls {
+				top: 12px;
+				right: 12px;
+				button {
+					width: 32px;
+					height: 32px;
+					font-size: 14px;
+				}
+			}
+
+			.legend {
+				bottom: 12px;
+				left: 12px;
+				gap: 12px;
+				padding: 8px 14px;
+				.item {
+					font-size: 11px;
+				}
+			}
+
+			.hint {
+				display: none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.cineGraphPage {
+		.graphContainer {
+			height: 380px;
+		}
+
+		.tabBar {
+			.tab {
+				padding: 7px 12px;
+				font-size: 11px;
+			}
+		}
+
+		.statsBar {
+			.stat {
+				padding: 5px 10px;
+				gap: 5px;
+			}
 		}
 	}
 }

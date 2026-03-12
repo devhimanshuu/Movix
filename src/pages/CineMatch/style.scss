@@ -1,191 +1,521 @@
 @import "../../mixins.scss";
 
 .cineMatchPage {
-    min-height: 700px;
-    padding-top: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    overflow-x: hidden;
+  min-height: 100vh;
+  padding-top: 100px;
+  padding-bottom: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow-x: hidden;
 
-    .pageHeader {
-        text-align: center;
-        margin-bottom: 30px;
-        
-        h1 {
-            font-size: 32px;
-            margin-bottom: 10px;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
+  .pageHeader {
+    text-align: center;
+    margin-bottom: 20px;
 
-        p {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
+    h1 {
+      font-size: 46px;
+      margin-bottom: 8px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 700;
+      letter-spacing: -0.5px;
     }
 
-    .matchContainer {
-        position: relative;
-        width: 300px;
-        height: 500px;
-        margin-bottom: 50px;
+    p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.45);
+    }
+  }
 
-        @include md {
-            width: 350px;
-            height: 550px;
+  // Genre Filter
+  .genreFilter {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 16px;
+    max-width: 600px;
+
+    .filterChip {
+      padding: 7px 16px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 13px;
+      font-family: "Outfit", sans-serif;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+      }
+
+      &.active {
+        background: var(--gradient);
+        color: white;
+        border-color: transparent;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(218, 47, 104, 0.25);
+      }
+    }
+  }
+
+  // Session Stats
+  .sessionStats {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    .statPill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 14px;
+      font-weight: 600;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+
+      &.liked {
+        color: #da2f68;
+        svg { font-size: 12px; }
+      }
+      &.passed {
+        color: rgba(255, 255, 255, 0.5);
+        svg { font-size: 12px; }
+      }
+      &.remaining {
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+  }
+
+  // Card Stack
+  .cardStack {
+    position: relative;
+    width: 320px;
+    height: 480px;
+    margin-bottom: 24px;
+
+    @include md {
+      width: 360px;
+      height: 540px;
+    }
+
+    .cardContainer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      background: rgba(20, 20, 35, 0.9);
+      user-select: none;
+
+      &.nextCard {
+        transform: scale(0.95) translateY(12px);
+        filter: brightness(0.6);
+        z-index: 1;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+
+      &.currentCard {
+        z-index: 5;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        cursor: grab;
+        transition: transform 0.35s ease, opacity 0.35s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+
+        &:active {
+          cursor: grabbing;
         }
 
-        .cardContainer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 20px;
-            overflow: hidden;
-            background: var(--black-light);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            cursor: grab;
-            
-            &.swipingRight {
-                transform: translateX(100px) rotate(10deg);
-                opacity: 0.8;
-            }
-
-            &.swipingLeft {
-                transform: translateX(-100px) rotate(-10deg);
-                opacity: 0.8;
-            }
-
-            img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                pointer-events: none;
-            }
-
-            .cardOverlay {
-                position: absolute;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-                height: 50%;
-                background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
-                padding: 20px;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-                pointer-events: none;
-
-                h2 {
-                    font-size: 24px;
-                    margin-bottom: 5px;
-                    line-height: 1.2;
-                }
-
-                .genres {
-                    font-size: 14px;
-                    color: var(--orange);
-                    margin-bottom: 10px;
-                    font-weight: 600;
-                }
-
-                .rating {
-                    display: flex;
-                    align-items: center;
-                    gap: 5px;
-                    font-weight: 700;
-                    
-                    span {
-                        color: white;
-                    }
-                }
-            }
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          pointer-events: none;
         }
 
-        .emptyState {
-            width: 100%;
-            height: 100%;
+        // Swipe indicators
+        .swipeIndicator {
+          position: absolute;
+          top: 30px;
+          z-index: 20;
+          padding: 10px 24px;
+          border-radius: 12px;
+          font-size: 20px;
+          font-weight: 800;
+          letter-spacing: 2px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          animation: popIn 0.15s ease;
+
+          &.like {
+            left: 20px;
+            color: #4cd137;
+            border: 3px solid #4cd137;
+            background: rgba(78, 209, 55, 0.15);
+            transform: rotate(-15deg);
+          }
+
+          &.nope {
+            right: 20px;
+            color: #e74c3c;
+            border: 3px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.15);
+            transform: rotate(15deg);
+          }
+        }
+
+        .cardOverlay {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 55%;
+          background: linear-gradient(to top, rgba(0, 0, 0, 0.95), rgba(0, 0, 0, 0.3) 60%, transparent);
+          padding: 24px;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          pointer-events: none;
+
+          h2 {
+            font-size: 26px;
+            margin-bottom: 10px;
+            line-height: 1.2;
+            font-weight: 700;
+          }
+
+          .cardMeta {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            background: var(--black-light);
-            border-radius: 20px;
-            text-align: center;
-            padding: 20px;
-            border: 2px dashed rgba(255,255,255,0.1);
+            gap: 12px;
+            flex-wrap: wrap;
 
-            h3 {
-                font-size: 20px;
-                margin-bottom: 10px;
+            .genres {
+              font-size: 13px;
+              color: #f89e00;
+              font-weight: 600;
             }
+
+            .rating {
+              display: flex;
+              align-items: center;
+              gap: 4px;
+              font-size: 14px;
+              font-weight: 700;
+              color: white;
+
+              svg {
+                color: #f89e00;
+                font-size: 12px;
+              }
+            }
+
+            .year {
+              font-size: 13px;
+              color: rgba(255, 255, 255, 0.5);
+            }
+          }
+        }
+
+        // Info button
+        .infoBtn {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 15;
+          width: 36px;
+          height: 36px;
+          border-radius: 50%;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(5px);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          color: white;
+          font-size: 16px;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          pointer-events: auto;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.15);
+          }
+        }
+
+        // Details Panel
+        .detailsPanel {
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: rgba(0, 0, 0, 0.88);
+          backdrop-filter: blur(10px);
+          z-index: 10;
+          padding: 60px 24px 24px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          gap: 20px;
+          animation: fadeIn 0.2s ease;
+
+          .overview {
+            font-size: 15px;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+          }
+
+          .viewDetailsBtn {
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: var(--gradient);
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: "Outfit", sans-serif;
+            align-self: flex-start;
+            transition: all 0.2s;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 8px 20px rgba(218, 47, 104, 0.3);
+            }
+          }
+        }
+      }
+
+      // Empty state
+      &.emptyState {
+        position: relative;
+        z-index: 5;
+        border: 2px dashed rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .emptyContent {
+          text-align: center;
+          padding: 30px;
+
+          .emptyIcon {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 20px;
+          }
+
+          h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: white;
+          }
+
+          p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.45);
+            line-height: 1.6;
+            margin-bottom: 24px;
+          }
+
+          .emptyActions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
 
             button {
-                padding: 10px 20px;
-                background: var(--gradient);
-                color: white;
-                border: none;
-                border-radius: 20px;
-                margin-top: 15px;
-                cursor: pointer;
-                font-weight: 600;
-
-                &:hover {
-                    opacity: 0.9;
-                }
+              padding: 12px 24px;
+              border-radius: 50px;
+              font-size: 14px;
+              font-weight: 600;
+              cursor: pointer;
+              font-family: "Outfit", sans-serif;
+              transition: all 0.2s;
             }
+
+            .resetBtn {
+              background: var(--gradient);
+              color: white;
+              border: none;
+              &:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(218, 47, 104, 0.3);
+              }
+            }
+
+            .homeBtn {
+              background: transparent;
+              color: white;
+              border: 1px solid rgba(255, 255, 255, 0.2);
+              &:hover {
+                background: rgba(255, 255, 255, 0.08);
+              }
+            }
+          }
         }
+      }
+    }
+  }
+
+  // Controls
+  .controls {
+    display: flex;
+    gap: 16px;
+    z-index: 10;
+    margin-bottom: 16px;
+
+    .controlBtn {
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+
+      &.pass, &.like {
+        width: 64px;
+        height: 64px;
+        font-size: 22px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      &.undo, &.info {
+        width: 48px;
+        height: 48px;
+        font-size: 16px;
+      }
+
+      &.pass {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        &:hover {
+          background: #e74c3c;
+          color: white;
+          border-color: #e74c3c;
+          transform: scale(1.1);
+          box-shadow: 0 8px 25px rgba(231, 76, 60, 0.4);
+        }
+      }
+
+      &.like {
+        background: var(--gradient);
+        color: white;
+
+        &:hover {
+          transform: scale(1.1);
+          box-shadow: 0 8px 25px rgba(218, 47, 104, 0.5);
+        }
+      }
+
+      &.undo {
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        &:hover:not(:disabled) {
+          background: rgba(255, 255, 255, 0.12);
+          color: white;
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+
+      &.info {
+        background: rgba(255, 255, 255, 0.06);
+        color: rgba(255, 255, 255, 0.5);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+
+        &:hover {
+          background: rgba(78, 205, 196, 0.15);
+          color: #4ecdc4;
+          border-color: rgba(78, 205, 196, 0.3);
+        }
+      }
+    }
+  }
+
+  // Keyboard hint
+  .keyboardHint {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.2);
+    text-align: center;
+  }
+}
+
+// Animations
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  from { transform: rotate(0) scale(0.5); opacity: 0; }
+  to { opacity: 1; }
+}
+
+// Responsive
+@media screen and (max-width: 768px) {
+  .cineMatchPage {
+    padding-top: 80px;
+
+    .pageHeader {
+      h1 { font-size: 32px; }
+    }
+
+    .genreFilter {
+      .filterChip {
+        padding: 5px 12px;
+        font-size: 12px;
+      }
+    }
+
+    .cardStack {
+      width: 280px;
+      height: 420px;
     }
 
     .controls {
-        display: flex;
-        gap: 30px;
-        z-index: 10;
-
-        button {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            transition: all 0.2s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-
-            &.passEffect {
-                transform: scale(1.1);
-            }
-            &.likeEffect {
-                transform: scale(1.1);
-            }
-
-            &.passBtn {
-                background: white;
-                color: var(--black);
-                
-                &:hover {
-                    background: #ff4757;
-                    color: white;
-                }
-            }
-
-            &.likeBtn {
-                background: var(--gradient);
-                color: white;
-
-                &:hover {
-                    transform: scale(1.1);
-                    box-shadow: 0 0 20px rgba(218, 47, 104, 0.6);
-                }
-            }
+      .controlBtn {
+        &.pass, &.like {
+          width: 56px;
+          height: 56px;
+          font-size: 20px;
         }
+        &.undo, &.info {
+          width: 42px;
+          height: 42px;
+        }
+      }
     }
+
+    .keyboardHint {
+      display: none;
+    }
+  }
 }
