@@ -234,37 +234,58 @@ const Trivia = () => {
     return (
       <div className="triviaPage">
         <ContentWrapper>
-          <div className="header">
-            <h1>🎬 Movie Trivia</h1>
-            <p>Test your cinema knowledge with multiple game modes</p>
-          </div>
-
-          {/* Best Stats */}
-          <div className="statsPreview">
-            <div className="statCard">
-              <FaTrophy className="icon gold" />
-              <span className="value">{bestStreak}</span>
-              <span className="label">Best Streak</span>
+          <div className="setupHero">
+            <div className="setupLabel">
+              <span className="dot" /> CHALLENGE YOURSELF
+            </div>
+            <h1>Movie <span className="grad">Trivia</span></h1>
+            <p>The ultimate test for cinephiles. Choose a mode and prove your knowledge.</p>
+            
+            <div className="statsPreview">
+              <div className="statCard">
+                <div className="statIcon gold">
+                  <FaTrophy />
+                </div>
+                <div className="statInfo">
+                  <span className="label">Best Streak</span>
+                  <span className="value">{bestStreak}</span>
+                </div>
+              </div>
             </div>
           </div>
 
-          {/* Game Mode Selection */}
           <div className="setupSection">
-            <h2>Choose Your Challenge</h2>
+            <div className="sectionHeader">
+              <h2>Select Game Mode</h2>
+              <div className="divider">
+                <span className="line" />
+                <span className="diamond" />
+                <span className="line" />
+              </div>
+            </div>
+            
             <div className="modeGrid">
               {GAME_MODES.map((mode) => (
                 <div key={mode.key} className="modeCard">
-                  <span className="modeIcon">{mode.icon}</span>
-                  <h3>{mode.label}</h3>
-                  <p>{mode.description}</p>
-                  <div className="difficultyBtns">
+                  <div className="modeVisual">
+                    <span className="modeIcon">{mode.icon}</span>
+                    <div className="glow" />
+                  </div>
+                  <div className="modeInfo">
+                    <h3>{mode.label}</h3>
+                    <p>{mode.description}</p>
+                  </div>
+                  <div className="difficultyGrid">
                     {DIFFICULTY_LEVELS.map((diff) => (
                       <button
                         key={diff.key}
                         className={`diffBtn ${diff.key}`}
                         onClick={() => startGame(mode.key, diff.key)}
                       >
-                        {diff.icon} {diff.label}
+                        <span className="btnInner">
+                          <span className="diffIcon">{diff.icon}</span>
+                          <span className="diffLabel">{diff.label}</span>
+                        </span>
                       </button>
                     ))}
                   </div>
