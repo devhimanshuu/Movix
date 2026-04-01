@@ -2,12 +2,22 @@ import React, { useState, useEffect } from "react";
 import "./style.scss";
 
 const CustomCursor = () => {
+	const [isTouchDevice, setIsTouchDevice] = useState(false);
 	const [position, setPosition] = useState({ x: 0, y: 0 });
 	const [isHovering, setIsHovering] = useState(false);
 	const [isHidden, setIsHidden] = useState(false);
 	const [isClicked, setIsClicked] = useState(false);
 
 	useEffect(() => {
+		const checkTouchDevice = () => {
+			setIsTouchDevice(
+				"ontouchstart" in window ||
+					navigator.maxTouchPoints > 0 ||
+					navigator.msMaxTouchPoints > 0
+			);
+		};
+		checkTouchDevice();
+
 		let rafId = null;
 		const targetPos = { x: 0, y: 0 };
 		const currentPos = { x: 0, y: 0 };
@@ -60,6 +70,8 @@ const CustomCursor = () => {
 			cancelAnimationFrame(rafId);
 		};
 	}, []);
+
+	if (isTouchDevice) return null;
 
 	return (
 		<>

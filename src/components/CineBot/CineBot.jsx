@@ -32,54 +32,58 @@ const CineBot = () => {
 	const [dragDistance, setDragDistance] = useState(0);
 
 	// Drag Logic
-	const onMouseDown = (e) => {
-		// Allow dragging from header OR the toggle button
-		if (
-			e.target.closest(".chat-header") ||
-			e.target.closest(".cinebot-toggle")
-		) {
+	const onStart = (clientX, clientY, target) => {
+		if (target.closest(".chat-header") || target.closest(".cinebot-toggle")) {
 			setIsDragging(true);
 			setDragDistance(0);
 			setDragStart({
-				x: e.clientX - position.x,
-				y: e.clientY - position.y,
+				x: clientX - position.x,
+				y: clientY - position.y,
 			});
 		}
 	};
 
+	const onMove = (clientX, clientY) => {
+		if (!isDragging) return;
+
+		const newX = clientX - dragStart.x;
+		const newY = clientY - dragStart.y;
+
+		const dist = Math.sqrt(
+			Math.pow(newX - position.x, 2) + Math.pow(newY - position.y, 2)
+		);
+		setDragDistance((prev) => prev + dist);
+		setPosition({ x: newX, y: newY });
+	};
+
+	const onEnd = () => {
+		setIsDragging(false);
+	};
+
 	useEffect(() => {
-		const onMouseMove = (e) => {
-			if (!isDragging) return;
-
-			const newX = e.clientX - dragStart.x;
-			const newY = e.clientY - dragStart.y;
-
-			// Calculate distance moved to distinguish drag from click
-			const dist = Math.sqrt(
-				Math.pow(newX - position.x, 2) + Math.pow(newY - position.y, 2),
-			);
-			setDragDistance((prev) => prev + dist);
-
-			setPosition({ x: newX, y: newY });
-		};
-
-		const onMouseUp = () => {
-			setIsDragging(false);
+		const handleMouseMove = (e) => onMove(e.clientX, e.clientY);
+		const handleTouchMove = (e) => {
+			if (e.touches.length > 0) {
+				onMove(e.touches[0].clientX, e.touches[0].clientY);
+			}
 		};
 
 		if (isDragging) {
-			window.addEventListener("mousemove", onMouseMove);
-			window.addEventListener("mouseup", onMouseUp);
+			window.addEventListener("mousemove", handleMouseMove);
+			window.addEventListener("mouseup", onEnd);
+			window.addEventListener("touchmove", handleTouchMove, { passive: false });
+			window.addEventListener("touchend", onEnd);
 		}
 
 		return () => {
-			window.removeEventListener("mousemove", onMouseMove);
-			window.removeEventListener("mouseup", onMouseUp);
+			window.removeEventListener("mousemove", handleMouseMove);
+			window.removeEventListener("mouseup", onEnd);
+			window.removeEventListener("touchmove", handleTouchMove);
+			window.removeEventListener("touchend", onEnd);
 		};
 	}, [isDragging, dragStart, position]);
 
 	const handleToggle = () => {
-		// Only toggle if it wasn't a significant drag
 		if (dragDistance < 10) {
 			setIsOpen(!isOpen);
 		}
@@ -119,7 +123,10 @@ const CineBot = () => {
 			<div
 				className="chat-window"
 				ref={chatWindowRef}
-				onMouseDown={onMouseDown}>
+				onMouseDown={(e) => onStart(e.clientX, e.clientY, e.target)}
+				onTouchStart={(e) =>
+					onStart(e.touches[0].clientX, e.touches[0].clientY, e.target)
+				}>
 				<div className="chat-header">
 					<div className="bot-info">
 						<div className="bot-avatar">🤖</div>
@@ -174,7 +181,10 @@ const CineBot = () => {
 			<button
 				className="cinebot-toggle"
 				onClick={handleToggle}
-				onMouseDown={onMouseDown}>
+				onMouseDown={(e) => onStart(e.clientX, e.clientY, e.target)}
+				onTouchStart={(e) =>
+					onStart(e.touches[0].clientX, e.touches[0].clientY, e.target)
+				}>
 				{isOpen ? <IoClose size={30} /> : <IoVideocamSharp size={30} />}
 			</button>
 		</div>

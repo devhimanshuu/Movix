@@ -261,6 +261,16 @@
 					}
 				}
 			}
+
+			/* Touch devices: always show action icons since there's no hover */
+			@media (hover: none) {
+				.posterBlock {
+					.watchlistIcon,
+					.compareIcon {
+						opacity: 1;
+					}
+				}
+			}
 		}
 	}
 }

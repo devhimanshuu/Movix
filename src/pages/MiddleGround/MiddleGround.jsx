@@ -6,6 +6,7 @@ import { fetchDataFromApi } from "../../utils/api";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import Img from "../../components/lazyLoadImage/img";
 import Spinner from "../../components/Spinner/Spinner";
+import MovieCard from "../../components/MovieCard/MovieCard";
 import PosterFallback from "../../assets/no-poster.png";
 
 import "./style.scss";
@@ -315,32 +316,11 @@ const MiddleGround = () => {
 						{data.length > 0 ? (
 							<div className="movieGrid">
 								{data.map((movie) => (
-									<div
+									<MovieCard
 										key={movie.id}
-										className="movieCard"
-										onClick={() => navigate(`/movie/${movie.id}`)}
-									>
-										<div className="posterWrap">
-											<Img
-												src={
-													movie.poster_path
-														? url.poster + movie.poster_path
-														: PosterFallback
-												}
-											/>
-											<div className="cardOverlay">
-												<div className="ratingBadge">
-													<FaStar /> {movie.vote_average?.toFixed(1)}
-												</div>
-											</div>
-										</div>
-										<div className="cardInfo">
-											<h4>{movie.title}</h4>
-											<span className="cardYear">
-												{movie.release_date?.slice(0, 4)}
-											</span>
-										</div>
-									</div>
+										data={movie}
+										mediaType="movie"
+									/>
 								))}
 							</div>
 						) : (

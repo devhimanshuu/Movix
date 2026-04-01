@@ -77,49 +77,34 @@ const Header = () => {
 					<img src={logo} alt="" />
 				</div>
 				<ul className="menuItems">
-					<li className="menuItem" onClick={() => navigate("/home")}>
-						Home
-					</li>
-					<li className="menuItem" onClick={() => navigationHandler("movie")}>
-						Movies
-					</li>
-					<li className="menuItem" onClick={() => navigationHandler("tv")}>
-						TV Shows
-					</li>
-					<li className="menuItem" onClick={() => navigate("/watchlist")}>
-						Watchlist
-					</li>
-					<li className="menuItem" onClick={() => navigate("/history")}>
-						History
-					</li>
-					<li className="menuItem" onClick={() => navigate("/comparison")}>
-						Comparison
-					</li>
-					<li className="menuItem" onClick={() => navigate("/cinematch")}>
-						Match
-					</li>
-					<li className="menuItem" onClick={() => navigate("/trivia")}>
-						Trivia
-					</li>
-					<li className="menuItem" onClick={() => navigate("/mystery-box")}>
-						Surprise
-					</li>
-					<li className="menuItem" onClick={() => navigate("/cinestream")}>
-						Feed
-					</li>
-					<li className="menuItem" onClick={() => navigate("/moodify")}>
-						Moods
-					</li>
-					<li className="menuItem" onClick={() => navigate("/globetrotter")}>
-						Globe
-					</li>
-					<li className="menuItem" onClick={() => navigate("/cinegraph")}>
-						Graph
-					</li>
-					<li className="menuItem" onClick={() => navigate("/middle-ground")}>
-						Planner
-					</li>
-					<li className="menuItem">
+					{[
+						{ label: "Home", path: "/home" },
+						{ label: "Movies", path: "/explore/movie", type: "movie" },
+						{ label: "TV Shows", path: "/explore/tv", type: "tv" },
+						{ label: "Watchlist", path: "/watchlist" },
+						{ label: "History", path: "/history" },
+						{ label: "Comparison", path: "/comparison" },
+						{ label: "Match", path: "/cinematch" },
+						{ label: "Trivia", path: "/trivia" },
+						{ label: "Surprise", path: "/mystery-box" },
+						{ label: "Feed", path: "/cinestream" },
+						{ label: "Moods", path: "/moodify" },
+						{ label: "Globe", path: "/globetrotter" },
+						{ label: "Graph", path: "/cinegraph" },
+						{ label: "Planner", path: "/middle-ground" },
+					].map((item, index) => (
+						<li
+							key={item.label}
+							className="menuItem"
+							style={{ "--i": index }}
+							onClick={() =>
+								item.type ? navigationHandler(item.type) : navigate(item.path)
+							}
+						>
+							{item.label}
+						</li>
+					))}
+					<li className="menuItem searchIcon">
 						<HiOutlineSearch onClick={openSearch} />
 					</li>
 				</ul>

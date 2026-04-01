@@ -193,8 +193,12 @@
 			.row {
 				display: flex;
 				align-items: center;
-				gap: 25px;
+				gap: 20px;
 				margin-bottom: 25px;
+				flex-wrap: wrap;
+				@include sm {
+					gap: 25px;
+				}
 			}
 
 			.info {

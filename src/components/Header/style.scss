@@ -92,19 +92,31 @@
       background: var(--black3);
       flex-direction: column;
       width: 100%;
+      height: calc(100vh - 60px);
       padding: 20px 0;
+      overflow-y: auto;
       border-top: 1px solid rgba(255, 255, 255, 0.1);
-      animation: mobileMenu 0.3s ease forwards;
+      animation: mobileMenuSlide 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+
       .menuItem {
-        font-size: 20px;
+        font-size: 18px;
         width: 100%;
         height: auto;
-        padding: 15px 20px;
+        padding: 12px 24px;
         margin: 0;
         display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        &:last-child {
+        align-items: center;
+        opacity: 0;
+        transform: translateX(-20px);
+        animation: menuItemFadeIn 0.3s ease forwards;
+        animation-delay: calc(var(--i) * 0.05s + 0.2s);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        &:active {
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        &.searchIcon {
           display: none;
         }
       }
@@ -150,11 +162,24 @@
   }
 }
 
-@keyframes mobileMenu {
+@keyframes mobileMenuSlide {
   0% {
-    transform: translateY(-130%);
+    transform: translateY(-10px);
+    opacity: 0;
   }
   100% {
     transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes menuItemFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
