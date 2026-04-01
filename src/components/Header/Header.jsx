@@ -92,18 +92,25 @@ const Header = () => {
 						{ label: "Globe", path: "/globetrotter" },
 						{ label: "Graph", path: "/cinegraph" },
 						{ label: "Planner", path: "/middle-ground" },
-					].map((item, index) => (
-						<li
-							key={item.label}
-							className="menuItem"
-							style={{ "--i": index }}
-							onClick={() =>
-								item.type ? navigationHandler(item.type) : navigate(item.path)
-							}
-						>
-							{item.label}
-						</li>
-					))}
+					].map((item, index) => {
+						const isActive = 
+							location.pathname === item.path || 
+							(item.type === "movie" && location.pathname.startsWith("/explore/movie")) ||
+							(item.type === "tv" && location.pathname.startsWith("/explore/tv"));
+
+						return (
+							<li
+								key={item.label}
+								className={`menuItem ${isActive ? "active" : ""}`}
+								style={{ "--i": index }}
+								onClick={() =>
+									item.type ? navigationHandler(item.type) : navigate(item.path)
+								}
+							>
+								{item.label}
+							</li>
+						);
+					})}
 					<li className="menuItem searchIcon">
 						<HiOutlineSearch onClick={openSearch} />
 					</li>
