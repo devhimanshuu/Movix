@@ -4,8 +4,7 @@ import { removeFromWatchlist, clearWatchlist } from "../../store/watchlistSlice"
 import "./style.scss";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/MovieCard/MovieCard";
-import Spinner from "../../components/Spinner/Spinner";
-import PageNotFound from "../404/PageNotFound";
+import CinematicState from "../404/CinematicState";
 
 const Watchlist = () => {
   const dispatch = useDispatch();
@@ -34,80 +33,89 @@ const Watchlist = () => {
 
   return (
     <div className="watchlistPage">
-      <ContentWrapper>
-        <div className="watchlistHeader">
-          <h1>My Watchlist</h1>
-          <div className="watchlistStats">
-            <span className="stat">
-              Total: <strong>{watchlist.length}</strong>
-            </span>
-            <span className="stat">
-              Movies: <strong>{movies.length}</strong>
-            </span>
-            <span className="stat">
-              TV Shows: <strong>{tvShows.length}</strong>
-            </span>
+      {watchlist.length === 0 ? (
+        <CinematicState
+          title="Empty Watchlist"
+          subtitle="Nothing added to your watchlist yet."
+          message="Start exploring movies and TV shows and add them to your watchlist for later."
+          icon="🎥"
+          badgeLabel="WATCHLIST EMPTY"
+          showSearch={false}
+        />
+      ) : (
+        <ContentWrapper>
+          <div className="watchlistHeader">
+            <h1>My Watchlist</h1>
+            <div className="watchlistStats">
+              <span className="stat">
+                Total: <strong>{watchlist.length}</strong>
+              </span>
+              <span className="stat">
+                Movies: <strong>{movies.length}</strong>
+              </span>
+              <span className="stat">
+                TV Shows: <strong>{tvShows.length}</strong>
+              </span>
+            </div>
           </div>
-        </div>
 
-        <div className="filterSection">
-          <div className="filterButtons">
-            <button
-              className={`filterBtn ${filter === "all" ? "active" : ""}`}
-              onClick={() => setFilter("all")}
-            >
-              All ({watchlist.length})
-            </button>
-            <button
-              className={`filterBtn ${filter === "movies" ? "active" : ""}`}
-              onClick={() => setFilter("movies")}
-            >
-              Movies ({movies.length})
-            </button>
-            <button
-              className={`filterBtn ${filter === "tv" ? "active" : ""}`}
-              onClick={() => setFilter("tv")}
-            >
-              TV Shows ({tvShows.length})
+          <div className="filterSection">
+            <div className="filterButtons">
+              <button
+                className={`filterBtn ${filter === "all" ? "active" : ""}`}
+                onClick={() => setFilter("all")}
+              >
+                All ({watchlist.length})
+              </button>
+              <button
+                className={`filterBtn ${filter === "movies" ? "active" : ""}`}
+                onClick={() => setFilter("movies")}
+              >
+                Movies ({movies.length})
+              </button>
+              <button
+                className={`filterBtn ${filter === "tv" ? "active" : ""}`}
+                onClick={() => setFilter("tv")}
+              >
+                TV Shows ({tvShows.length})
+              </button>
+            </div>
+            <button className="clearBtn" onClick={handleClearAll}>
+              Clear All
             </button>
           </div>
-          <button className="clearBtn" onClick={handleClearAll}>
-            Clear All
-          </button>
-        </div>
 
-        {watchlist.length === 0 ? (
-          <div className="emptyState">
-            <p>Your watchlist is empty</p>
-            <p className="subtext">
-              Start adding movies and TV shows to your watchlist!
-            </p>
-          </div>
-        ) : displayItems.length === 0 ? (
-          <div className="emptyState">
-            <p>
-              No {filter !== "all" ? filter : "items"} in your watchlist yet.
-            </p>
-          </div>
-        ) : (
-          <div className="watchlistGrid">
-            {displayItems.map((item) => (
-              <div key={item.id} className="watchlistItem">
-                <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
-                  <MovieCard data={item} mediaType={item.media_type} />
-                  <button
-                    className="removeBtn"
-                    onClick={() => handleRemove(item.id)}
-                    title="Remove from watchlist"
-                  >
-                    ✕
-                  </button>
+          {displayItems.length === 0 ? (
+            <CinematicState
+              title={`No ${filter !== "all" ? filter : "Items"}`}
+              subtitle={`You don't have any ${filter !== "all" ? filter : "items"} in your watchlist.`}
+              message="Try switching to a different category or add new titles to your watchlist."
+              icon="🎬"
+              badgeLabel="FILTERED"
+              showSearch={false}
+              showHomeButton={false}
+              showBackButton={false}
+            />
+          ) : (
+            <div className="watchlistGrid">
+              {displayItems.map((item) => (
+                <div key={item.id} className="watchlistItem">
+                  <div style={{ position: "relative", display: "inline-block", width: "100%" }}>
+                    <MovieCard data={item} mediaType={item.media_type} />
+                    <button
+                      className="removeBtn"
+                      onClick={() => handleRemove(item.id)}
+                      title="Remove from watchlist"
+                    >
+                      ✕
+                    </button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </ContentWrapper>
+              ))}
+            </div>
+          )}
+        </ContentWrapper>
+      )}
     </div>
   );
 };

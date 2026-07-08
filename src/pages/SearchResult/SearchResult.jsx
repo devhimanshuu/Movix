@@ -7,8 +7,8 @@ import { fetchDataFromApi } from "../../utils/api";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import SearchFilters from "../../components/SearchFilters/SearchFilters";
-import noResults from "../../assets/no-results.png";
 import Spinner from "../../components/Spinner/Spinner";
+import CinematicState from "../404/CinematicState";
 
 const SearchResult = () => {
   const [data, setData] = useState(null);
@@ -83,9 +83,9 @@ const SearchResult = () => {
     <div className="searchResultsPage">
       {loading && <Spinner initial={true} />}
       {!loading && (
-        <ContentWrapper>
+        <>
           {data?.results?.length > 0 ? (
-            <>
+            <ContentWrapper>
               <div className="pageTitle">
                 {`Search${
                   data.total_results > 1 ? "results" : "result"
@@ -111,16 +111,29 @@ const SearchResult = () => {
                     );
                   })
                 ) : (
-                  <span className="resultNotFound">
-                    No results match your filters. Try adjusting your search criteria.
-                  </span>
+                  <CinematicState
+                    title="No Matches"
+                    subtitle="Nothing matches your current filters."
+                    message="Try adjusting your search criteria or clearing some filters to find what you're looking for."
+                    icon="🔍"
+                    badgeLabel="FILTERED OUT"
+                    showHomeButton={false}
+                  />
                 )}
               </InfiniteScroll>
-            </>
+            </ContentWrapper>
           ) : (
-            <span className="resultNotFound"> Sorry, Results not Found!</span>
+            <CinematicState
+              title="No Results"
+              subtitle={`Nothing found for "${query}"`}
+              message="The search didn't turn up any matching movies or TV shows. Try a different search term."
+              icon="🎞"
+              badgeLabel="NO RESULTS"
+              showSearch={true}
+              showHomeButton={false}
+            />
           )}
-        </ContentWrapper>
+        </>
       )}
     </div>
   );

@@ -1,0 +1,534 @@
+@import "../../mixins.scss";
+
+.cinematic-state {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(ellipse at center, #0a0a0f 0%, #000000 70%);
+  overflow: hidden;
+  padding: 60px 20px;
+  border-radius: 0;
+
+  /* Vignette Overlay */
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 40%,
+      rgba(0, 0, 0, 0.5) 100%
+    );
+  }
+
+  /* Film Grain Overlay */
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+    animation: csGrainShift 0.5s steps(4) infinite;
+  }
+
+  /* Scanlines */
+  .scanlines {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255, 255, 255, 0.006) 2px,
+      rgba(255, 255, 255, 0.006) 4px
+    );
+  }
+
+  /* Light Leak */
+  .light-leak {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    pointer-events: none;
+    background: radial-gradient(
+      ellipse at 20% 30%,
+      rgba(218, 47, 104, 0.03) 0%,
+      rgba(248, 158, 0, 0.02) 30%,
+      transparent 60%
+    );
+    animation: csLightLeakPulse 6s ease-in-out infinite;
+  }
+
+  /* Camera Flash */
+  .camera-flash {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+    pointer-events: none;
+    background: white;
+    opacity: 0;
+    animation: csCameraFlash 1s ease-out forwards;
+  }
+
+  /* Film Counter */
+  .film-counter {
+    position: absolute;
+    bottom: 24px;
+    right: 30px;
+    z-index: 10;
+    pointer-events: none;
+    font-family: "Courier New", monospace;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.06);
+    letter-spacing: 2px;
+    user-select: none;
+
+    .counter-number {
+      display: block;
+      animation: csCounterTick 1s steps(2) infinite;
+    }
+
+    .counter-label {
+      display: block;
+      font-size: 8px;
+      color: rgba(255, 255, 255, 0.03);
+      margin-top: 3px;
+    }
+  }
+
+  /* Floating Elements */
+  .floating-elements {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .film-reel {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(218, 47, 104, 0.06);
+    border-radius: 50%;
+    opacity: 0.4;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 6px;
+      border: 2px solid rgba(218, 47, 104, 0.04);
+      border-radius: 50%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(218, 47, 104, 0.02);
+      border-radius: 50%;
+    }
+
+    &.reel-1 {
+      width: 70px;
+      height: 70px;
+      top: 8%;
+      left: 5%;
+      animation: csFloatReel 8s ease-in-out infinite;
+    }
+
+    &.reel-2 {
+      width: 45px;
+      height: 45px;
+      top: 65%;
+      right: 8%;
+      animation: csFloatReel 10s ease-in-out infinite 1s;
+
+      &::before { inset: 5px; }
+      &::after { inset: 12px; }
+    }
+
+    &.reel-3 {
+      width: 30px;
+      height: 30px;
+      bottom: 10%;
+      left: 15%;
+      animation: csFloatReel 7s ease-in-out infinite 2s;
+
+      &::before { inset: 4px; }
+      &::after { inset: 9px; }
+    }
+  }
+
+  /* Main Content */
+  .content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    max-width: 520px;
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+    transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+
+    &.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Badge */
+  .state-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(218, 47, 104, 0.7);
+    border: 1px solid rgba(218, 47, 104, 0.12);
+    background: rgba(218, 47, 104, 0.04);
+    margin-bottom: 28px;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.4s;
+    opacity: 0;
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--pink);
+      animation: csBadgePulse 1.5s ease-in-out infinite;
+    }
+  }
+
+  /* Icon */
+  .state-icon-wrapper {
+    margin-bottom: 24px;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.5s;
+    opacity: 0;
+
+    .state-icon {
+      font-size: 48px;
+      display: inline-block;
+      animation: csIconFloat 3s ease-in-out infinite;
+
+      @include sm {
+        font-size: 56px;
+      }
+    }
+  }
+
+  /* Title */
+  .state-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0 0 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.6s;
+    opacity: 0;
+
+    @include sm {
+      font-size: 34px;
+    }
+  }
+
+  /* Subtitle */
+  .state-subtitle {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 10px;
+    font-weight: 400;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.7s;
+    opacity: 0;
+  }
+
+  /* Message */
+  .state-message {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.25);
+    line-height: 1.7;
+    margin: 0 0 32px;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+  }
+
+  /* Search Section */
+  .search-section {
+    margin-bottom: 28px;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 0.9s;
+    opacity: 0;
+
+    .search-box {
+      display: flex;
+      align-items: center;
+      max-width: 400px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 10px;
+      padding: 3px 3px 3px 14px;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &:focus-within {
+        border-color: rgba(218, 47, 104, 0.2);
+        background: rgba(218, 47, 104, 0.03);
+        box-shadow: 0 0 0 3px rgba(218, 47, 104, 0.05);
+
+        .search-icon {
+          color: var(--pink);
+        }
+      }
+
+      .search-icon {
+        font-size: 18px;
+        color: rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+        transition: color 0.3s ease;
+      }
+
+      .search-input {
+        flex: 1;
+        background: none;
+        border: none;
+        outline: none;
+        color: rgba(255, 255, 255, 0.8);
+        padding: 11px 10px;
+        font-size: 14px;
+        font-family: inherit;
+        width: 100%;
+
+        &::placeholder {
+          color: rgba(255, 255, 255, 0.1);
+        }
+      }
+
+      .search-btn {
+        padding: 8px 18px;
+        background: var(--gradient);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-1px);
+          box-shadow: 0 4px 15px rgba(218, 47, 104, 0.3);
+        }
+
+        &:active:not(:disabled) {
+          transform: translateY(0);
+        }
+
+        &:disabled {
+          opacity: 0.3;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+
+  /* Actions */
+  .actions-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 40px;
+
+    @include sm {
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  .cinematic-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    position: relative;
+    overflow: hidden;
+    animation: csFadeInUp 0.5s ease forwards;
+    opacity: 0;
+
+    .btn-icon {
+      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .btn-text {
+      position: relative;
+      z-index: 1;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -75%;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.1),
+        transparent
+      );
+      transform: skewX(-25deg);
+      transition: left 0.6s ease;
+    }
+
+    &:hover::before {
+      left: 125%;
+    }
+
+    &.primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 25px rgba(218, 47, 104, 0.3);
+      animation-delay: 1s;
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 35px rgba(218, 47, 104, 0.5);
+
+        .btn-icon {
+          transform: translateX(-3px);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+
+    &.secondary {
+      background: rgba(255, 255, 255, 0.04);
+      color: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      animation-delay: 1.1s;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.15);
+        color: rgba(255, 255, 255, 0.9);
+        transform: translateY(-2px);
+
+        .btn-icon {
+          transform: rotate(-180deg);
+        }
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+
+  /* Rating Badge */
+  .rating-badge {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    opacity: 0;
+    animation: csFadeInUp 0.5s ease forwards;
+    animation-delay: 1.2s;
+
+    .stars {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: rgba(248, 158, 0, 0.15);
+      animation: csStarTwinkle 2s ease-in-out infinite;
+    }
+
+    .rating-text {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.12);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+  }
+}
+
+/* ========= KEYFRAME ANIMATIONS ========= */
+
+@keyframes csGrainShift {
+  0%   { transform: translate(0, 0); }
+  25%  { transform: translate(-2px, 1px); }
+  50%  { transform: translate(1px, -2px); }
+  75%  { transform: translate(-1px, 2px); }
+}
+
+@keyframes csLightLeakPulse {
+  0%, 100% { opacity: 0.3; }
+  50%     { opacity: 0.6; }
+}
+
+@keyframes csCameraFlash {
+  0%   { opacity: 0.4; }
+  20%  { opacity: 0.2; }
+  100% { opacity: 0; }
+}
+
+@keyframes csCounterTick {
+  0%   { opacity: 0.3; }
+  50%  { opacity: 0.1; }
+  100% { opacity: 0.3; }
+}
+
+@keyframes csFloatReel {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%     { transform: translateY(-30px) rotate(180deg); }
+}
+
+@keyframes csFadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes csBadgePulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%     { opacity: 0.4; transform: scale(0.8); }
+}
+
+@keyframes csIconFloat {
+  0%, 100% { transform: translateY(0); }
+  50%     { transform: translateY(-8px); }
+}
+
+@keyframes csStarTwinkle {
+  0%, 100% { opacity: 0.15; }
+  50%     { opacity: 0.4; }
+}

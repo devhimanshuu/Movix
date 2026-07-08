@@ -12,6 +12,7 @@ import { fetchDataFromApi } from "../../utils/api";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/MovieCard/MovieCard";
 import Spinner from "../../components/Spinner/Spinner";
+import CinematicState from "../404/CinematicState";
 
 let filters = {};
 
@@ -149,29 +150,33 @@ const Explore = () => {
           </div>
         </div>
         {loading && <Spinner initial={true} />}
-        {!loading && (
-          <>
-            {data?.results?.length > 0 ? (
-              <InfiniteScroll
-                className="content"
-                dataLength={data?.results?.length || []}
-                next={fetchNextPageData}
-                hasMore={pageNum <= data?.total_pages}
-                loader={<Spinner />}
-              >
-                {data?.results?.map((item, index) => {
-                  if (item.media_type === "person") return;
-                  return (
-                    <MovieCard key={index} data={item} mediaType={mediaType} />
-                  );
-                })}
-              </InfiniteScroll>
-            ) : (
-              <span className="resultNotFound">Sorry, Results not found!</span>
-            )}
-          </>
+        {!loading && data?.results?.length > 0 && (
+          <InfiniteScroll
+            className="content"
+            dataLength={data?.results?.length || []}
+            next={fetchNextPageData}
+            hasMore={pageNum <= data?.total_pages}
+            loader={<Spinner />}
+          >
+            {data?.results?.map((item, index) => {
+              if (item.media_type === "person") return;
+              return (
+                <MovieCard key={index} data={item} mediaType={mediaType} />
+              );
+            })}
+          </InfiniteScroll>
         )}
       </ContentWrapper>
+      {!loading && data?.results?.length === 0 && (
+        <CinematicState
+          title="No Results"
+          subtitle="Nothing matches your current criteria."
+          message="Try different filters or adjust your genre/sort selection to find what you're looking for."
+          icon="🔍"
+          badgeLabel="NO MATCHES"
+          showHomeButton={false}
+        />
+      )}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { removeFromHistory, clearHistory } from "../../store/historySlice";
 import "./style.scss";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import MovieCard from "../../components/MovieCard/MovieCard";
-import PageNotFound from "../404/PageNotFound";
+import CinematicState from "../404/CinematicState";
 
 const WatchHistory = () => {
   const dispatch = useDispatch();
@@ -21,7 +21,15 @@ const WatchHistory = () => {
   };
 
   if (history.length === 0) {
-    return <PageNotFound />;
+    return (
+      <CinematicState
+        title="No Watch History"
+        subtitle="You haven't watched anything yet."
+        message="Start exploring movies and TV shows — your viewing history will appear here."
+        icon="📽"
+        badgeLabel="HISTORY EMPTY"
+      />
+    );
   }
 
   return (
