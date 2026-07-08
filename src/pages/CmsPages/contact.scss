@@ -6,19 +6,29 @@
 
   .contactBgGlow {
     position: fixed;
-    top: -50%;
-    right: -20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(218, 47, 104, 0.06) 0%, transparent 70%);
+    top: -40%;
+    right: -15%;
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(218, 47, 104, 0.05) 0%, transparent 70%);
     border-radius: 50%;
     pointer-events: none;
     z-index: 0;
     animation: bgGlowFloat 8s ease-in-out infinite;
 
-    @include md {
-      width: 800px;
-      height: 800px;
+    @include md { width: 900px; height: 900px; }
+
+    &.secondary {
+      top: auto;
+      bottom: -30%;
+      left: -15%;
+      right: auto;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(248, 158, 0, 0.03) 0%, transparent 70%);
+      animation: bgGlowFloat2 10s ease-in-out infinite;
+
+      @include md { width: 700px; height: 700px; }
     }
   }
 
@@ -30,15 +40,10 @@
       font-size: 38px;
       margin-bottom: 14px;
       line-height: 1.15;
-
-      @include md {
-        font-size: 52px;
-      }
+      @include md { font-size: 52px; }
     }
 
-    .subtitle {
-      color: rgba(255, 255, 255, 0.45);
-    }
+    .subtitle { color: rgba(255, 255, 255, 0.45); }
   }
 
   .contactGrid {
@@ -54,52 +59,83 @@
     }
   }
 
+  /* ===== FORM WRAPPER ===== */
   .contactFormWrapper {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 20px;
-    padding: 32px;
-    transition: border-color 0.3s ease;
     position: relative;
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.04) 0%,
+      rgba(255, 255, 255, 0.01) 100%
+    );
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 24px;
+    padding: 36px;
+    backdrop-filter: blur(20px);
+    transition: all 0.3s ease;
 
-    &:hover {
-      border-color: rgba(255, 255, 255, 0.1);
-    }
+    &:hover { border-color: rgba(255, 255, 255, 0.09); }
 
-    @include md {
-      padding: 40px;
+    @include md { padding: 44px; }
+
+    .formDecor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent 5%, var(--pink) 30%, var(--orange) 60%, transparent 95%);
+      border-radius: 24px 24px 0 0;
+      opacity: 0.6;
     }
   }
 
+  /* ===== FORM ===== */
   .contactForm {
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
 
     .formHeader {
-      margin-bottom: 4px;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 8px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+
+      .formHeaderIcon {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(218, 47, 104, 0.1), rgba(248, 158, 0, 0.05));
+        border: 1px solid rgba(218, 47, 104, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--pink);
+        font-size: 16px;
+        flex-shrink: 0;
+      }
 
       h3 {
         font-size: 20px;
         font-weight: 700;
         color: var(--text-primary);
-        margin-bottom: 6px;
+        margin-bottom: 4px;
       }
 
       p {
         font-size: 14px;
-        color: rgba(255, 255, 255, 0.35);
+        color: rgba(255, 255, 255, 0.3);
+        line-height: 1.5;
       }
     }
 
     .formRow {
       display: grid;
       grid-template-columns: 1fr;
-      gap: 22px;
-
-      @include md {
-        grid-template-columns: 1fr 1fr;
-      }
+      gap: 20px;
+      @include md { grid-template-columns: 1fr 1fr; }
     }
 
     .formGroup {
@@ -110,68 +146,22 @@
         position: relative;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         background: rgba(255, 255, 255, 0.03);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 0 14px;
+        border: 1.5px solid rgba(255, 255, 255, 0.06);
+        border-radius: 14px;
+        padding: 0 16px;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-        &:focus-within {
-          border-color: rgba(218, 47, 104, 0.4);
-          background: rgba(218, 47, 104, 0.03);
-          box-shadow: 0 0 0 3px rgba(218, 47, 104, 0.06);
-
-          .inputIcon {
-            color: var(--pink);
-          }
-
-          label {
-            transform: translateY(-20px) scale(0.85);
-            color: var(--pink);
-          }
-
-          .inputFocus {
-            transform: scaleX(1);
-          }
-        }
-
         .inputIcon {
-          color: rgba(255, 255, 255, 0.2);
+          color: rgba(255, 255, 255, 0.15);
           font-size: 14px;
-          transition: color 0.3s ease;
+          transition: all 0.3s ease;
           flex-shrink: 0;
           z-index: 1;
         }
 
-        label {
-          position: absolute;
-          left: 40px;
-          top: 50%;
-          transform: translateY(-50%);
-          font-size: 14px;
-          color: rgba(255, 255, 255, 0.3);
-          pointer-events: none;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-          z-index: 1;
-          background: transparent;
-          padding: 0 4px;
-        }
-
-        .inputFocus {
-          position: absolute;
-          bottom: 0;
-          left: 12px;
-          right: 12px;
-          height: 2px;
-          background: var(--pink);
-          border-radius: 1px;
-          transform: scaleX(0);
-          transition: transform 0.3s ease;
-        }
-
-        input,
-        textarea {
+        input, textarea {
           background: none;
           border: none;
           outline: none;
@@ -183,55 +173,77 @@
           position: relative;
           z-index: 1;
 
-          &:placeholder-shown + label {
-            // Keep label in place when placeholder is visible (no value)
-          }
-
-          &:not(:placeholder-shown) + label {
-            transform: translateY(-20px) scale(0.85);
-            color: rgba(255, 255, 255, 0.4);
-          }
-
           &::placeholder {
-            color: transparent;
+            color: rgba(255, 255, 255, 0.15);
+            transition: color 0.3s ease;
           }
         }
 
         textarea {
-          min-height: 110px;
+          min-height: 120px;
           resize: vertical;
-          padding: 18px 0 12px;
+          padding: 18px 0 14px;
+          line-height: 1.6;
+        }
+
+        .inputFocus {
+          position: absolute;
+          bottom: -1px;
+          left: 16px;
+          right: 16px;
+          height: 2px;
+          background: var(--gradient);
+          border-radius: 2px;
+          transform: scaleX(0);
+          opacity: 0;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         &.textareaWrapper {
           align-items: flex-start;
-          padding-top: 4px;
-
-          label {
-            top: 22px;
-          }
+          padding-top: 2px;
         }
+      }
+
+      /* Focus state */
+      &.focused .inputWrapper {
+        border-color: rgba(218, 47, 104, 0.25);
+        background: rgba(218, 47, 104, 0.04);
+        box-shadow: 0 0 0 4px rgba(218, 47, 104, 0.06);
+
+        .inputIcon { color: var(--pink); }
+        .inputFocus { transform: scaleX(1); opacity: 1; }
+        input::placeholder { color: rgba(255, 255, 255, 0.08); }
+        textarea::placeholder { color: rgba(255, 255, 255, 0.08); }
+      }
+
+      /* Filled state */
+      &.filled .inputWrapper {
+        .inputIcon { color: rgba(218, 47, 104, 0.5); }
       }
     }
 
+    /* ===== SUBMIT BUTTON ===== */
     .submitBtn {
       position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
       background: var(--gradient);
       color: white;
       border: none;
-      padding: 16px 36px;
-      border-radius: 12px;
-      font-size: 15px;
+      padding: 17px 40px;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: 600;
       cursor: pointer;
       font-family: inherit;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       align-self: flex-start;
       overflow: hidden;
+      margin-top: 4px;
+
+      &:disabled { cursor: not-allowed; opacity: 0.7; }
 
       .btnContent {
         display: inline-flex;
@@ -241,100 +253,115 @@
         z-index: 1;
 
         .btnIcon {
-          transition: transform 0.3s ease;
+          font-size: 15px;
+          transition: all 0.3s ease;
+
+          &.spinner { animation: spin 0.8s linear infinite; }
+        }
+
+        &.loading .btnIcon {
+          animation: spin 0.8s linear infinite;
         }
       }
 
       .btnGlow {
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent);
         opacity: 0;
         transition: opacity 0.3s ease;
       }
 
-      &:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 30px rgba(218, 47, 104, 0.35);
+      &:hover:not(:disabled) {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(218, 47, 104, 0.35);
 
-        .btnGlow {
-          opacity: 1;
-        }
-
-        .btnIcon {
-          transform: translateX(4px) rotate(-10deg);
-        }
+        .btnGlow { opacity: 1; }
+        .btnContent .btnIcon { transform: translateX(5px) rotate(-10deg); }
       }
 
-      &:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 10px rgba(218, 47, 104, 0.3);
+      &:active:not(:disabled) {
+        transform: translateY(-1px);
+        box-shadow: 0 4px 15px rgba(218, 47, 104, 0.3);
       }
     }
   }
 
+  /* ===== SUCCESS STATE ===== */
   .successMessage {
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    padding: 50px 20px;
-    animation: successReveal 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    padding: 60px 20px 50px;
+    position: relative;
 
     .successIcon {
-      width: 72px;
-      height: 72px;
+      width: 80px;
+      height: 80px;
       border-radius: 50%;
-      background: linear-gradient(135deg, rgba(34, 197, 94, 0.15), rgba(34, 197, 94, 0.05));
-      border: 2px solid rgba(34, 197, 94, 0.25);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(34, 197, 94, 0.04));
+      border: 2px solid rgba(34, 197, 94, 0.2);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #22c55e;
-      font-size: 32px;
-      margin-bottom: 24px;
+      font-size: 36px;
+      margin-bottom: 28px;
       position: relative;
-      animation: successIconPop 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+      animation: successIconPop 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
       transform: scale(0);
+
+      .successRipple {
+        position: absolute;
+        inset: -8px;
+        border-radius: 50%;
+        border: 2px solid rgba(34, 197, 94, 0.1);
+        animation: successRipple 1.5s ease-out infinite;
+      }
     }
 
     h3 {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 700;
       color: var(--text-primary);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     p {
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.4);
       font-size: 15px;
       line-height: 1.65;
       max-width: 380px;
     }
 
-    .successRings {
-      display: flex;
-      gap: 8px;
-      margin-top: 28px;
+    .successParticles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
 
-      span {
-        width: 8px;
-        height: 8px;
+      .particle {
+        position: absolute;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
-        background: rgba(34, 197, 94, 0.15);
-        animation: successRingBounce 1.5s ease-in-out infinite;
+        background: #22c55e;
+        opacity: 0;
+        animation: successParticle 1.5s ease-out forwards;
+        animation-delay: calc(var(--i) * 0.15s);
 
-        &:nth-child(2) {
-          animation-delay: 0.2s;
-        }
-
-        &:nth-child(3) {
-          animation-delay: 0.4s;
-        }
+        &:nth-child(1) { top: 20%; left: 15%; }
+        &:nth-child(2) { top: 15%; right: 20%; }
+        &:nth-child(3) { top: 30%; left: 10%; }
+        &:nth-child(4) { bottom: 25%; left: 20%; }
+        &:nth-child(5) { bottom: 20%; right: 15%; }
+        &:nth-child(6) { top: 25%; right: 25%; }
       }
     }
   }
 
+  /* ===== SIDEBAR ===== */
   .contactSidebar {
     display: flex;
     flex-direction: column;
@@ -342,15 +369,15 @@
   }
 
   .sidebarCard {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.005));
+    border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
-    padding: 28px;
+    padding: 26px;
     transition: all 0.3s ease;
 
     &:hover {
-      border-color: rgba(255, 255, 255, 0.1);
-      background: rgba(255, 255, 255, 0.03);
+      border-color: rgba(255, 255, 255, 0.09);
+      background: rgba(255, 255, 255, 0.025);
     }
 
     .sidebarCardHeader {
@@ -360,11 +387,11 @@
       margin-bottom: 20px;
 
       .cardIcon {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        background: rgba(218, 47, 104, 0.08);
-        border: 1px solid rgba(218, 47, 104, 0.12);
+        width: 40px;
+        height: 40px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, rgba(218, 47, 104, 0.08), rgba(248, 158, 0, 0.04));
+        border: 1px solid rgba(218, 47, 104, 0.08);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -372,10 +399,7 @@
         font-size: 16px;
         flex-shrink: 0;
 
-        &.questionIcon {
-          font-size: 18px;
-          font-weight: 700;
-        }
+        &.questionIcon { font-size: 19px; font-weight: 700; }
       }
 
       h3 {
@@ -396,35 +420,32 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      padding: 14px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
+      padding: 14px 16px;
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      border-radius: 14px;
       text-decoration: none;
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
       &:hover {
-        background: rgba(218, 47, 104, 0.06);
-        border-color: rgba(218, 47, 104, 0.15);
-        transform: translateX(6px);
+        background: rgba(218, 47, 104, 0.05);
+        border-color: rgba(218, 47, 104, 0.12);
+        transform: translateX(5px);
 
         .methodIconBg {
-          background: rgba(218, 47, 104, 0.15);
-          border-color: rgba(218, 47, 104, 0.25);
+          background: linear-gradient(135deg, rgba(218, 47, 104, 0.12), rgba(248, 158, 0, 0.06));
+          border-color: rgba(218, 47, 104, 0.2);
           transform: scale(1.05);
-
-          .methodIcon {
-            color: var(--pink);
-          }
+          .methodIcon { color: var(--pink); }
         }
       }
 
       .methodIconBg {
-        width: 40px;
-        height: 40px;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.06);
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -432,8 +453,8 @@
         transition: all 0.3s ease;
 
         .methodIcon {
-          font-size: 16px;
-          color: rgba(255, 255, 255, 0.35);
+          font-size: 17px;
+          color: rgba(255, 255, 255, 0.25);
           transition: color 0.3s ease;
         }
       }
@@ -449,7 +470,7 @@
         font-weight: 600;
         text-transform: uppercase;
         letter-spacing: 1px;
-        color: rgba(255, 255, 255, 0.3);
+        color: rgba(255, 255, 255, 0.2);
       }
 
       .methodValue {
@@ -460,32 +481,22 @@
     }
   }
 
-  .faqCard {
-    p {
-      color: rgba(255, 255, 255, 0.45);
-      font-size: 14px;
-      line-height: 1.7;
-
-      a {
-        color: var(--pink);
-        text-decoration: none;
-        font-weight: 600;
-        transition: opacity 0.3s ease;
-
-        &:hover {
-          opacity: 0.8;
-        }
-      }
+  .faqCard p {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+    line-height: 1.7;
+    a {
+      color: var(--pink);
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.3s ease;
+      &:hover { opacity: 0.8; }
     }
   }
 
   .newsletterCard {
-    background: linear-gradient(
-      135deg,
-      rgba(218, 47, 104, 0.05) 0%,
-      rgba(248, 158, 0, 0.03) 100%
-    );
-    border-color: rgba(218, 47, 104, 0.08);
+    background: linear-gradient(135deg, rgba(218, 47, 104, 0.04) 0%, rgba(248, 158, 0, 0.02) 100%);
+    border-color: rgba(218, 47, 104, 0.06);
     position: relative;
     overflow: hidden;
 
@@ -493,8 +504,8 @@
       content: "";
       position: absolute;
       top: 0;
-      left: 20px;
-      right: 20px;
+      left: 24px;
+      right: 24px;
       height: 2px;
       background: linear-gradient(90deg, var(--pink), var(--orange));
       border-radius: 0 0 2px 2px;
@@ -502,7 +513,7 @@
 
     .newsletterCardDesc {
       font-size: 14px;
-      color: rgba(255, 255, 255, 0.45);
+      color: rgba(255, 255, 255, 0.4);
       line-height: 1.65;
       margin-bottom: 20px;
     }
@@ -513,20 +524,16 @@
       gap: 10px;
 
       input {
-        background: rgba(255, 255, 255, 0.04);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 12px;
         color: var(--text-primary);
-        padding: 12px 14px;
+        padding: 13px 14px;
         font-size: 14px;
         width: 100%;
         font-family: inherit;
         transition: all 0.3s ease;
-
-        &::placeholder {
-          color: rgba(255, 255, 255, 0.2);
-        }
-
+        &::placeholder { color: rgba(255, 255, 255, 0.15); }
         &:focus {
           outline: none;
           border-color: var(--pink);
@@ -538,22 +545,18 @@
         background: var(--gradient);
         color: white;
         border: none;
-        padding: 12px 20px;
-        border-radius: 10px;
+        padding: 13px 20px;
+        border-radius: 12px;
         font-size: 14px;
         font-weight: 600;
         cursor: pointer;
         font-family: inherit;
         transition: all 0.3s ease;
-
         &:hover {
-          box-shadow: 0 4px 20px rgba(218, 47, 104, 0.35);
+          box-shadow: 0 4px 20px rgba(218, 47, 104, 0.3);
           transform: translateY(-1px);
         }
-
-        &:active {
-          transform: translateY(0);
-        }
+        &:active { transform: translateY(0); }
       }
     }
 
@@ -564,18 +567,24 @@
       color: #22c55e;
       font-size: 14px;
       font-weight: 500;
-      padding: 12px 16px;
-      background: rgba(34, 197, 94, 0.08);
-      border: 1px solid rgba(34, 197, 94, 0.15);
-      border-radius: 10px;
+      padding: 13px 16px;
+      background: rgba(34, 197, 94, 0.06);
+      border: 1px solid rgba(34, 197, 94, 0.12);
+      border-radius: 12px;
       animation: successReveal 0.35s ease;
     }
   }
 }
 
+/* ===== KEYFRAMES ===== */
 @keyframes bgGlowFloat {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(-30px, 30px); }
+}
+
+@keyframes bgGlowFloat2 {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(25px, -20px); }
 }
 
 @keyframes successReveal {
@@ -584,11 +593,22 @@
 }
 
 @keyframes successIconPop {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
+  from { transform: scale(0) rotate(-30deg); }
+  to { transform: scale(1) rotate(0deg); }
 }
 
-@keyframes successRingBounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
+@keyframes successRipple {
+  from { transform: scale(0.8); opacity: 1; }
+  to { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes successParticle {
+  0% { opacity: 0; transform: translateY(0) scale(0); }
+  30% { opacity: 0.6; transform: translateY(-20px) scale(1); }
+  100% { opacity: 0; transform: translateY(-50px) scale(0); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }

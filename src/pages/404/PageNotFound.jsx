@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineSearch } from "react-icons/hi";
 
 import "./style.scss";
 
@@ -7,6 +8,8 @@ const PageNotFound = () => {
   const navigate = useNavigate();
   const [showContent, setShowContent] = useState(false);
   const [counter, setCounter] = useState(0);
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchRef = useRef(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowContent(true), 200);
@@ -21,6 +24,19 @@ const PageNotFound = () => {
   }, []);
 
   const formatCounter = (num) => String(num).padStart(2, "0");
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/search/${searchQuery.trim()}`);
+    }
+  };
+
+  const handleSearchKey = (e) => {
+    if (e.key === "Enter" && searchQuery.trim()) {
+      navigate(`/search/${searchQuery.trim()}`);
+    }
+  };
 
   return (
     <div className="cinematic-404">
@@ -100,6 +116,30 @@ const PageNotFound = () => {
             The page you're looking for seems to have ended up on the
             cutting room floor.
           </p>
+        </div>
+
+        {/* Search */}
+        <div className="search-section">
+          <p className="search-label">Search Movies & TV Shows</p>
+          <div className="search-box">
+            <HiOutlineSearch className="search-icon" />
+            <input
+              ref={searchRef}
+              type="text"
+              className="search-input"
+              placeholder="Search by title..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearchKey}
+            />
+            <button
+              className="search-btn"
+              onClick={handleSearch}
+              disabled={!searchQuery.trim()}
+            >
+              Search
+            </button>
+          </div>
         </div>
 
         {/* Actions */}
