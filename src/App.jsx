@@ -27,9 +27,18 @@ import MysteryBox from "./pages/MysteryBox/MysteryBox";
 import GlobeTrotter from "./pages/GlobeTrotter/GlobeTrotter";
 import CineGraph from "./pages/CineGraph/CineGraph";
 import MiddleGround from "./pages/MiddleGround/MiddleGround";
+import RegionalCinema from "./pages/RegionalCinema/RegionalCinema";
 import CineBot from "./components/CineBot/CineBot";
 import Landing from "./pages/Landing/Landing";
 import CustomCursor from "./components/CustomCursor/CustomCursor";
+import PrivacyPolicy from "./pages/CmsPages/PrivacyPolicy";
+import TermsOfService from "./pages/CmsPages/TermsOfService";
+import About from "./pages/CmsPages/About";
+import FAQ from "./pages/CmsPages/FAQ";
+import Blog from "./pages/CmsPages/Blog";
+import Contact from "./pages/CmsPages/Contact";
+import BackToTop from "./components/BackToTop/BackToTop";
+import ScrollToTop from "./components/ScrollToTop/ScrollToTop";
 import { all } from "axios";
 
 function App() {
@@ -135,6 +144,7 @@ function AppLayout() {
 
 	return (
 		<>
+			<ScrollToTop />
 			{!isLanding && <Header />}
 			<Routes>
 				<Route path="/" element={<Landing />} />
@@ -153,10 +163,18 @@ function AppLayout() {
 				<Route path="/middle-ground" element={<MiddleGround />} />
 				<Route path="/mystery-box" element={<MysteryBox />} />
 				<Route path="/globetrotter" element={<GlobeTrotter />} />
+				<Route path="/regional-cinema" element={<RegionalCinema />} />
+				<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+				<Route path="/terms" element={<TermsOfService />} />
+				<Route path="/about" element={<About />} />
+				<Route path="/faq" element={<FAQ />} />
+				<Route path="/blog" element={<Blog />} />
+				<Route path="/contact" element={<Contact />} />
 				<Route path="/:mediaType/:id" element={<Details />} />
 				<Route path="*" element={<PageNotFound />} />
 			</Routes>
 			{!isLanding && <Footer />}
+			<BackToTop />
 			<CineBot />
 			<CustomCursor />
 		</>

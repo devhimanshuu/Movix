@@ -8,6 +8,8 @@ import InTheatre from "./InTheatre/InTheatre";
 import ContinueWatching from "./ContinueWatching/ContinueWatching";
 import ContinueWatchingReminder from "../../components/ContinueWatchingReminder/ContinueWatchingReminder";
 import InteractiveSection from "./InteractiveSection/InteractiveSection";
+import LanguageSection from "./LanguageSections/LanguageSection";
+import languages from "../../data/languages";
 
 const Home = () => {
   return (
@@ -20,6 +22,10 @@ const Home = () => {
       <Trending />
       <Popular />
       <TopRated />
+
+      {languages.map(({ title, code }) => (
+        <LanguageSection key={code} title={title} languageCode={code} />
+      ))}
     </div>
   );
 };

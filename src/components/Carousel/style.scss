@@ -1,4 +1,5 @@
 @import "../../mixins.scss";
+
 .carousel {
 	margin-bottom: 50px;
 	.contentWrapper {
@@ -33,6 +34,29 @@
 	.carouselRighttNav {
 		right: 30px;
 	}
+
+	.swipeHint {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		justify-content: center;
+		width: 100%;
+		padding: 10px 0 4px;
+		animation: swipeHintFade 3s ease forwards;
+		@include md {
+			display: none;
+		}
+		.swipeHintText {
+			font-size: 13px;
+			color: rgba(255, 255, 255, 0.4);
+		}
+		.swipeHintArrow {
+			font-size: 16px;
+			color: var(--pink);
+			animation: swipeArrowBounce 1.2s ease-in-out infinite;
+		}
+	}
+
 	.loadingSkeleton {
 		display: flex;
 		gap: 10px;
@@ -85,13 +109,19 @@
 	.carouselItems {
 		display: flex;
 		gap: 10px;
+		overflow-x: auto;
 		overflow-y: hidden;
 		margin-right: -20px;
 		margin-left: -20px;
 		padding: 0 20px;
+		touch-action: pan-y;
+		&::-webkit-scrollbar {
+			display: none;
+		}
+		-ms-overflow-style: none;
+		scrollbar-width: none;
 		@include md {
 			gap: 20px;
-			overflow: hidden;
 			margin: 0;
 			padding: 0;
 		}
@@ -272,5 +302,33 @@
 				}
 			}
 		}
+	}
+}
+
+@keyframes rotateSignature {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+@keyframes swipeHintFade {
+	0%, 70% {
+		opacity: 1;
+	}
+	100% {
+		opacity: 0;
+		visibility: hidden;
+	}
+}
+
+@keyframes swipeArrowBounce {
+	0%, 100% {
+		transform: translateX(0);
+	}
+	50% {
+		transform: translateX(6px);
 	}
 }

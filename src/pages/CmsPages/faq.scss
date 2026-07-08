@@ -1,0 +1,217 @@
+@import "../../mixins.scss";
+
+.faqPage {
+  position: relative;
+  overflow: hidden;
+
+  .faqBgGlow {
+    position: fixed;
+    top: -30%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(218, 47, 104, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: faqGlowFloat 10s ease-in-out infinite;
+  }
+
+  .pageHeader {
+    position: relative;
+    z-index: 1;
+  }
+
+  .content {
+    position: relative;
+    z-index: 1;
+  }
+
+  .faqList {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 20px 0;
+  }
+
+  .faqItem {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 14px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: faqItemFadeIn 0.5s ease forwards;
+    opacity: 0;
+    transform: translateY(10px);
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    &.open {
+      border-color: rgba(218, 47, 104, 0.2);
+      background: rgba(218, 47, 104, 0.03);
+      box-shadow: 0 4px 20px rgba(218, 47, 104, 0.06);
+    }
+
+    .faqQuestion {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 24px;
+      background: none;
+      border: none;
+      color: var(--text-primary);
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.3s ease;
+      font-family: inherit;
+
+      @include md {
+        font-size: 17px;
+        padding: 24px 28px;
+      }
+
+      &:hover {
+        color: var(--pink);
+      }
+
+      .faqQuestionContent {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        flex: 1;
+
+        .faqIndex {
+          font-size: 12px;
+          font-weight: 700;
+          color: rgba(218, 47, 104, 0.4);
+          font-family: "Courier New", monospace;
+          letter-spacing: 1px;
+          flex-shrink: 0;
+          width: 28px;
+        }
+      }
+
+      .faqIcon {
+        font-size: 14px;
+        color: var(--pink);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        flex-shrink: 0;
+        margin-left: 16px;
+        display: flex;
+        align-items: center;
+
+        &.rotated {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    .faqAnswer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+      p {
+        padding: 0 24px 20px;
+        color: rgba(255, 255, 255, 0.5);
+        line-height: 1.75;
+        font-size: 15px;
+        margin: 0;
+
+        @include md {
+          font-size: 16px;
+          padding: 0 28px 24px;
+        }
+      }
+    }
+
+    &.open .faqAnswer {
+      max-height: 400px;
+    }
+  }
+
+  .ctaSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 50px 30px;
+    margin: 40px 0 20px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 20px;
+    animation: ctaReveal 0.6s ease forwards;
+    animation-delay: 0.8s;
+    opacity: 0;
+
+    .ctaIcon {
+      font-size: 36px;
+      color: rgba(218, 47, 104, 0.2);
+      margin-bottom: 16px;
+      animation: ctaIconBounce 2s ease-in-out infinite;
+    }
+
+    h3 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 24px;
+      max-width: 400px;
+    }
+
+    .ctaBtn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      background: var(--gradient);
+      color: white;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      font-family: inherit;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(218, 47, 104, 0.3);
+      }
+
+      &:active {
+        transform: translateY(0);
+      }
+    }
+  }
+}
+
+@keyframes faqGlowFloat {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(20px, -30px); }
+}
+
+@keyframes faqItemFadeIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ctaReveal {
+  to { opacity: 1; }
+}
+
+@keyframes ctaIconBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}

@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useCallback, useState, useEffect } from "react";
 import {
   BsFillArrowLeftCircleFill,
   BsFillArrowRightCircleFill,
@@ -31,6 +31,18 @@ const Carousel = ({ data, loading, endpoint, title }) => {
   const comparison = useSelector((state) => state.comparison.items);
   const navigate = useNavigate();
 
+  const touchRef = useRef({ startX: 0, scrollLeft: 0, isDragging: false, lastX: 0, lastTime: 0, velocityX: 0 });
+  const momentumRef = useRef(null);
+  const [showSwipeHint, setShowSwipeHint] = useState(false);
+  const hasSwipedRef = useRef(false);
+
+  useEffect(() => {
+    if (!loading && data?.length > 0 && window.innerWidth < 768) {
+      const timer = setTimeout(() => setShowSwipeHint(true), 800);
+      return () => clearTimeout(timer);
+    }
+  }, [loading, data?.length]);
+
   const navigation = (dir) => {
     const container = carouselContainer.current;
 
@@ -44,6 +56,76 @@ const Carousel = ({ data, loading, endpoint, title }) => {
       behavior: "smooth",
     });
   };
+
+  const applyMomentum = useCallback(() => {
+    const container = carouselContainer.current;
+    if (!container || !touchRef.current.velocityX) return;
+
+    let velocity = touchRef.current.velocityX;
+    const friction = 0.95;
+    const threshold = 0.5;
+
+    const animate = () => {
+      if (Math.abs(velocity) < threshold) {
+        touchRef.current.velocityX = 0;
+        return;
+      }
+
+      container.scrollLeft += velocity;
+      velocity *= friction;
+      touchRef.current.velocityX = velocity;
+      momentumRef.current = requestAnimationFrame(animate);
+    };
+
+    momentumRef.current = requestAnimationFrame(animate);
+  }, []);
+
+  const handleTouchStart = useCallback((e) => {
+    if (momentumRef.current) {
+      cancelAnimationFrame(momentumRef.current);
+      momentumRef.current = null;
+    }
+    if (!hasSwipedRef.current) {
+      hasSwipedRef.current = true;
+      setShowSwipeHint(false);
+    }
+    const container = carouselContainer.current;
+    const now = Date.now();
+    touchRef.current = {
+      startX: e.touches[0].pageX - container.offsetLeft,
+      scrollLeft: container.scrollLeft,
+      isDragging: true,
+      lastX: e.touches[0].pageX,
+      lastTime: now,
+      velocityX: 0,
+    };
+  }, []);
+
+  const handleTouchMove = useCallback((e) => {
+    if (!touchRef.current.isDragging) return;
+    const container = carouselContainer.current;
+    const now = Date.now();
+    const x = e.touches[0].pageX - container.offsetLeft;
+    const walk = (touchRef.current.startX - x) * 1.5;
+    container.scrollLeft = touchRef.current.scrollLeft + walk;
+
+    const dt = now - touchRef.current.lastTime;
+    if (dt > 0) {
+      const dx = e.touches[0].pageX - touchRef.current.lastX;
+      touchRef.current.velocityX = -(dx / dt) * 15;
+    }
+    touchRef.current.lastX = e.touches[0].pageX;
+    touchRef.current.lastTime = now;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    touchRef.current.isDragging = false;
+    if (Math.abs(touchRef.current.velocityX) > 1) {
+      applyMomentum();
+    } else {
+      touchRef.current.velocityX = 0;
+    }
+  }, [applyMomentum]);
 
   const skItem = () => {
     return (
@@ -70,7 +152,14 @@ const Carousel = ({ data, loading, endpoint, title }) => {
           onClick={() => navigation("right")}
         />
         {!loading ? (
-          <div className="carouselItems" ref={carouselContainer}>
+          <>
+            {showSwipeHint && (
+              <div className="swipeHint">
+                <span className="swipeHintText">Swipe to explore</span>
+                <span className="swipeHintArrow">→</span>
+              </div>
+            )}
+            <div className="carouselItems" ref={carouselContainer} onTouchStart={handleTouchStart} onTouchMove={handleTouchMove} onTouchEnd={handleTouchEnd}>
             {data?.map((item) => {
               const posterUrl = item.poster_path
                 ? url.poster + item.poster_path
@@ -135,7 +224,8 @@ const Carousel = ({ data, loading, endpoint, title }) => {
                 </div>
               );
             })}
-          </div>
+            </div>
+          </>
         ) : (
           <div className="loadingSkeleton">
             {skItem()}

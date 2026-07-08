@@ -71,6 +71,7 @@
 		transform: translateY(30px) scale(0.9) rotate(2deg);
 		opacity: 0;
 		visibility: hidden;
+		pointer-events: none;
 		transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 		transform-origin: bottom right;
 
@@ -290,6 +291,7 @@
 			transform: translateY(0) scale(1);
 			opacity: 1;
 			visibility: visible;
+			pointer-events: auto;
 		}
 	}
 }

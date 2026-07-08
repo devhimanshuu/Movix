@@ -1,0 +1,47 @@
+@import "../../mixins.scss";
+
+.backToTopBtn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--pink);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.8);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 20px rgba(218, 47, 104, 0.4);
+
+  &.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+  }
+
+  &:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 8px 30px rgba(218, 47, 104, 0.5);
+  }
+
+  &:active {
+    transform: translateY(0) scale(0.95);
+  }
+
+  @include md {
+    bottom: 40px;
+    right: 40px;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+}

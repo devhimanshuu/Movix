@@ -3,6 +3,8 @@ import { useParams, useLocation } from "react-router-dom";
 import InfiniteScroll from "react-infinite-scroll-component";
 import Select from "react-select";
 
+import movixTheme from "../../utils/reactSelectTheme";
+
 import "./style.scss";
 
 import useFetch from "../../hooks/useFetch";
@@ -131,6 +133,7 @@ const Explore = () => {
               placeholder="Select genres"
               className="react-select-container genresDD"
               classNamePrefix="react-select"
+              theme={movixTheme}
             />
             <Select
               name="sortby"
@@ -141,6 +144,7 @@ const Explore = () => {
               placeholder="Sort by"
               className="react-select-container sortbyDD"
               classNamePrefix="react-select"
+              theme={movixTheme}
             />
           </div>
         </div>

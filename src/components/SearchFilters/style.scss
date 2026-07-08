@@ -5,14 +5,15 @@
 
   .filterToggle {
     padding: 10px 20px;
-    background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
-    color: white;
+    background: var(--gradient);
+    color: var(--text-primary);
     border: none;
     border-radius: 20px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    font-family: inherit;
 
     &:hover {
       transform: translateY(-2px);
@@ -21,8 +22,8 @@
   }
 
   .filterPanel {
-    background: rgba(10, 41, 85, 0.5);
-    border: 1px solid rgba(218, 47, 104, 0.3);
+    background: rgba(2, 12, 27, 0.7);
+    border: 1px solid rgba(218, 47, 104, 0.2);
     border-radius: 12px;
     padding: 25px;
     margin-top: 20px;
@@ -47,7 +48,7 @@
     .filterLabel {
       display: block;
       margin-bottom: 12px;
-      color: white;
+      color: var(--text-primary);
       font-size: 1rem;
       font-weight: 600;
     }
@@ -60,22 +61,23 @@
       .filterOption {
         padding: 8px 16px;
         background: transparent;
-        border: 2px solid #404040;
-        color: #b0b0b0;
+        border: 2px solid rgba(255, 255, 255, 0.15);
+        color: var(--text-secondary);
         border-radius: 20px;
         cursor: pointer;
         font-size: 0.95rem;
         transition: all 0.3s ease;
+        font-family: inherit;
 
         &:hover {
-          border-color: #da2f68;
-          color: white;
+          border-color: var(--pink);
+          color: var(--text-primary);
         }
 
         &.active {
-          background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
-          border-color: #da2f68;
-          color: white;
+          background: var(--gradient);
+          border-color: var(--pink);
+          color: var(--text-primary);
         }
       }
     }
@@ -88,26 +90,27 @@
       .rangeInput {
         flex: 1;
         padding: 10px;
-        background: rgba(4, 21, 45, 0.8);
-        border: 1px solid #404040;
+        background: rgba(2, 12, 27, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 8px;
-        color: white;
+        color: var(--text-primary);
         font-size: 0.95rem;
         transition: all 0.3s ease;
+        font-family: inherit;
 
         &:focus {
           outline: none;
-          border-color: #da2f68;
-          background: rgba(4, 21, 45, 1);
+          border-color: var(--pink);
+          background: rgba(2, 12, 27, 0.9);
         }
 
         &::placeholder {
-          color: #666;
+          color: rgba(255, 255, 255, 0.25);
         }
       }
 
       span {
-        color: #b0b0b0;
+        color: var(--text-secondary);
         font-weight: 600;
       }
     }
@@ -121,7 +124,7 @@
         width: 100%;
         height: 6px;
         border-radius: 3px;
-        background: #404040;
+        background: rgba(255, 255, 255, 0.1);
         outline: none;
         -webkit-appearance: none;
         appearance: none;
@@ -132,7 +135,7 @@
           width: 18px;
           height: 18px;
           border-radius: 50%;
-          background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
+          background: var(--gradient);
           cursor: pointer;
           transition: all 0.3s ease;
 
@@ -146,7 +149,7 @@
           width: 18px;
           height: 18px;
           border-radius: 50%;
-          background: linear-gradient(98.37deg, #f89e00 0.99%, #da2f68 100%);
+          background: var(--gradient);
           cursor: pointer;
           border: none;
           transition: all 0.3s ease;
@@ -164,17 +167,18 @@
     width: 100%;
     padding: 12px;
     background: transparent;
-    border: 2px solid #e50914;
-    color: #e50914;
+    border: 2px solid var(--pink);
+    color: var(--pink);
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s ease;
+    font-family: inherit;
 
     &:hover {
-      background: #e50914;
-      color: white;
+      background: var(--pink);
+      color: var(--text-primary);
     }
   }
 }
