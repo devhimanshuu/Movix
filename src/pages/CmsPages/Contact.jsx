@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ContentWrapper from "../../components/contentWrapper/ContentWrapper";
 import {
   FaEnvelope,
@@ -10,6 +10,8 @@ import {
   FaBell,
   FaMapMarkerAlt,
   FaTag,
+  FaCommentAlt,
+  FaSpinner,
 } from "react-icons/fa";
 import "./style.scss";
 
@@ -21,8 +23,10 @@ const Contact = () => {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
   const [newsletterEmail, setNewsletterEmail] = useState("");
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  const [focusedField, setFocusedField] = useState(null);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -30,11 +34,15 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setSubmitting(true);
     setTimeout(() => {
-      setSubmitted(false);
-      setFormData({ name: "", email: "", subject: "", message: "" });
-    }, 4000);
+      setSubmitting(false);
+      setSubmitted(true);
+      setTimeout(() => {
+        setSubmitted(false);
+        setFormData({ name: "", email: "", subject: "", message: "" });
+      }, 4000);
+    }, 1500);
   };
 
   const handleNewsletterSubmit = (e) => {
@@ -46,9 +54,18 @@ const Contact = () => {
     }
   };
 
+  const getFieldState = (field) => {
+    const hasValue = formData[field]?.length > 0;
+    const isFocused = focusedField === field;
+    if (isFocused) return "focused";
+    if (hasValue) return "filled";
+    return "empty";
+  };
+
   return (
     <div className="cmsPage contactPage">
       <div className="contactBgGlow" />
+      <div className="contactBgGlow secondary" />
       <ContentWrapper>
         <div className="pageHeader">
           <div className="headerBadge">
@@ -67,101 +84,120 @@ const Contact = () => {
 
         <div className="contactGrid">
           <div className="contactFormWrapper">
+            <div className="formDecor" />
             {submitted ? (
               <div className="successMessage">
                 <div className="successIcon">
                   <FaCheck />
+                  <div className="successRipple" />
                 </div>
                 <h3>Message Sent!</h3>
                 <p>
                   Thanks for reaching out. We'll get back to you as soon as
                   possible — usually within 24 hours.
                 </p>
-                <div className="successRings">
-                  <span />
-                  <span />
-                  <span />
+                <div className="successParticles">
+                  {[...Array(6)].map((_, i) => (
+                    <span key={i} className="particle" style={{ '--i': i }} />
+                  ))}
                 </div>
               </div>
             ) : (
               <form className="contactForm" onSubmit={handleSubmit}>
                 <div className="formHeader">
-                  <h3>Send Us a Message</h3>
-                  <p>Fill out the form below and we'll get back to you.</p>
+                  <div className="formHeaderIcon">
+                    <FaCommentAlt />
+                  </div>
+                  <div>
+                    <h3>Send Us a Message</h3>
+                    <p>We'd love to hear from you. Fill out the form and we'll respond promptly.</p>
+                  </div>
                 </div>
 
                 <div className="formRow">
-                  <div className="formGroup">
+                  <div className={`formGroup ${getFieldState("name")}`}>
                     <div className="inputWrapper">
                       <FaUser className="inputIcon" />
                       <input
                         type="text"
                         id="name"
                         name="name"
-                        placeholder=" "
+                        placeholder="Your Name"
                         value={formData.name}
                         onChange={handleChange}
+                        onFocus={() => setFocusedField("name")}
+                        onBlur={() => setFocusedField(null)}
                         required
                       />
-                      <label htmlFor="name">Your Name</label>
                       <span className="inputFocus" />
                     </div>
                   </div>
-                  <div className="formGroup">
+                  <div className={`formGroup ${getFieldState("email")}`}>
                     <div className="inputWrapper">
                       <FaEnvelope className="inputIcon" />
                       <input
                         type="email"
                         id="email"
                         name="email"
-                        placeholder=" "
+                        placeholder="Email Address"
                         value={formData.email}
                         onChange={handleChange}
+                        onFocus={() => setFocusedField("email")}
+                        onBlur={() => setFocusedField(null)}
                         required
                       />
-                      <label htmlFor="email">Email Address</label>
                       <span className="inputFocus" />
                     </div>
                   </div>
                 </div>
 
-                <div className="formGroup">
+                <div className={`formGroup ${getFieldState("subject")}`}>
                   <div className="inputWrapper">
                     <FaTag className="inputIcon" />
                     <input
                       type="text"
                       id="subject"
                       name="subject"
-                      placeholder=" "
+                      placeholder="Subject"
                       value={formData.subject}
                       onChange={handleChange}
+                      onFocus={() => setFocusedField("subject")}
+                      onBlur={() => setFocusedField(null)}
                       required
                     />
-                    <label htmlFor="subject">Subject</label>
                     <span className="inputFocus" />
                   </div>
                 </div>
 
-                <div className="formGroup">
+                <div className={`formGroup ${getFieldState("message")}`}>
                   <div className="inputWrapper textareaWrapper">
                     <textarea
                       id="message"
                       name="message"
-                      placeholder=" "
+                      placeholder="Your Message"
                       rows="5"
                       value={formData.message}
                       onChange={handleChange}
+                      onFocus={() => setFocusedField("message")}
+                      onBlur={() => setFocusedField(null)}
                       required
                     />
-                    <label htmlFor="message">Your Message</label>
                     <span className="inputFocus" />
                   </div>
                 </div>
 
-                <button type="submit" className="submitBtn">
-                  <span className="btnContent">
-                    <FaPaperPlane className="btnIcon" />
-                    Send Message
+                <button
+                  type="submit"
+                  className="submitBtn"
+                  disabled={submitting}
+                >
+                  <span className={`btnContent ${submitting ? "loading" : ""}`}>
+                    {submitting ? (
+                      <FaSpinner className="btnIcon spinner" />
+                    ) : (
+                      <FaPaperPlane className="btnIcon" />
+                    )}
+                    {submitting ? "Sending..." : "Send Message"}
                   </span>
                   <span className="btnGlow" />
                 </button>
@@ -178,10 +214,7 @@ const Contact = () => {
                 <h3>Reach Out</h3>
               </div>
               <div className="contactMethods">
-                <a
-                  href="mailto:hello@movix.app"
-                  className="contactMethod"
-                >
+                <a href="mailto:hello@movix.app" className="contactMethod">
                   <span className="methodIconBg">
                     <FaEnvelope className="methodIcon" />
                   </span>

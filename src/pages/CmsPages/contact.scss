@@ -26,58 +26,18 @@
     position: relative;
     z-index: 1;
 
-    .headerBadge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--pink);
-      background: rgba(218, 47, 104, 0.08);
-      border: 1px solid rgba(218, 47, 104, 0.15);
-      padding: 6px 18px;
-      border-radius: 20px;
-      margin-bottom: 16px;
-
-      .badgePulse {
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background: var(--pink);
-        animation: badgePulse 2s ease-in-out infinite;
-      }
-    }
-
     h1 {
       font-size: 38px;
-      font-weight: 800;
       margin-bottom: 14px;
       line-height: 1.15;
 
       @include md {
         font-size: 52px;
       }
-
-      .gradientText {
-        background: var(--gradient);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-      }
     }
 
     .subtitle {
-      font-size: 16px;
       color: rgba(255, 255, 255, 0.45);
-      max-width: 560px;
-      margin: 0 auto;
-      line-height: 1.65;
-
-      @include md {
-        font-size: 17px;
-      }
     }
   }
 
@@ -616,11 +576,6 @@
 @keyframes bgGlowFloat {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(-30px, 30px); }
-}
-
-@keyframes badgePulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(1.3); }
 }
 
 @keyframes successReveal {

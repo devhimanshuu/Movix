@@ -198,7 +198,7 @@
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.06);
     border-radius: 20px;
-    animation: ctaReveal 0.6s ease forwards;
+    animation: blogCtaReveal 0.6s ease forwards;
     animation-delay: 0.6s;
     opacity: 0;
 
@@ -206,7 +206,7 @@
       font-size: 32px;
       color: rgba(248, 158, 0, 0.2);
       margin-bottom: 16px;
-      animation: ctaIconBounce 2.5s ease-in-out infinite;
+      animation: blogCtaIconBounce 2.5s ease-in-out infinite;
     }
 
     h3 {
@@ -259,11 +259,11 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
-@keyframes ctaReveal {
+@keyframes blogCtaReveal {
   to { opacity: 1; }
 }
 
-@keyframes ctaIconBounce {
+@keyframes blogCtaIconBounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-6px); }
 }

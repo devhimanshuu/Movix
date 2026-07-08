@@ -84,7 +84,7 @@ const FAQItem = ({ question, answer, index }) => {
           <FaChevronDown />
         </span>
       </button>
-      <div className="faqAnswer" style={isOpen ? { maxHeight: "400px" } : {}}>
+      <div className="faqAnswer">
         <p>{answer}</p>
       </div>
     </div>
